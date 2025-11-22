@@ -4,17 +4,30 @@ services:
       context: .
       dockerfile: ./server/Dockerfile
       args:
+        PYTHON_VERSION: ${PYTHON_VERSION}
         NEW_UID: ${NEW_UID}
         NEW_GID: ${NEW_GID}
         MY_USER: ${MY_USER}
         MY_GROUP: ${MY_GROUP}
-    container_name: php_apache_python
+    container_name: python_app
     ports:
-      - "${PHP_APACHE_PORT}:80"
+      - "${PYTHON_APP_PORT}:5000"
     volumes:
-      - ../.:/var/www/html
+      - ../.:/app
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=${FLASK_ENV}
+      - FLASK_DEBUG=${FLASK_DEBUG}
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_USER=${MYSQL_USER}
+      - DB_PASSWORD=${MYSQL_PASSWORD}
     networks:
       - network_python
+    depends_on:
+      - mysql
+    command: python app.py
 
   mysql:
     image: mysql:latest
@@ -30,8 +43,6 @@ services:
     volumes:
       - ./mysql/database:/docker-entrypoint-initdb.d
       - persistent_python:/var/lib/mysql:rw
-    depends_on:
-      - server_docker
     networks:
       - network_python
 

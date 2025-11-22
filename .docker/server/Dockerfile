@@ -1,46 +1,68 @@
-ARG PHP_VERSION=8.2
-FROM php:${PHP_VERSION}-apache
+ARG PYTHON_VERSION=3.11
+FROM python:${PYTHON_VERSION}-slim
 
 ## ---------------------------------------------------------
-## Argumentos fijos (reemplazamos las variables por valores fijos)
+## Argumentos (valores del archivo .env)
 ## ---------------------------------------------------------
 
-# Definir los valores que provienen del archivo .env
 ARG NEW_UID
 ARG NEW_GID
 ARG MY_USER
 ARG MY_GROUP
 
 ## ---------------------------------------------------------
-## Habilitar e instalar extensiones y librerías necesarias
+## Instalar dependencias del sistema
 ## ---------------------------------------------------------
 
 RUN set -eux && \
-groupadd -g ${NEW_GID} -r ${MY_GROUP} && \
-useradd -u ${NEW_UID} -m -s /bin/bash -g ${MY_GROUP} ${MY_USER} && \
 apt-get update && \
 apt-get install -y \
-    unzip \
     git \
-    libxml2-dev \
-    tzdata \
+    curl \
     nano \
-    zlib1g-dev \
-    wget && \
+    vim \
+    tzdata \
+    build-essential \
+    libpq-dev \
+    default-libmysqlclient-dev \
+    pkg-config \
+    sudo && \
 ln -fs /usr/share/zoneinfo/Europe/Madrid /etc/localtime && \
 dpkg-reconfigure -f noninteractive tzdata && \
-docker-php-ext-install -j$(nproc) mysqli pdo_mysql && \
-docker-php-ext-enable mysqli pdo_mysql && \
-a2enmod rewrite && \
 apt-get clean && \
-rm -rf /var/lib/apt/lists/* && \
-curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
+rm -rf /var/lib/apt/lists/*
+
+## ---------------------------------------------------------
+## Crear usuario y grupo
+## ---------------------------------------------------------
+
+RUN groupadd -g ${NEW_GID} -r ${MY_GROUP} && \
+useradd -u ${NEW_UID} -m -s /bin/bash -g ${MY_GROUP} ${MY_USER}
+
+## ---------------------------------------------------------
+## Actualizar pip y instalar herramientas base
+## ---------------------------------------------------------
+
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel
+
+## ---------------------------------------------------------
+## Configurar directorio de trabajo
+## ---------------------------------------------------------
+
+WORKDIR /app
+
+## ---------------------------------------------------------
+## Copiar requirements.txt e instalar dependencias Python
+## ---------------------------------------------------------
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
 ## ---------------------------------------------------------
 ## Copiar el contenido de la aplicación
 ## ---------------------------------------------------------
 
-COPY . /var/www/html
+COPY --chown=${MY_USER}:${MY_GROUP} . /app
 
 ## ---------------------------------------------------------
 ## Configurar bash
@@ -52,28 +74,13 @@ COPY ./server/bash/terminal /etc/terminal
 COPY ./server/bash/sudo-user /etc/sudoers.d/sudo-user
 
 ## ---------------------------------------------------------
-## Copiar y habilitar la configuración de Apache
+## Exponer el puerto 5000 (Flask por defecto)
 ## ---------------------------------------------------------
 
-COPY ./server/host/virtual-host.conf /etc/apache2/sites-available/virtual-host.conf
-RUN a2ensite virtual-host.conf 
-RUN a2dissite 000-default.conf
-    
-## ---------------------------------------------------------
-## Agregar ServerName a la configuración global de Apache
-## ---------------------------------------------------------
-
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
-
-## ---------------------------------------------------------
-## Exponer el puerto 80
-## ---------------------------------------------------------
-
-EXPOSE 80
+EXPOSE 5000
 
 ## ---------------------------------------------------------
 ## Comando por defecto
 ## ---------------------------------------------------------
 
-ENTRYPOINT ["docker-php-entrypoint"]
-CMD ["apache2-foreground"]
+CMD ["python", "app.py"]

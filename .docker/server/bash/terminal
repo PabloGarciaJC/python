@@ -18,10 +18,10 @@ _clr_reset='\[\e[0m\]'   # Restablecer: Volver al color y estilo predeterminado
 _clr_bold='\[\e[1m\]'    # Negrita: Aplicar estilo en negrita
 
 ## ---------------------------------------------------------
-## Get PHP version
+## Get Python version
 ## ---------------------------------------------------------
 
-PS1_PHP=$(php -v 2>/dev/null | awk -F'[^0-9]*' '/^PHP/{print $2}' | sed 's/[[:space:]]//g')
+PS1_PYTHON=$(python --version 2>/dev/null | awk '{print $2}')
 
 ## ---------------------------------------------------------
 ## Get username
@@ -34,11 +34,11 @@ PS1_USR=$(whoami)
 ## ---------------------------------------------------------
 # Configura el prompt para mostrar:
 # 1. Nombre de usuario en verde brillante
-# 2. Versión de PHP en amarillo brillante
+# 2. Versión de Python en amarillo brillante
 # 3. Directorio actual en azul brillante
 # 4. Texto en negrita donde se especifica
 # 5. Restablecer formato de texto al predeterminado después de cada sección
-PS1="${_clr_bold}${_clr_usr}${PS1_USR}${_clr_reset}@${_clr_bold}${_clr_ver}php-${PS1_PHP}${_clr_reset} in ${_clr_bold}${_clr_dir}\w${_clr_reset} \$ "
+PS1="${_clr_bold}${_clr_usr}${PS1_USR}${_clr_reset}@${_clr_bold}${_clr_ver}python-${PS1_PYTHON}${_clr_reset} in ${_clr_bold}${_clr_dir}\w${_clr_reset} \$ "
 
 ## ---------------------------------------------------------
 ## Clear terminal and print message
