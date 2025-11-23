@@ -4,7 +4,9 @@ services:
       context: .
       dockerfile: ./server/Dockerfile
       args:
-        PYTHON_VERSION: ${PYTHON_VERSION}
+        BASE_IMAGE: ${BASE_IMAGE}
+        BASE_IMAGE_VERSION: ${BASE_IMAGE_VERSION}
+        BASE_IMAGE_VARIANT: ${BASE_IMAGE_VARIANT}
         NEW_UID: ${NEW_UID}
         NEW_GID: ${NEW_GID}
         MY_USER: ${MY_USER}

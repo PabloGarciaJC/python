@@ -1,5 +1,7 @@
-ARG PYTHON_VERSION
-FROM python:${PYTHON_VERSION}-slim
+ARG BASE_IMAGE
+ARG BASE_IMAGE_VERSION
+ARG BASE_IMAGE_VARIANT
+FROM ${BASE_IMAGE}:${BASE_IMAGE_VERSION}-${BASE_IMAGE_VARIANT}
 
 ## ---------------------------------------------------------
 ## Argumentos
