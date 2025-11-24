@@ -21,6 +21,9 @@ urlpatterns = [
     path('categorias/<int:category_id>/editar/', CategoryController.edit, name='categories_edit'),
     path('categorias/<int:category_id>/eliminar/', CategoryController.delete, name='categories_delete'),
     path('ventas/', SaleController.index, name='sales'),
+    path('ventas/crear/', SaleController.create, name='sales_create'),
+    path('ventas/<int:sale_id>/editar/', SaleController.edit, name='sales_edit'),
+    path('ventas/<int:sale_id>/eliminar/', SaleController.delete, name='sales_delete'),
     path('reportes/', ReportController.index, name='reports'),
     path('configuracion/', ConfigController.index, name='config'),
 ]
