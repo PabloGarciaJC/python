@@ -36,7 +36,8 @@ class Supplier:
                 data.get('telefono', ''),
                 data.get('email', ''),
                 data.get('direccion', '')
-            )
+            ),
+            fetch=False
         )
     
     @staticmethod
@@ -60,11 +61,12 @@ class Supplier:
                 data.get('email', ''),
                 data.get('direccion', ''),
                 supplier_id
-            )
+            ),
+            fetch=False
         )
     
     @staticmethod
     def delete(supplier_id):
         """Eliminar lógicamente un proveedor"""
         query = "UPDATE proveedores SET activo = 0 WHERE id = %s"
-        return Database.execute_query(query, (supplier_id,))
+        return Database.execute_query(query, (supplier_id,), fetch=False)

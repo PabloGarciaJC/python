@@ -17,7 +17,7 @@ class SupplierController:
         
         suppliers = Supplier.get_all()
         total = Supplier.count()
-        return HttpResponse(SupplierView.index(user, suppliers, total))
+        return HttpResponse(SupplierView.index(user, suppliers, total, request))
     
     @staticmethod
     @ensure_csrf_cookie
@@ -54,9 +54,9 @@ class SupplierController:
                 
             except Exception as e:
                 error_message = f"Error al crear el proveedor: {str(e)}"
-                return HttpResponse(SupplierView.create(user, error_message))
+                return HttpResponse(SupplierView.create(user, request, error_message))
         
-        return HttpResponse(SupplierView.create(user))
+        return HttpResponse(SupplierView.create(user, request))
     
     @staticmethod
     @ensure_csrf_cookie
@@ -97,9 +97,9 @@ class SupplierController:
                 
             except Exception as e:
                 error_message = f"Error al actualizar el proveedor: {str(e)}"
-                return HttpResponse(SupplierView.edit(user, supplier, error_message))
+                return HttpResponse(SupplierView.edit(user, supplier, request, error_message))
         
-        return HttpResponse(SupplierView.edit(user, supplier))
+        return HttpResponse(SupplierView.edit(user, supplier, request))
     
     @staticmethod
     def delete(request, supplier_id):

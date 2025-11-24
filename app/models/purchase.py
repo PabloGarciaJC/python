@@ -55,7 +55,8 @@ class Purchase:
                 data['total'],
                 data.get('estado', 'pendiente'),
                 data.get('notas', '')
-            )
+            ),
+            fetch=False
         )
         
         # Insertar los detalles de la compra
@@ -73,7 +74,8 @@ class Purchase:
                         detail['cantidad'],
                         detail['precio_unitario'],
                         detail['subtotal']
-                    )
+                    ),
+                    fetch=False
                 )
         
         return purchase_id
@@ -101,7 +103,8 @@ class Purchase:
                 data['estado'],
                 data.get('notas', ''),
                 purchase_id
-            )
+            ),
+            fetch=False
         )
     
     @staticmethod
@@ -109,11 +112,11 @@ class Purchase:
         """Eliminar una compra y sus detalles"""
         # Primero eliminar los detalles
         detail_query = "DELETE FROM detalle_compras WHERE compra_id = %s"
-        Database.execute_query(detail_query, (purchase_id,))
+        Database.execute_query(detail_query, (purchase_id,), fetch=False)
         
         # Luego eliminar la compra
         query = "DELETE FROM compras WHERE id = %s"
-        return Database.execute_query(query, (purchase_id,))
+        return Database.execute_query(query, (purchase_id,), fetch=False)
     
     @staticmethod
     def get_details(purchase_id):
@@ -132,7 +135,7 @@ class Purchase:
         """Actualizar los detalles de una compra"""
         # Eliminar detalles existentes
         delete_query = "DELETE FROM detalle_compras WHERE compra_id = %s"
-        Database.execute_query(delete_query, (purchase_id,))
+        Database.execute_query(delete_query, (purchase_id,), fetch=False)
         
         # Insertar nuevos detalles
         if details:
@@ -149,6 +152,7 @@ class Purchase:
                         detail['cantidad'],
                         detail['precio_unitario'],
                         detail['subtotal']
-                    )
+                    ),
+                    fetch=False
                 )
         return True

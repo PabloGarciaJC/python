@@ -7,6 +7,9 @@ class PurchaseView:
     def index(user, purchases, request):
         """Vista de lista de compras"""
         
+        from django.middleware.csrf import get_token
+        csrf_token = f'<input type="hidden" name="csrfmiddlewaretoken" value="{get_token(request)}">'
+        
         # Tabla de compras
         rows = ""
         if purchases:
@@ -30,6 +33,7 @@ class PurchaseView:
                         <a href="/compras/{purchase['id']}/ver/" class="btn" style="background: #3b82f6; color: white; padding: 8px 15px; font-size: 13px;">Ver</a>
                         <a href="/compras/{purchase['id']}/editar/" class="btn btn-warning">Editar</a>
                         <form method="POST" action="/compras/{purchase['id']}/eliminar/" style="display: inline;">
+                            {csrf_token}
                             <button type="submit" class="btn btn-danger" 
                                     onclick="return confirm('¿Estás seguro de eliminar esta compra?')">
                                 Eliminar
@@ -83,6 +87,9 @@ class PurchaseView:
     def create(user, suppliers, products, request, error=None):
         """Vista de formulario para crear compra"""
         
+        from django.middleware.csrf import get_token
+        csrf_token = f'<input type="hidden" name="csrfmiddlewaretoken" value="{get_token(request)}">'
+        
         error_html = ""
         if error:
             error_html = f"""
@@ -109,6 +116,7 @@ class PurchaseView:
             </div>
             {error_html}
             <form method="POST" action="/compras/crear/" id="purchaseForm" style="padding: 20px;">
+                {csrf_token}
                 <input type="hidden" name="details" id="detailsInput" value="[]">
                     
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
@@ -308,6 +316,9 @@ class PurchaseView:
     def edit(user, purchase, suppliers, products, details, request, error=None):
         """Vista de formulario para editar compra"""
         
+        from django.middleware.csrf import get_token
+        csrf_token = f'<input type="hidden" name="csrfmiddlewaretoken" value="{get_token(request)}">'
+        
         error_html = ""
         if error:
             error_html = f"""
@@ -362,7 +373,7 @@ class PurchaseView:
         <div class="card shadow-sm">
             <div class="card-body">
                 <form method="POST" id="purchaseForm">
-                    <input type="hidden" name="csrfmiddlewaretoken" value="{get_token(request)}">
+                    {csrf_token}
                     <input type="hidden" name="details" id="detailsInput" value="">
                     
                     <div class="row">

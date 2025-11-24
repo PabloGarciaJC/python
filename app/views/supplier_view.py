@@ -4,8 +4,11 @@ from app.views.layout import Layout
 
 class SupplierView:
     @staticmethod
-    def index(user, suppliers, total):
+    def index(user, suppliers, total, request):
         """Vista de lista de proveedores"""
+        
+        from django.middleware.csrf import get_token
+        csrf_token = f'<input type="hidden" name="csrfmiddlewaretoken" value="{get_token(request)}">'
         
         rows = ""
         if suppliers:
@@ -20,6 +23,7 @@ class SupplierView:
                     <td>
                         <a href="/proveedores/{supplier['id']}/editar/" class="btn btn-warning">Editar</a>
                         <form method="POST" action="/proveedores/{supplier['id']}/eliminar/" style="display: inline;">
+                            {csrf_token}
                             <button type="submit" class="btn btn-danger" 
                                     onclick="return confirm('¿Estás seguro de eliminar este proveedor?')">
                                 Eliminar
@@ -70,8 +74,11 @@ class SupplierView:
         return Layout.render('Proveedores', user, 'proveedores', content)
     
     @staticmethod
-    def create(user, error=None):
+    def create(user, request, error=None):
         """Vista de formulario para crear proveedor"""
+        
+        from django.middleware.csrf import get_token
+        csrf_token = f'<input type="hidden" name="csrfmiddlewaretoken" value="{get_token(request)}">'
         
         error_html = ""
         if error:
@@ -89,6 +96,7 @@ class SupplierView:
             </div>
             {error_html}
             <form method="POST" action="/proveedores/crear/" style="padding: 20px;">
+                {csrf_token}
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
                     <div>
                         <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Nombre *</label>
@@ -132,8 +140,11 @@ class SupplierView:
         return Layout.render('Nuevo Proveedor', user, 'proveedores', content)
     
     @staticmethod
-    def edit(user, supplier, error=None):
+    def edit(user, supplier, request, error=None):
         """Vista de formulario para editar proveedor"""
+        
+        from django.middleware.csrf import get_token
+        csrf_token = f'<input type="hidden" name="csrfmiddlewaretoken" value="{get_token(request)}">'
         
         error_html = ""
         if error:
@@ -151,6 +162,7 @@ class SupplierView:
             </div>
             {error_html}
             <form method="POST" action="/proveedores/{supplier['id']}/editar/" style="padding: 20px;">
+                {csrf_token}
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
                     <div>
                         <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Nombre *</label>
