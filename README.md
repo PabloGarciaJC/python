@@ -1,4 +1,4 @@
-# Sistema de Gestión de Inventario (Django + MySQL + Docker)
+# Sistema de Gestión de Inventario (Python + Django)
 
 **Sistema de Gestión de Inventario** es una aplicación completa desarrollada con **Django** bajo el patrón **MVC**, diseñada para administrar inventarios, ventas, compras, productos, clientes, proveedores y almacenes desde un panel de administración intuitivo y moderno.
 
