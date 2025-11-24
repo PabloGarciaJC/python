@@ -2,49 +2,9 @@ class AuthView:
     """Vista de Autenticación"""
     
     @staticmethod
-    def _get_styles():
-        """Estilos CSS compartidos"""
-        return """
-        <style>
-            * { margin: 0; padding: 0; box-sizing: border-box; }
-            body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; }
-            
-            /* Login/Register Container */
-            .auth-container { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-            .auth-card { background: white; padding: 40px; border-radius: 12px; width: 100%; max-width: 450px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
-            .auth-card h2 { text-align: center; margin-bottom: 10px; color: #333; }
-            .auth-card p { text-align: center; margin-bottom: 30px; color: #666; font-size: 14px; }
-            
-            /* Forms */
-            .form-group { margin-bottom: 20px; }
-            .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: #374151; }
-            .form-control { width: 100%; padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; }
-            .form-control:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); }
-            
-            /* Buttons */
-            .btn { display: inline-block; padding: 12px 20px; border-radius: 8px; text-decoration: none; cursor: pointer; border: none; font-size: 14px; transition: all 0.3s; font-weight: 500; }
-            .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; width: 100%; }
-            .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
-            .btn-secondary { background: #6b7280; color: white; width: 100%; margin-top: 10px; }
-            .btn-secondary:hover { background: #4b5563; }
-            
-            /* Alerts */
-            .alert { padding: 12px 15px; border-radius: 8px; margin-bottom: 20px; font-size: 14px; }
-            .alert-error { background: #fee2e2; color: #991b1b; border-left: 4px solid #dc2626; }
-            .alert-error ul { margin: 5px 0 0 20px; }
-            
-            /* Links */
-            .auth-footer { text-align: center; margin-top: 20px; }
-            .auth-footer a { color: #667eea; text-decoration: none; font-weight: 500; }
-            .auth-footer a:hover { text-decoration: underline; }
-        </style>
-        """
-    
-    @staticmethod
     def login(error=None, csrf_token=''):
         """Vista de login"""
         error_html = f'<div class="alert alert-error">{error}</div>' if error else ''
-        styles = AuthView._get_styles()
         
         return f"""
 <!DOCTYPE html>
@@ -53,31 +13,61 @@ class AuthView:
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión - Sistema de Inventario</title>
-    {styles}
+    <link rel="stylesheet" href="/static/css/auth.css">
 </head>
 <body>
+<!-- Spinner -->
+<div id="spinner" class="spinner"></div>
+
 <div class="auth-container">
     <div class="auth-card">
+            <!-- Usuarios de Prueba -->
+        <div class="test-users-section">
+            <h3 class="test-users-title">⚡ Acceso Rápido</h3>
+            <p class="test-users-subtitle">Usuarios ficticios para realizar pruebas</p>
+            <div class="test-users-grid">
+                <div class="user-card" data-username="admin" data-password="admin123">
+                    <div class="user-card-role">Administrador</div>
+                    <div class="user-card-username">admin</div>
+                    <a href="#" class="user-card-action select-user">Seleccionar aquí</a>
+                </div>
+                <div class="user-card" data-username="jperez" data-password="vendedor123">
+                    <div class="user-card-role">Vendedor</div>
+                    <div class="user-card-username">jperez</div>
+                    <a href="#" class="user-card-action select-user">Seleccionar aquí</a>
+                </div>
+                <div class="user-card" data-username="mgonzalez" data-password="almacen123">
+                    <div class="user-card-role">Almacenero</div>
+                    <div class="user-card-username">mgonzalez</div>
+                    <a href="#" class="user-card-action select-user">Seleccionar aquí</a>
+                </div>
+            </div>
+        </div>
         <h2>🔐 Iniciar Sesión</h2>
         <p>Bienvenido al Sistema de Inventario</p>
         {error_html}
-        <form method="POST">
+        <form method="POST" id="login-form">
             <input type="hidden" name="csrfmiddlewaretoken" value="{csrf_token}">
             <div class="form-group">
                 <label>Usuario</label>
-                <input type="text" name="username" class="form-control" required autofocus>
+                <input type="text" name="username" id="username-input" class="form-control" required autofocus>
             </div>
             <div class="form-group">
                 <label>Contraseña</label>
-                <input type="password" name="password" class="form-control" required>
+                <input type="password" name="password" id="password-input" class="form-control" required>
             </div>
             <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
         </form>
+        
+
+        
         <div class="auth-footer">
             <p>¿No tienes cuenta? <a href="/register/">Regístrate aquí</a></p>
         </div>
     </div>
 </div>
+
+<script src="/static/js/auth.js"></script>
 </body>
 </html>
 """
@@ -92,8 +82,6 @@ class AuthView:
             errors_list = ''.join([f'<li>{error}</li>' for error in errors])
             errors_html = f'<div class="alert alert-error"><ul>{errors_list}</ul></div>'
         
-        styles = AuthView._get_styles()
-        
         return f"""
 <!DOCTYPE html>
 <html lang="es">
@@ -101,7 +89,7 @@ class AuthView:
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro - Sistema de Inventario</title>
-    {styles}
+    <link rel="stylesheet" href="/static/css/auth.css">
 </head>
 <body>
 <div class="auth-container">

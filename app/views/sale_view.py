@@ -198,80 +198,11 @@ class SaleView:
             </form>
         </div>
         
+        <script src="/static/js/product-manager.js"></script>
         <script>
+            // Inicializar el gestor de productos con los datos del servidor
             const products = {str(products_json).replace("'", '"')};
-            let selectedProducts = [];
-            
-            function addProduct() {{
-                const select = document.getElementById('productSelect');
-                const quantity = parseInt(document.getElementById('quantityInput').value);
-                const productId = parseInt(select.value);
-                
-                if (!productId || quantity <= 0) {{
-                    alert('Seleccione un producto y cantidad válida');
-                    return;
-                }}
-                
-                const product = products.find(p => p.id === productId);
-                if (!product) return;
-                
-                // Verificar si ya está agregado
-                const existing = selectedProducts.find(p => p.producto_id === productId);
-                if (existing) {{
-                    existing.cantidad += quantity;
-                    existing.subtotal = existing.cantidad * existing.precio_unitario;
-                }} else {{
-                    selectedProducts.push({{
-                        producto_id: productId,
-                        nombre: product.nombre,
-                        precio_unitario: product.precio,
-                        cantidad: quantity,
-                        subtotal: product.precio * quantity
-                    }});
-                }}
-                
-                renderProducts();
-                select.value = '';
-                document.getElementById('quantityInput').value = 1;
-            }}
-            
-            function removeProduct(index) {{
-                selectedProducts.splice(index, 1);
-                renderProducts();
-            }}
-            
-            function renderProducts() {{
-                const tbody = document.getElementById('productsBody');
-                const table = document.getElementById('productsTable');
-                
-                if (selectedProducts.length === 0) {{
-                    table.style.display = 'none';
-                    return;
-                }}
-                
-                table.style.display = 'table';
-                tbody.innerHTML = selectedProducts.map((p, i) => `
-                    <tr>
-                        <td>${{p.nombre}}</td>
-                        <td>$${{p.precio_unitario.toFixed(2)}}</td>
-                        <td>${{p.cantidad}}</td>
-                        <td>$${{p.subtotal.toFixed(2)}}</td>
-                        <td><button type="button" class="btn btn-danger" onclick="removeProduct(${{i}})">X</button></td>
-                    </tr>
-                `).join('');
-                
-                const total = selectedProducts.reduce((sum, p) => sum + p.subtotal, 0);
-                document.getElementById('totalAmount').textContent = `$${{total.toFixed(2)}}`;
-            }}
-            
-            document.getElementById('saleForm').addEventListener('submit', function(e) {{
-                if (selectedProducts.length === 0) {{
-                    e.preventDefault();
-                    alert('Debe agregar al menos un producto');
-                    return;
-                }}
-                document.getElementById('details').value = JSON.stringify(selectedProducts);
-            }});
+            manager = new ProductManager(products);
         </script>
         """
         
@@ -409,74 +340,13 @@ class SaleView:
             </form>
         </div>
         
+        <script src="/static/js/product-manager.js"></script>
         <script>
+            // Inicializar el gestor de productos con los datos del servidor
             const products = {str(products_json).replace("'", '"')};
-            let selectedProducts = {str(existing_details).replace("'", '"')};
-            
-            function addProduct() {{
-                const select = document.getElementById('productSelect');
-                const quantity = parseInt(document.getElementById('quantityInput').value);
-                const productId = parseInt(select.value);
-                
-                if (!productId || quantity <= 0) {{
-                    alert('Seleccione un producto y cantidad válida');
-                    return;
-                }}
-                
-                const product = products.find(p => p.id === productId);
-                if (!product) return;
-                
-                const existing = selectedProducts.find(p => p.producto_id === productId);
-                if (existing) {{
-                    existing.cantidad += quantity;
-                    existing.subtotal = existing.cantidad * existing.precio_unitario;
-                }} else {{
-                    selectedProducts.push({{
-                        producto_id: productId,
-                        nombre: product.nombre,
-                        precio_unitario: product.precio,
-                        cantidad: quantity,
-                        subtotal: product.precio * quantity
-                    }});
-                }}
-                
-                renderProducts();
-                select.value = '';
-                document.getElementById('quantityInput').value = 1;
-            }}
-            
-            function removeProduct(index) {{
-                selectedProducts.splice(index, 1);
-                renderProducts();
-            }}
-            
-            function renderProducts() {{
-                const tbody = document.getElementById('productsBody');
-                tbody.innerHTML = selectedProducts.map((p, i) => `
-                    <tr>
-                        <td>${{p.nombre}}</td>
-                        <td>$${{p.precio_unitario.toFixed(2)}}</td>
-                        <td>${{p.cantidad}}</td>
-                        <td>$${{p.subtotal.toFixed(2)}}</td>
-                        <td><button type="button" class="btn btn-danger" onclick="removeProduct(${{i}})">X</button></td>
-                    </tr>
-                `).join('');
-                
-                const total = selectedProducts.reduce((sum, p) => sum + p.subtotal, 0);
-                document.getElementById('totalAmount').textContent = `$${{total.toFixed(2)}}`;
-            }}
-            
-            document.getElementById('saleForm').addEventListener('submit', function(e) {{
-                if (selectedProducts.length === 0) {{
-                    e.preventDefault();
-                    alert('Debe agregar al menos un producto');
-                    return;
-                }}
-                document.getElementById('details').value = JSON.stringify(selectedProducts);
-            }});
-            
-            // Renderizar productos existentes al cargar
-            renderProducts();
+            const existingDetails = {str(existing_details).replace("'", '"')};
+            manager = new ProductManager(products, existingDetails);
+            manager.render();
         </script>
         """
         

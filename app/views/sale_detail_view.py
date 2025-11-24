@@ -155,31 +155,7 @@ class SaleDetailView:
             </form>
         </div>
         
-        <script>
-            const productoSelect = document.getElementById('producto');
-            const cantidadInput = document.getElementById('cantidad');
-            const precioInput = document.getElementById('precio_unitario');
-            const subtotalSpan = document.getElementById('subtotal');
-            
-            productoSelect.addEventListener('change', function() {{
-                const selectedOption = this.options[this.selectedIndex];
-                const price = selectedOption.getAttribute('data-price');
-                if (price) {{
-                    precioInput.value = parseFloat(price).toFixed(2);
-                    calcularSubtotal();
-                }}
-            }});
-            
-            cantidadInput.addEventListener('input', calcularSubtotal);
-            precioInput.addEventListener('input', calcularSubtotal);
-            
-            function calcularSubtotal() {{
-                const cantidad = parseFloat(cantidadInput.value) || 0;
-                const precio = parseFloat(precioInput.value) || 0;
-                const subtotal = cantidad * precio;
-                subtotalSpan.textContent = subtotal.toFixed(2);
-            }}
-        </script>
+        <script src="/static/js/detail-calculator.js"></script>
         """
         
         return Layout.render('Nuevo Detalle de Venta', user, 'detalle-ventas', content)
@@ -256,31 +232,7 @@ class SaleDetailView:
             </form>
         </div>
         
-        <script>
-            const productoSelect = document.getElementById('producto');
-            const cantidadInput = document.getElementById('cantidad');
-            const precioInput = document.getElementById('precio_unitario');
-            const subtotalSpan = document.getElementById('subtotal');
-            
-            productoSelect.addEventListener('change', function() {{
-                const selectedOption = this.options[this.selectedIndex];
-                const price = selectedOption.getAttribute('data-price');
-                if (price) {{
-                    precioInput.value = parseFloat(price).toFixed(2);
-                    calcularSubtotal();
-                }}
-            }});
-            
-            cantidadInput.addEventListener('input', calcularSubtotal);
-            precioInput.addEventListener('input', calcularSubtotal);
-            
-            function calcularSubtotal() {{
-                const cantidad = parseFloat(cantidadInput.value) || 0;
-                const precio = parseFloat(precioInput.value) || 0;
-                const subtotal = cantidad * precio;
-                subtotalSpan.textContent = subtotal.toFixed(2);
-            }}
-        </script>
+        <script src="/static/js/detail-calculator.js"></script>
         """
         
         return Layout.render('Editar Detalle de Venta', user, 'detalle-ventas', content)

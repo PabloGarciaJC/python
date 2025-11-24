@@ -167,7 +167,9 @@ INSERT INTO roles (nombre, descripcion) VALUES
 
 -- Insertar usuario administrador por defecto (password: admin123)
 INSERT INTO usuarios (username, email, password, nombre_completo, rol_id) VALUES
-('admin', 'admin@inventario.com', 'pbkdf2_sha256$600000$admin$hashedpassword', 'Administrador Sistema', 1);
+('admin', 'admin@inventario.com', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 'Administrador Sistema', 1),
+('jperez', 'jperez@inventario.com', '56976bf24998ca63e35fe4f1e2469b5751d1856003e8d16fef0aafef496ed044', 'Juan Pérez', 1),
+('mgonzalez', 'mgonzalez@inventario.com', '7439033334ff7f5d2d164c47fe54b5819c0f7cd1225ecbc3bbac5bc80206b01f', 'María González', 1);
 
 -- Insertar categorías de ejemplo
 INSERT INTO categorias (nombre, descripcion) VALUES

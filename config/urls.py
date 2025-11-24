@@ -1,4 +1,6 @@
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from app.controllers.auth_controller import AuthController
 from app.controllers.dashboard_controller import DashboardController
 from app.controllers.product_controller import ProductController
@@ -77,3 +79,7 @@ urlpatterns = [
     path('configuracion/usuarios/<int:user_edit_id>/editar/', ConfigController.edit_user, name='config_edit_user'),
     path('configuracion/usuarios/<int:user_delete_id>/eliminar/', ConfigController.delete_user, name='config_delete_user'),
 ]
+
+# Servir archivos estáticos en desarrollo
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
