@@ -302,6 +302,15 @@ class ConfigView:
                             {role_options}
                         </select>
                     </div>
+                    
+                    <div>
+                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Estado *</label>
+                        <select name="activo" required 
+                                style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                            <option value="1" {'selected' if user_to_edit.get('activo', 1) == 1 else ''}>Activo</option>
+                            <option value="0" {'selected' if user_to_edit.get('activo', 1) == 0 else ''}>Inactivo</option>
+                        </select>
+                    </div>
                 </div>
                 
                 <div style="margin-top: 30px; display: flex; gap: 10px;">
@@ -366,6 +375,15 @@ class ConfigView:
                         <input type="text" value="{user_info.get('rol', '')}" disabled 
                                style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; background: #f5f5f5;">
                         <small style="color: #666;">El rol no se puede cambiar</small>
+                    </div>
+                    
+                    <div>
+                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Estado *</label>
+                        <select name="activo" required 
+                                style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                            <option value="1" {'selected' if user_info.get('activo', 1) == 1 else ''}>Activo</option>
+                            <option value="0" {'selected' if user_info.get('activo', 1) == 0 else ''}>Inactivo</option>
+                        </select>
                     </div>
                 </div>
                 

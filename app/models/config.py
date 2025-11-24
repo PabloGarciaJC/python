@@ -145,12 +145,14 @@ class Config:
         query = """
             UPDATE pablogarciajcbd.usuarios 
             SET nombre_completo = %s,
-                email = %s
+                email = %s,
+                activo = %s
             WHERE id = %s
         """
         params = (
             data['nombre_completo'],
             data.get('email', ''),
+            data.get('activo', 1),
             user_id
         )
         return Database.execute_query(query, params, fetch=False)

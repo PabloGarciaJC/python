@@ -115,7 +115,7 @@ class ConfigController:
                     'nombre_completo': request.POST.get('nombre_completo'),
                     'email': request.POST.get('email'),
                     'rol_id': request.POST.get('rol_id'),
-                    'activo': 1
+                    'activo': int(request.POST.get('activo', 1))
                 }
                 
                 # Validaciones
@@ -184,7 +184,8 @@ class ConfigController:
             try:
                 data = {
                     'nombre_completo': request.POST.get('nombre_completo'),
-                    'email': request.POST.get('email')
+                    'email': request.POST.get('email'),
+                    'activo': int(request.POST.get('activo', 1))
                 }
                 
                 # Actualizar el perfil
