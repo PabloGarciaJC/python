@@ -1,81 +1,60 @@
-# CMS Ecommerce (MVC + PHP + jQuery)
+# Sistema de Gestión de Inventario (Django + MySQL + Docker)
 
-**CMS Ecommerce** es un sistema de gestión de contenidos especializado en comercio electrónico, desarrollado con **PHP** bajo el patrón **MVC** y potenciado con **jQuery** para interactividad del lado del cliente. Permite administrar productos, categorías, inventario, pedidos, usuarios y contenido web desde un panel intuitivo, mientras jQuery mejora la experiencia del usuario con animaciones, validaciones y actualizaciones dinámicas mediante AJAX.
+**Sistema de Gestión de Inventario** es una aplicación completa desarrollada con **Django** bajo el patrón **MVC**, diseñada para administrar inventarios, ventas, compras, productos, clientes, proveedores y almacenes desde un panel de administración intuitivo y moderno.
 
 ## Demo del Proyecto
 
-[https://ecommerce.com/](https://ecommerce.pablogarciajc.com/)
+[http://localhost:8081/](http://localhost:8081/)
 
-| ![Imagen 1](https://pablogarciajc.com/wp-content/uploads/2025/09/ecommerce_11_11.webp) | ![Imagen 2](https://pablogarciajc.com/wp-content/uploads/2025/01/ecommerce_6_webp.png) |
+| ![Dashboard](https://via.placeholder.com/400x250?text=Dashboard+con+Estadísticas) | ![Gestión de Productos](https://via.placeholder.com/400x250?text=Gestión+de+Productos) |
 |-----------|-----------|
 
 ## Funcionalidades Principales
 
-La plataforma cuenta con **cuatro módulos principales** que optimizan la experiencia de usuario y administración:
-
-- **Diseño Adaptado a Móviles**: Experiencia optimizada para dispositivos móviles
-- **Multilenguaje**: Soporte para múltiples idiomas.
-- **Dashboard**: Visualiza métricas clave.
-- **Registro y Login**: Gestión de cuentas de usuario.
-- **Cuenta**: Administración de perfil y contraseñas.
-- **Usuarios**: Gestión de usuarios y roles.
-- **Roles**: Asigna permisos específicos a los usuarios.
-- **Catálogo**: Administración de productos y servicios.
-- **Pedidos**: Consulta y gestión de pedidos.
-- **Carrito de Compras**: Gestión de productos en el carrito.
-- **Favoritos**: Guarda productos o recursos favoritos para acceso rápido.
-- **Comentarios**: Deja tus comentarios sobre la plataforma.
-- **Conoce la Plataforma**: Acceso a documentación técnica.
-- **Cerrar Sesión**: Logout seguro.
+- **Dashboard**
+- **Productos**
+- **Categorías**
+- **Clientes**
+- **Proveedores**
+- **Almacenes**
+- **Movimientos Inventario**
+- **Roles**
+- **Ventas**
+- **Detalle Ventas**
+- **Compras**
+- **Detalle Compras**
+- **Reportes**
+- **Configuración**
 
 ### Roles de Usuario Iniciales
 
-El sistema está diseñado inicialmente con **dos roles**:
+El sistema está diseñado con **roles personalizables**:
 
-1. **Administrador**: Tiene acceso completo a todas las funcionalidades y módulos de la plataforma. El administrador puede gestionar usuarios, roles, productos, pedidos, entre otros.
-2. **Cliente**: Accede principalmente a funcionalidades relacionadas con la compra de productos, visualización de su cuenta, carrito de compras, y favoritos.
+1. **Administrador**: Acceso completo a todos los módulos del sistema
+2. **Vendedor**: Acceso a ventas, clientes y consulta de productos
+3. **Almacenero**: Gestión de inventario, movimientos y almacenes
+4. **Supervisor**: Visualización de reportes y estadísticas
 
 ## Tecnologías Usadas
 
 | **Tecnología**             | **Descripción**                                                                                                                                                   |
 |----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **PHP y SQL**              | Lenguaje de programación para backend y bases de datos.                                                                                                           |
-| **Logging**                | Herramienta para registrar eventos, errores y el estado del sistema en tiempo real.                                                                               |
-| **Testing Unitario**       | Verifica que unidades individuales de código funcionen correctamente y de forma aislada.                                                                          |
-| **Testing de Integración** | Asegura que los distintos módulos o servicios del sistema interactúan correctamente entre sí.                                                                    |
-| **Composer**               | Gestor de dependencias en PHP.                                                                                                                                    |
-| **Docker (con WSL)**       | Plataforma para contenerización y escalabilidad, con soporte para entornos Linux en Windows mediante WSL2.                                                       |
-| **Docker Compose**         | Herramienta para definir y ejecutar aplicaciones multi-contenedor, facilitando la gestión de entornos complejos.                                                 |
-| **Make**                   | Automatiza tareas repetitivas como pruebas, despliegues y gestión de contenedores, optimizando el flujo de trabajo.                                              |
+| **Django 5.0**             | Framework web de alto nivel para Python que fomenta el desarrollo rápido y el diseño limpio.                                                                     |
+| **Python 3.11**            | Lenguaje de programación potente y versátil para desarrollo backend.                                                                                              |
+| **MySQL 8.0**              | Sistema de gestión de bases de datos relacional robusto y escalable.                                                                                              |
+| **Docker & Docker Compose**| Plataforma de contenerización para desarrollo, envío y ejecución de aplicaciones de forma aislada.                                                                |
+| **Make**                   | Herramienta de automatización de tareas que simplifica comandos complejos.                                                                                        |
+| **phpMyAdmin**             | Interfaz web para administración de bases de datos MySQL.                                                                                                         |
 
----
-
-## Créditos
-
-| **Recurso**                        | **Descripción**                                                                                               | **Enlace**                                              |
-|------------------------------------|---------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|
-| **Plantilla de la aplicación**     | Plantilla utilizada para la interfaz de usuario.                                                              | [Electro Store - Plantilla de eCommerce](https://w3layouts.com/template/electro-store-an_python-theme-bootstrap-template/)                        |
-| **Licencia de la plantilla**       | Licencia de la plantilla bajo Creative Commons Attribution 3.0 Unported.                                      | [Creative Commons License](http://creativecommons.org/licenses/by/3.0/) |
-| **Imágenes de productos**          | Imágenes de productos obtenidas de Amazon.                                                                     | [Amazon](https://www.amazon.com)                         |
 ---
 
 ## Usuarios Ficticios para Pruebas
 
-| **Nombre**                     | **Correo**                        | **Contraseña** | **Rol**         |
+| **Nombre**                     | **Usuario**                       | **Contraseña** | **Rol**         |
 |---------------------------------|-----------------------------------|----------------|-----------------|
-| Administrador                   | admin@cms.com                     | password       | Administrador   |
-| Luis Fernando Ramos             | luis.ramos@pablogarciajc.com       | password       | Cliente         |
-| Marco Antonio Santis            | santis@pablogarciajc.com          | password       | Cliente         |
-| Juan Carlos Pérez               | juan.perez@pablogarciajc.com      | password       | Cliente         |
-| Ana María López                 | ana.lopez@pablogarciajc.com       | password       | Cliente         |
-| Carlos Alberto Rodríguez        | carlos.rodriguez@pablogarciajc.com| password       | Cliente         |
-| Lucía Fernanda Mendoza          | lucia.mendoza@pablogarciajc.com   | password       | Cliente         |
-| Pedro Luis Gómez                | pedro.gomez@pablogarciajc.com     | password       | Cliente         |
-| Sofía Alejandra Martínez        | sofia.martinez@pablogarciajc.com  | password       | Cliente         |
-| Diego Armando Herrera           | diego.herrera@pablogarciajc.com   | password       | Cliente         |
-| María Isabel González           | maria.gonzalez@pablogarciajc.com  | password       | Cliente         |
-| Javier Ernesto Ortiz            | javier.ortiz@pablogarciajc.com    | password       | Cliente         |
-| Laura Patricia Vega             | laura.vega@pablogarciajc.com      | password       | Cliente         |
+| Administrador del Sistema       | admin                            | admin123       | Administrador   |
+| Juan Pérez                      | jperez                           | vendedor123    | Vendedor        |
+| María González                  | mgonzalez                        | almacen123     | Almacenero      |
 
 ---
 
@@ -83,27 +62,72 @@ El sistema está diseñado inicialmente con **dos roles**:
 
 ### Requisitos Previos
 
-- Tener **Docker** y **Docker Compose** instalados.
-- **Make**: Utilizado para automatizar procesos y gestionar contenedores de manera más eficiente.
+- Tener **Docker** y **Docker Compose** instalados
+- **Make**: Para automatizar comandos
+- Puerto **8081** (aplicación) y **8082** (phpMyAdmin) disponibles
 
 ### Pasos de Instalación
 
-1. Clona el repositorio desde GitHub.
-2. Dentro del repositorio, encontrarás un archivo **Makefile** que contiene los comandos necesarios para iniciar y gestionar tu aplicación.
-3. Usa los siguientes comandos de **Make** para interactuar con la aplicación:
+1. **Clona el repositorio**
 
-   - **`make init-app`**: Inicializa los contenedores y configura la aplicación.
-   - **`make up`**: Levanta la aplicación y sus contenedores asociados.
-   - **`make down`**: Detiene los contenedores y apaga la aplicación.
-   - **`make shell`**: Ingresa al contenedor para interactuar directamente con el sistema en su entorno de ejecución.
-   - **`make install-dependencies`**: Instala todas las dependencias necesarias para disponer del sistema de logs y ejecutar pruebas.
-   - **`make init-test`**: Ejecuta las pruebas unitarias y de integración.
+   ```bash
+   git clone https://github.com/PabloGarciaJC/python.git
+   cd python
+   ```
 
-4. Además de estos comandos, dentro del archivo **Makefile** puedes encontrar otros comandos que te permitirán interactuar de manera más específica con los contenedores y los diferentes servicios que conforman la aplicación.
+2. **Comandos disponibles en el Makefile**
 
-5. Accede a los siguientes URL:
+   - **`make up`**: Levanta todos los contenedores (aplicación y base de datos)
+   - **`make down`**: Detiene y elimina los contenedores
+   - **`make restart`**: Reinicia los contenedores
+   - **`make logs`**: Muestra los logs de la aplicación
+   - **`make shell`**: Accede al contenedor de Python
+   - **`make mysql`**: Accede al contenedor de MySQL
+   - **`make ps`**: Lista los contenedores en ejecución
+
+3. **Inicia la aplicación**
+   ```bash
+   make up
+   ```
+
+4. **Accede a las URLs**
    - **Aplicación Web**: [http://localhost:8081/](http://localhost:8081/)
-   - **PhpMyAdmin**: [http://localhost:8082/](http://localhost:8082/)
+   - **phpMyAdmin**: [http://localhost:8082/](http://localhost:8082/)
+     - Servidor: `mysql`
+     - Usuario: `pablogarciajcuser`
+     - Contraseña: `pablogarciajcpassword`
+     - Base de datos: `pablogarciajcbd`
+
+5. **Credenciales de acceso inicial**
+   - Usuario: `admin`
+   - Contraseña: `admin123`
+
+---
+
+## Arquitectura del Sistema
+
+### Patrón MVC
+
+- **Models**: Lógica de acceso a datos (app/models/)
+- **Views**: Renderizado HTML (app/views/)
+- **Controllers**: Lógica de negocio (app/controllers/)
+
+### Base de Datos
+
+El sistema utiliza **14 tablas principales**:
+
+- usuarios, roles, clientes, proveedores
+- productos, categorias, almacenes
+- ventas, detalle_ventas
+- compras, detalle_compras
+- movimientos_inventario
+
+### Seguridad
+
+- Protección CSRF en formularios
+- Validación de sesiones
+- Sanitización de inputs
+- Control de acceso por roles
 
 ---
 
@@ -119,4 +143,4 @@ El sistema está diseñado inicialmente con **dos roles**:
 | **Twitter**  | Proyectos, pensamientos y actualizaciones.                | [Presiona aquí](https://x.com/PabloGarciaJC?t=lct1gxvE8DkqAr8dgxrHIw&s=09)   |
 
 ---
-> _"El buen manejo de tus finanzas hoy construye la seguridad del mañana."_
+> _"La gestión eficiente del inventario es clave para el éxito de cualquier negocio."_

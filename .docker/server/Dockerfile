@@ -53,12 +53,10 @@ RUN pip install --no-cache-dir --upgrade pip setuptools wheel
 ## ---------------------------------------------------------
 
 RUN pip install --no-cache-dir \
-    Flask==3.0.0 \
-    Flask-Cors==4.0.0 \
+    Django==5.0.0 \
     mysqlclient==2.2.1 \
-    SQLAlchemy==2.0.23 \
-    Flask-SQLAlchemy==3.1.1 \
-    python-dotenv==1.0.0
+    python-dotenv==1.0.0 \
+    django-cors-headers==4.3.1
 
 ## ---------------------------------------------------------
 ## Configurar directorio de trabajo
@@ -82,11 +80,12 @@ COPY ./server/bash/terminal /etc/terminal
 COPY ./server/bash/sudo-user /etc/sudoers.d/sudo-user
 
 ## ---------------------------------------------------------
-## Configurar entrypoint para corregir permisos
+## Configurar scripts
 ## ---------------------------------------------------------
 
 COPY ./server/scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
+COPY ./server/scripts/wait-for-mysql.sh /usr/local/bin/wait-for-mysql.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/wait-for-mysql.sh
 
 ## ---------------------------------------------------------
 ## Exponer el puerto 8081
@@ -95,8 +94,8 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 EXPOSE 8081
 
 ## ---------------------------------------------------------
-## Comando por defecto
+## Comando por defecto con wait wrapper
 ## ---------------------------------------------------------
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-CMD ["python", "app.py"]
+CMD ["/usr/local/bin/wait-for-mysql.sh", "python", "main.py"]
