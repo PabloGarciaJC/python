@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: mysql
--- Tiempo de generación: 25-11-2025 a las 00:34:40
+-- Tiempo de generación: 25-11-2025 a las 08:48:07
 -- Versión del servidor: 9.5.0
 -- Versión de PHP: 8.3.26
 
@@ -380,7 +380,7 @@ CREATE TABLE `django_session` (
 --
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
-('90vtopiefjbh1e5vm4arqcbj9vxtzrq6', 'eyJ1c2VyX2lkIjo0LCJ1c2VybmFtZSI6Im1nb256YWxleiJ9:1vNgzD:klZdji91Q1vBonIeq5G3xNRWWJZjCy2WPCsy-Oyp_OA', '2025-12-09 00:32:51.222631');
+('jqr5vqfxwbq9kssfvzf5d7zmgyas2bl2', 'eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIn0:1vNohV:LMiJV_cdJetFu7T5TFaNJyKBZ1LiIKj9FdjkSTVdDeo', '2025-12-09 08:47:05.751027');
 
 -- --------------------------------------------------------
 
@@ -459,7 +459,7 @@ INSERT INTO `productos` (`id`, `codigo`, `nombre`, `descripcion`, `categoria_id`
 (6, 'ELEC-006', 'Tablet Samsung 10\"', 'Tablet Android 64GB con lÃ¡piz Ã³ptico', 1, 450.00, 750.00, 8, 10, 1, 1, '2025-11-25 00:26:43', '2025-11-25 00:26:43'),
 (7, 'ELEC-007', 'Webcam Full HD', 'CÃ¡mara web 1080p con micrÃ³fono', 1, 55.00, 95.00, 15, 22, 1, 1, '2025-11-25 00:26:43', '2025-11-25 00:26:43'),
 (8, 'ELEC-008', 'Disco Duro Externo 1TB', 'HDD portÃ¡til USB 3.0', 1, 120.00, 185.00, 12, 28, 1, 1, '2025-11-25 00:26:43', '2025-11-25 00:26:43'),
-(9, 'ELEC-009', 'Impresora Multifuncional', 'Impresora WiFi con escÃ¡ner y copiadora', 1, 280.00, 450.00, 5, 8, 1, 1, '2025-11-25 00:26:43', '2025-11-25 00:26:43'),
+(9, 'ELEC-009', 'Impresora Multifuncional', 'Impresora WiFi con escÃ¡ner y copiadora', 1, 280.00, 450.00, 5, 8, NULL, 1, '2025-11-25 00:26:43', '2025-11-25 08:16:30'),
 (10, 'ELEC-010', 'Router WiFi 6', 'Router dual band hasta 1200Mbps', 1, 90.00, 155.00, 10, 16, 1, 1, '2025-11-25 00:26:43', '2025-11-25 00:26:43'),
 (11, 'ELEC-011', 'Memoria USB 64GB', 'Pendrive USB 3.0 alta velocidad', 1, 18.00, 32.00, 30, 45, 1, 1, '2025-11-25 00:26:43', '2025-11-25 00:26:43'),
 (12, 'ELEC-012', 'Cable HDMI 2m', 'Cable HDMI 2.0 4K Ultra HD', 1, 12.00, 22.00, 40, 68, 1, 1, '2025-11-25 00:26:43', '2025-11-25 00:26:43'),
@@ -530,7 +530,12 @@ INSERT INTO `productos` (`id`, `codigo`, `nombre`, `descripcion`, `categoria_id`
 (77, 'JUGT-005', 'Peluche Oso 60cm', 'Peluche gigante suave', 7, 38.00, 72.00, 15, 28, 1, 1, '2025-11-25 00:26:43', '2025-11-25 00:26:43'),
 (78, 'JUGT-006', 'Juego de Mesa Monopoly', 'Juego clÃ¡sico familiar', 7, 42.00, 78.00, 12, 22, 1, 1, '2025-11-25 00:26:43', '2025-11-25 00:26:43'),
 (79, 'JUGT-007', 'Pelota Inflable Grande', 'Pelota de playa 75cm', 7, 8.00, 15.50, 30, 58, 1, 1, '2025-11-25 00:26:43', '2025-11-25 00:26:43'),
-(80, 'JUGT-008', 'Set Dinosaurios x12', 'ColecciÃ³n de figuras de dinosaurios', 7, 28.00, 52.00, 18, 34, 1, 1, '2025-11-25 00:26:43', '2025-11-25 00:26:43');
+(80, 'JUGT-008', 'Set Dinosaurios x12', 'ColecciÃ³n de figuras de dinosaurios', 7, 28.00, 52.00, 18, 34, 1, 1, '2025-11-25 00:26:43', '2025-11-25 00:26:43'),
+(81, '8888', 'movil', 'sdsd', 6, 444.00, 111.00, 10, 5555, NULL, 0, '2025-11-25 08:13:44', '2025-11-25 08:32:03'),
+(83, '7777', 'movil', '54554', 1, 900.00, 6688.00, 10, 70, NULL, 0, '2025-11-25 08:22:02', '2025-11-25 08:32:01'),
+(84, '88999', 'movil', 'ppppppp', 6, 8333.00, 622.00, 10, 42, NULL, 0, '2025-11-25 08:24:13', '2025-11-25 08:32:00'),
+(86, 'ELEC-00977', 'movil', 'pplkl', 6, 99.00, 8778.00, 10, 70, NULL, 0, '2025-11-25 08:31:47', '2025-11-25 08:31:58'),
+(87, '8888220', 'lllllll', 'ññññ', 2, 8664.00, 80.00, 10, 7, NULL, 1, '2025-11-25 08:32:27', '2025-11-25 08:32:27');
 
 -- --------------------------------------------------------
 
@@ -607,11 +612,11 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `username`, `email`, `password`, `nombre_completo`, `rol_id`, `activo`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin@inventario.com', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 'Administrador Sistema', 1, 0, '2025-11-25 00:26:43', '2025-11-25 00:26:43'),
-(2, 'superadmin', 'superadmin@superadmin.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Super Administrador', 1, 1, '2025-11-25 00:26:43', '2025-11-25 00:31:20'),
-(3, 'jperez', 'jperez@inventario.com', '56976bf24998ca63e35fe4f1e2469b5751d1856003e8d16fef0aafef496ed044', 'Juan PÃ©rez', 2, 0, '2025-11-25 00:26:43', '2025-11-25 00:26:43'),
-(4, 'mgonzalez', 'mgonzalez@inventario.com', '7439033334ff7f5d2d164c47fe54b5819c0f7cd1225ecbc3bbac5bc80206b01f', 'MarÃ­a GonzÃ¡lez', 3, 0, '2025-11-25 00:26:43', '2025-11-25 00:26:43'),
-(5, 'crodriguez', 'crodriguez@inventario.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Carlos RodrÃ­guez', 4, 0, '2025-11-25 00:26:43', '2025-11-25 00:26:43');
+(1, 'admin', 'admin@inventario.com', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 'Administrador Sistema', 1, 0, '2025-11-25 00:26:43', '2025-11-25 08:32:55'),
+(2, 'superadmin', 'superadmin@superadmin.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Super Administrador', 1, 1, '2025-11-25 00:26:43', '2025-11-25 08:23:43'),
+(3, 'jperez', 'jperez@inventario.com', '56976bf24998ca63e35fe4f1e2469b5751d1856003e8d16fef0aafef496ed044', 'Juan PÃ©rez', 2, 0, '2025-11-25 00:26:43', '2025-11-25 08:04:37'),
+(4, 'mgonzalez', 'mgonzalez@inventario.com', '7439033334ff7f5d2d164c47fe54b5819c0f7cd1225ecbc3bbac5bc80206b01f', 'MarÃ­a GonzÃ¡lez', 3, 0, '2025-11-25 00:26:43', '2025-11-25 08:04:44'),
+(5, 'crodriguez', 'crodriguez@inventario.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Carlos RodrÃ­guez', 4, 0, '2025-11-25 00:26:43', '2025-11-25 08:04:50');
 
 -- --------------------------------------------------------
 
@@ -859,7 +864,7 @@ ALTER TABLE `movimientos_inventario`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedores`
