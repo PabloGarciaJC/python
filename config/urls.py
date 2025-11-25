@@ -16,6 +16,7 @@ from app.controllers.purchase_detail_controller import PurchaseDetailController
 from app.controllers.inventory_movement_controller import InventoryMovementController
 from app.controllers.report_controller import ReportController
 from app.controllers.config_controller import ConfigController
+from app.controllers.documentation_controller import DocumentationController
 
 urlpatterns = [
     path('', DashboardController.index, name='dashboard'),
@@ -72,6 +73,7 @@ urlpatterns = [
     path('movimientos-inventario/<int:movement_id>/eliminar/', InventoryMovementController.delete, name='inventory_movements_delete'),
     path('movimientos-inventario/<int:movement_id>/ver/', InventoryMovementController.view, name='inventory_movements_view'),
     path('reportes/', ReportController.index, name='reports'),
+    path('documentacion/', DocumentationController.index, name='documentation'),
     path('configuracion/', ConfigController.index, name='config'),
     path('configuracion/perfil/editar/', ConfigController.edit_profile, name='config_edit_profile'),
     path('configuracion/perfil/cambiar-password/', ConfigController.change_password, name='config_change_password'),

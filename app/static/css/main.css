@@ -799,3 +799,239 @@ table td.empty-message-cell {
     font-size: 18px;
 }
 
+/* Documentation Styles */
+.documentation-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.doc-main-title {
+    font-size: 2.5rem;
+    color: #1f2937;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.doc-main-title i {
+    color: #667eea;
+    margin-right: 15px;
+}
+
+.doc-subtitle {
+    text-align: center;
+    color: #6b7280;
+    font-size: 1.1rem;
+    margin-bottom: 50px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.doc-section {
+    margin-bottom: 60px;
+}
+
+.doc-section-title {
+    font-size: 2rem;
+    color: #1f2937;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #667eea;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.doc-section-title i {
+    color: #667eea;
+    font-size: 1.8rem;
+}
+
+.doc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.doc-grid-stats {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.doc-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+    transition: transform 0.3s, box-shadow 0.3s;
+    overflow: hidden;
+}
+
+.doc-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}
+
+.doc-card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+}
+
+.doc-card-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.doc-card-header i {
+    font-size: 1.3rem;
+}
+
+.doc-card-body {
+    padding: 20px;
+    color: #4b5563;
+    line-height: 1.6;
+}
+
+.doc-card-body p {
+    margin: 0 0 10px 0;
+}
+
+.doc-card-body p:last-child {
+    margin-bottom: 0;
+}
+
+.doc-card-body strong {
+    color: #1f2937;
+    font-weight: 600;
+}
+
+.doc-link {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.doc-link:hover {
+    color: #764ba2;
+    text-decoration: underline;
+}
+
+.doc-note {
+    background: #eff6ff;
+    border-left: 4px solid #3b82f6;
+    padding: 15px 20px;
+    margin: 20px 0;
+    border-radius: 8px;
+    color: #1e40af;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.doc-note code {
+    background: #dbeafe;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    color: #1e40af;
+}
+
+.doc-card-user .doc-card-header {
+    padding: 15px 20px;
+}
+
+.doc-card-user .doc-card-body p {
+    margin: 8px 0;
+    font-size: 0.95rem;
+}
+
+.bg-gradient-purple {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.bg-gradient-pink {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.bg-gradient-cyan {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.bg-gradient-green {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.doc-stat-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.doc-stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}
+
+.doc-stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.8rem;
+}
+
+.doc-stat-info h3 {
+    margin: 0;
+    font-size: 2rem;
+    color: #1f2937;
+}
+
+.doc-stat-info p {
+    margin: 5px 0 0 0;
+    color: #6b7280;
+    font-size: 0.95rem;
+}
+
+.doc-card-social .doc-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.doc-card-social .btn {
+    align-self: flex-start;
+}
+
+@media (max-width: 768px) {
+    .doc-main-title {
+        font-size: 2rem;
+    }
+    
+    .doc-section-title {
+        font-size: 1.5rem;
+    }
+    
+    .doc-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .doc-grid-stats {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
+

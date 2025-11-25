@@ -44,6 +44,7 @@ class Layout:
             {'url': '/detalle-compras/', 'label': 'Detalle Compras', 'key': 'detalle-compras'},
             {'url': '/reportes/', 'label': 'Reportes', 'key': 'reportes'},
             {'url': '/configuracion/', 'label': 'Configuración', 'key': 'configuracion'},
+            {'url': '/documentacion/', 'label': 'Documentación', 'key': 'documentacion'},
         ]
         
         menu_html = ""
