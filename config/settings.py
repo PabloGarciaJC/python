@@ -39,7 +39,12 @@ def configure_django():
             INSTALLED_APPS=[
                 'django.contrib.sessions',
                 'django.contrib.contenttypes',
+                'django.contrib.staticfiles',
             ],
             SESSION_ENGINE='django.contrib.sessions.backends.db',
             USE_TZ=True,
+            STATIC_URL='/static/',
+            STATICFILES_DIRS=[
+                os.path.join(os.path.dirname(os.path.dirname(__file__)), 'app', 'static'),
+            ],
         )

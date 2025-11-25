@@ -4,6 +4,7 @@ from app.views.category_view import CategoryView
 from django.shortcuts import redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import ensure_csrf_cookie
+from app.middleware.auth_middleware import AuthMiddleware
 
 class CategoryController:
     @staticmethod
@@ -27,6 +28,7 @@ class CategoryController:
     
     @staticmethod
     @ensure_csrf_cookie
+    @AuthMiddleware.require_active_user
     def create(request):
         """Crear una nueva categoría"""
         # Verificar autenticación
@@ -69,6 +71,7 @@ class CategoryController:
     
     @staticmethod
     @ensure_csrf_cookie
+    @AuthMiddleware.require_active_user
     def edit(request, category_id):
         """Editar una categoría existente"""
         # Verificar autenticación
@@ -115,6 +118,7 @@ class CategoryController:
                 return HttpResponse(CategoryView.edit(user, category, request, error=f'Error al actualizar categoría: {str(e)}'))
     
     @staticmethod
+    @AuthMiddleware.require_active_user
     def delete(request, category_id):
         """Eliminar una categoría"""
         # Verificar autenticación

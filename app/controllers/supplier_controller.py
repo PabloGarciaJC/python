@@ -3,6 +3,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from app.models.user import User
 from app.models.supplier import Supplier
 from app.views.supplier_view import SupplierView
+from app.middleware.auth_middleware import AuthMiddleware
 
 class SupplierController:
     @staticmethod

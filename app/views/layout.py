@@ -3,62 +3,14 @@ class Layout:
     
     @staticmethod
     def get_styles():
-        """Estilos CSS globales"""
-        return """
-        <style>
-            * { margin: 0; padding: 0; box-sizing: border-box; }
-            body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; }
-            
-            /* Navbar */
-            .navbar { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1rem 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-            .navbar-content { display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; }
-            .navbar h1 { font-size: 1.5rem; }
-            .navbar-menu { display: flex; gap: 20px; align-items: center; }
-            .navbar-menu a { color: white; text-decoration: none; padding: 8px 15px; border-radius: 5px; transition: background 0.3s; }
-            .navbar-menu a:hover { background: rgba(255,255,255,0.2); }
-            
-            /* Sidebar */
-            .layout { display: flex; min-height: calc(100vh - 70px); }
-            .sidebar { width: 250px; background: white; padding: 20px; box-shadow: 2px 0 5px rgba(0,0,0,0.05); }
-            .sidebar-menu { list-style: none; }
-            .sidebar-menu li { margin: 10px 0; }
-            .sidebar-menu a { display: block; padding: 12px 15px; color: #333; text-decoration: none; border-radius: 8px; transition: all 0.3s; }
-            .sidebar-menu a:hover, .sidebar-menu a.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
-            
-            /* Main Content */
-            .main-content { flex: 1; padding: 30px; }
-            .card { background: white; border-radius: 12px; padding: 25px; margin-bottom: 20px; box-shadow: 0 2px 15px rgba(0,0,0,0.08); }
-            .card-header { font-size: 1.5rem; font-weight: 600; color: #333; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; }
-            
-            /* Stats Cards */
-            .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px; }
-            .stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); }
-            .stat-card h3 { font-size: 0.9rem; opacity: 0.9; margin-bottom: 10px; }
-            .stat-card .value { font-size: 2.5rem; font-weight: bold; }
-            
-            /* Table */
-            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-            th, td { padding: 15px; text-align: left; border-bottom: 1px solid #f0f0f0; }
-            th { background: #f8f9fa; font-weight: 600; color: #667eea; }
-            tr:hover { background: #f8f9fa; }
-            
-            /* Buttons */
-            .btn { display: inline-block; padding: 10px 20px; border-radius: 8px; text-decoration: none; cursor: pointer; border: none; font-size: 14px; transition: all 0.3s; font-weight: 500; }
-            .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
-            .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
-            .btn-success { background: #10b981; color: white; padding: 8px 15px; font-size: 13px; }
-            .btn-warning { background: #f59e0b; color: white; padding: 8px 15px; font-size: 13px; }
-            .btn-danger { background: #ef4444; color: white; padding: 8px 15px; font-size: 13px; }
-            
-            /* Badge */
-            .badge { padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
-            .badge-success { background: #d1fae5; color: #065f46; }
-            .badge-warning { background: #fef3c7; color: #92400e; }
-            
-            /* Empty State */
-            .empty-state { text-align: center; padding: 40px; color: #6b7280; }
-        </style>
-        """
+        """Carga los estilos CSS desde archivo externo"""
+        return '''
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="/static/css/main.css">
+        <link rel="stylesheet" href="/static/css/forms.css">
+        <link rel="stylesheet" href="/static/css/dashboard.css">
+        <link rel="stylesheet" href="/static/css/swal.css">
+        '''
     
     @staticmethod
     def navbar(user):
@@ -66,7 +18,10 @@ class Layout:
         return f"""
         <div class="navbar">
             <div class="navbar-content">
-                <h1>Sistema de Gestión</h1>
+                <button class="hamburger-menu" id="hamburger-menu" aria-label="Toggle menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1>Sistema de Inventario</h1>
                 <div class="navbar-menu">
                     <span>Hola, {user['username']}</span>
                     <a href="/logout/">Cerrar Sesión</a>
@@ -93,6 +48,7 @@ class Layout:
             {'url': '/detalle-compras/', 'label': 'Detalle Compras', 'key': 'detalle-compras'},
             {'url': '/reportes/', 'label': 'Reportes', 'key': 'reportes'},
             {'url': '/configuracion/', 'label': 'Configuración', 'key': 'configuracion'},
+            {'url': '/documentacion/', 'label': 'Documentación', 'key': 'documentacion'},
         ]
         
         menu_html = ""
@@ -101,7 +57,8 @@ class Layout:
             menu_html += f'<li><a href="{item["url"]}" {active_class}>{item["label"]}</a></li>\n'
         
         return f"""
-        <div class="sidebar">
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+        <div class="sidebar" id="sidebar">
             <ul class="sidebar-menu">
                 {menu_html}
             </ul>
@@ -121,7 +78,7 @@ class Layout:
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>{title} - Sistema de Gestión</title>
+            <title>{title} - Sistema de Inventario</title>
             {styles}
         </head>
         <body>
@@ -132,6 +89,13 @@ class Layout:
                     {content}
                 </div>
             </div>
+            <script src="/static/js/main.js"></script>
+            <script>
+                // Pasar estado del usuario al JavaScript
+                // activo=1 → true (puede modificar), activo=0 → false (no puede modificar)
+                window.userActive = {('true' if user.get('activo', 1) == 1 else 'false')};
+            </script>
+            <script src="/static/js/protection.js"></script>
         </body>
         </html>
         """

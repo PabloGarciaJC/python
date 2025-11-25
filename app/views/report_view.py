@@ -78,7 +78,7 @@ class ReportView:
             estado_badges = {
                 'pendiente': '<span class="badge badge-warning">Pendiente</span>',
                 'completada': '<span class="badge badge-success">Completada</span>',
-                'cancelada': '<span class="badge" style="background: #fee2e2; color: #991b1b;">Cancelada</span>'
+                'cancelada': '<span class="badge badge-cancelada">Cancelada</span>'
             }
             for estado in ventas_estado:
                 badge = estado_badges.get(estado['estado'], estado['estado'])
@@ -98,7 +98,7 @@ class ReportView:
         stock_rows = ""
         if stock_bajo:
             for producto in stock_bajo:
-                alerta_class = 'style="color: #ef4444; font-weight: bold;"' if producto['stock'] < 5 else ''
+                alerta_class = 'class="text-danger"' if producto['stock'] < 5 else ''
                 stock_rows += f"""
                 <tr>
                     <td>{producto['nombre']}</td>
@@ -119,7 +119,7 @@ class ReportView:
             {resumen_html}
         </div>
         
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px;">
+        <div class="report-grid">
             <div class="card">
                 <div class="card-header">Top 5 Productos Más Vendidos</div>
                 <table>
@@ -154,7 +154,7 @@ class ReportView:
             </div>
         </div>
         
-        <div class="card" style="margin-top: 20px;">
+        <div class="card mt-20">
             <div class="card-header">Top 5 Clientes Frecuentes</div>
             <table>
                 <thead>
@@ -172,10 +172,10 @@ class ReportView:
             </table>
         </div>
         
-        <div class="card" style="margin-top: 20px;">
+        <div class="card mb-30">
             <div class="card-header">
-                <span>⚠️ Productos con Stock Bajo</span>
-                <span style="font-size: 0.9rem; color: #666; font-weight: normal;">(Stock menor o igual a 10 unidades)</span>
+                <span><i class="fas fa-exclamation-triangle"></i> Productos con Stock Bajo</span>
+                <span class="text-muted">(Stock menor o igual a 10 unidades)</span>
             </div>
             <table>
                 <thead>

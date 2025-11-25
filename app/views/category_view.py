@@ -18,14 +18,15 @@ class CategoryView:
                     <td>{category['nombre']}</td>
                     <td>{category['descripcion'] or 'Sin descripción'}</td>
                     <td>
-                        <a href="/categorias/{category['id']}/editar/" class="btn btn-warning" style="text-decoration: none;">Editar</a>
-                        <a href="/categorias/{category['id']}/eliminar/" class="btn btn-danger" style="text-decoration: none;" onclick="return confirm('¿Está seguro de eliminar esta categoría?');">Eliminar</a>
+                        <a href="/categorias/{category['id']}/editar/" class="btn btn-warning no-underline">Editar</a>
+                        <a href="/categorias/{category['id']}/eliminar/" class="btn btn-danger no-underline" onclick="return confirm('¿Está seguro de eliminar esta categoría?');">Eliminar</a>
                     </td>
                 </tr>
                 """
             
             table_content = f"""
-            <table>
+            <div class="table-container">
+                <table>
                 <thead>
                     <tr>
                         <th>#</th>
@@ -37,12 +38,13 @@ class CategoryView:
                 <tbody>
                     {rows}
                 </tbody>
-            </table>
+                </table>
+            </div>
             """
         else:
             table_content = """
             <div class="empty-state">
-                <div style="font-size: 4rem; margin-bottom: 20px;">📑</div>
+                <div class="icon-4xl"><i class="fas fa-folder"></i></div>
                 <h3>No hay categorías registradas</h3>
                 <p>Comienza agregando tu primera categoría</p>
             </div>
@@ -72,7 +74,7 @@ class CategoryView:
         error_html = ""
         if error:
             error_html = f"""
-            <div style="background: #fee2e2; color: #991b1b; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <div class="alert-error">
                 {error}
             </div>
             """
@@ -81,27 +83,25 @@ class CategoryView:
         <div class="card">
             <div class="card-header">
                 <span>Crear Nueva Categoría</span>
-                <a href="/categorias/" class="btn" style="background: #6b7280; color: white;">← Volver</a>
+                <a href="/categorias/" class="btn btn-secondary">← Volver</a>
             </div>
             {error_html}
-            <form method="POST" action="/categorias/crear/" style="padding: 20px;">
+            <form method="POST" action="/categorias/crear/" class="p-20">
                 <input type="hidden" name="csrfmiddlewaretoken" value="{csrf_token}">
                 
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Nombre *</label>
-                    <input type="text" name="nombre" required 
-                           style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                <div class="mb-20">
+                    <label class="form-label">Nombre *</label>
+                    <input type="text" name="nombre" required class="form-input">
                 </div>
                 
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Descripción</label>
-                    <textarea name="descripcion" rows="4" 
-                              style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"></textarea>
+                <div class="mb-20">
+                    <label class="form-label">Descripción</label>
+                    <textarea name="descripcion" rows="4" class="form-textarea"></textarea>
                 </div>
                 
-                <div style="display: flex; gap: 10px;">
+                <div class="form-actions">
                     <button type="submit" class="btn btn-primary">Guardar Categoría</button>
-                    <a href="/categorias/" class="btn" style="background: #6b7280; color: white; text-decoration: none;">Cancelar</a>
+                    <a href="/categorias/" class="btn btn-secondary no-underline">Cancelar</a>
                 </div>
             </form>
         </div>
@@ -121,7 +121,7 @@ class CategoryView:
         error_html = ""
         if error:
             error_html = f"""
-            <div style="background: #fee2e2; color: #991b1b; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <div class="alert-error">
                 {error}
             </div>
             """
@@ -130,27 +130,25 @@ class CategoryView:
         <div class="card">
             <div class="card-header">
                 <span>Editar Categoría</span>
-                <a href="/categorias/" class="btn" style="background: #6b7280; color: white;">← Volver</a>
+                <a href="/categorias/" class="btn btn-secondary">← Volver</a>
             </div>
             {error_html}
-            <form method="POST" action="/categorias/{category['id']}/editar/" style="padding: 20px;">
+            <form method="POST" action="/categorias/{category['id']}/editar/" class="p-20">
                 <input type="hidden" name="csrfmiddlewaretoken" value="{csrf_token}">
                 
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Nombre *</label>
-                    <input type="text" name="nombre" value="{category['nombre']}" required 
-                           style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                <div class="mb-20">
+                    <label class="form-label">Nombre *</label>
+                    <input type="text" name="nombre" value="{category['nombre']}" required class="form-input">
                 </div>
                 
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Descripción</label>
-                    <textarea name="descripcion" rows="4" 
-                              style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">{category.get('descripcion', '')}</textarea>
+                <div class="mb-20">
+                    <label class="form-label">Descripción</label>
+                    <textarea name="descripcion" rows="4" class="form-textarea">{category.get('descripcion', '')}</textarea>
                 </div>
                 
-                <div style="display: flex; gap: 10px;">
+                <div class="form-actions">
                     <button type="submit" class="btn btn-primary">Actualizar Categoría</button>
-                    <a href="/categorias/" class="btn" style="background: #6b7280; color: white; text-decoration: none;">Cancelar</a>
+                    <a href="/categorias/" class="btn btn-secondary no-underline">Cancelar</a>
                 </div>
             </form>
         </div>

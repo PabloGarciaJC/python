@@ -22,7 +22,7 @@ class SupplierView:
                     <td>{supplier.get('email', 'N/A')}</td>
                     <td>
                         <a href="/proveedores/{supplier['id']}/editar/" class="btn btn-warning">Editar</a>
-                        <form method="POST" action="/proveedores/{supplier['id']}/eliminar/" style="display: inline;">
+                        <form method="POST" action="/proveedores/{supplier['id']}/eliminar/" class="d-inline">
                             {csrf_token}
                             <button type="submit" class="btn btn-danger" 
                                     onclick="return confirm('¿Estás seguro de eliminar este proveedor?')">
@@ -36,7 +36,8 @@ class SupplierView:
                 """
             
             table_content = f"""
-            <table>
+            <div class="table-container">
+                <table>
                 <thead>
                     <tr>
                         <th>#</th>
@@ -50,12 +51,13 @@ class SupplierView:
                 <tbody>
                     {rows}
                 </tbody>
-            </table>
+                </table>
+            </div>
             """
         else:
             table_content = """
             <div class="empty-state">
-                <div style="font-size: 4rem; margin-bottom: 20px;">🚚</div>
+                <i class="fas fa-truck icon-4xl"></i>
                 <h3>No hay proveedores registrados</h3>
                 <p>Comienza agregando tu primer proveedor</p>
             </div>
@@ -83,7 +85,7 @@ class SupplierView:
         error_html = ""
         if error:
             error_html = f"""
-            <div style="background: #fee2e2; color: #991b1b; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <div class="alert-error">
                 {error}
             </div>
             """
@@ -92,45 +94,45 @@ class SupplierView:
         <div class="card">
             <div class="card-header">
                 <span>Crear Nuevo Proveedor</span>
-                <a href="/proveedores/" class="btn" style="background: #6b7280; color: white;">← Volver</a>
+                <a href="/proveedores/" class="btn btn-secondary">← Volver</a>
             </div>
             {error_html}
-            <form method="POST" action="/proveedores/crear/" style="padding: 20px;">
+            <form method="POST" action="/proveedores/crear/" class="p-20">
                 {csrf_token}
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div class="form-grid">
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Nombre *</label>
+                        <label class="form-label">Nombre *</label>
                         <input type="text" name="nombre" required
-                               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                               class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">RUC</label>
+                        <label class="form-label">RUC</label>
                         <input type="text" name="ruc" maxlength="20"
-                               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                               class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Teléfono</label>
+                        <label class="form-label">Teléfono</label>
                         <input type="text" name="telefono" maxlength="20"
-                               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                               class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Email</label>
+                        <label class="form-label">Email</label>
                         <input type="email" name="email" maxlength="100"
-                               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                               class="form-input">
                     </div>
                 </div>
                 
-                <div style="margin-top: 20px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Dirección</label>
+                <div class="mt-20">
+                    <label class="form-label">Dirección</label>
                     <textarea name="direccion" rows="3"
-                              style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; resize: vertical;"></textarea>
+                              class="form-textarea"></textarea>
                 </div>
                 
-                <div style="margin-top: 30px; display: flex; gap: 10px; justify-content: flex-end;">
-                    <a href="/proveedores/" class="btn" style="background: #6b7280; color: white;">Cancelar</a>
+                <div class="form-actions-end mt-30">
+                    <a href="/proveedores/" class="btn btn-secondary">Cancelar</a>
                     <button type="submit" class="btn btn-primary">Guardar Proveedor</button>
                 </div>
             </form>
@@ -149,7 +151,7 @@ class SupplierView:
         error_html = ""
         if error:
             error_html = f"""
-            <div style="background: #fee2e2; color: #991b1b; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <div class="alert-error">
                 {error}
             </div>
             """
@@ -158,45 +160,45 @@ class SupplierView:
         <div class="card">
             <div class="card-header">
                 <span>Editar Proveedor</span>
-                <a href="/proveedores/" class="btn" style="background: #6b7280; color: white;">← Volver</a>
+                <a href="/proveedores/" class="btn btn-secondary">← Volver</a>
             </div>
             {error_html}
-            <form method="POST" action="/proveedores/{supplier['id']}/editar/" style="padding: 20px;">
+            <form method="POST" action="/proveedores/{supplier['id']}/editar/" class="p-20">
                 {csrf_token}
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div class="form-grid">
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Nombre *</label>
+                        <label class="form-label">Nombre *</label>
                         <input type="text" name="nombre" value="{supplier['nombre']}" required
-                               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                               class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">RUC</label>
+                        <label class="form-label">RUC</label>
                         <input type="text" name="ruc" value="{supplier.get('ruc', '')}" maxlength="20"
-                               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                               class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Teléfono</label>
+                        <label class="form-label">Teléfono</label>
                         <input type="text" name="telefono" value="{supplier.get('telefono', '')}" maxlength="20"
-                               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                               class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Email</label>
+                        <label class="form-label">Email</label>
                         <input type="email" name="email" value="{supplier.get('email', '')}" maxlength="100"
-                               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                               class="form-input">
                     </div>
                 </div>
                 
-                <div style="margin-top: 20px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Dirección</label>
+                <div class="mt-20">
+                    <label class="form-label">Dirección</label>
                     <textarea name="direccion" rows="3"
-                              style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; resize: vertical;">{supplier.get('direccion', '')}</textarea>
+                              class="form-textarea">{supplier.get('direccion', '')}</textarea>
                 </div>
                 
-                <div style="margin-top: 30px; display: flex; gap: 10px; justify-content: flex-end;">
-                    <a href="/proveedores/" class="btn" style="background: #6b7280; color: white;">Cancelar</a>
+                <div class="form-actions-end mt-30">
+                    <a href="/proveedores/" class="btn btn-secondary">Cancelar</a>
                     <button type="submit" class="btn btn-primary">Actualizar Proveedor</button>
                 </div>
             </form>

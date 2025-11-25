@@ -17,7 +17,7 @@ class PurchaseView:
                 estado_badge = {
                     'pendiente': '<span class="badge badge-warning">Pendiente</span>',
                     'completada': '<span class="badge badge-success">Completada</span>',
-                    'cancelada': '<span style="padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; background: #fee2e2; color: #991b1b;">Cancelada</span>'
+                    'cancelada': '<span class="badge badge-cancelada">Cancelada</span>'
                 }.get(purchase['estado'], purchase['estado'])
                 
                 rows += f"""
@@ -30,9 +30,9 @@ class PurchaseView:
                     <td>{estado_badge}</td>
                     <td>{purchase['usuario_nombre']}</td>
                     <td>
-                        <a href="/compras/{purchase['id']}/ver/" class="btn" style="background: #3b82f6; color: white; padding: 8px 15px; font-size: 13px;">Ver</a>
+                        <a href="/compras/{purchase['id']}/ver/" class="btn btn-info btn-sm">Ver</a>
                         <a href="/compras/{purchase['id']}/editar/" class="btn btn-warning">Editar</a>
-                        <form method="POST" action="/compras/{purchase['id']}/eliminar/" style="display: inline;">
+                        <form method="POST" action="/compras/{purchase['id']}/eliminar/" class="d-inline">
                             {csrf_token}
                             <button type="submit" class="btn btn-danger" 
                                     onclick="return confirm('¿Estás seguro de eliminar esta compra?')">
@@ -44,7 +44,8 @@ class PurchaseView:
                 """
             
             table_content = f"""
-            <table>
+            <div class="table-container">
+                <table>
                 <thead>
                     <tr>
                         <th>#</th>
@@ -60,12 +61,13 @@ class PurchaseView:
                 <tbody>
                     {rows}
                 </tbody>
-            </table>
+                </table>
+            </div>
             """
         else:
             table_content = """
             <div class="empty-state">
-                <div style="font-size: 4rem; margin-bottom: 20px;">🛒</div>
+                <div class="icon-4xl"><i class="fas fa-shopping-cart"></i></div>
                 <h3>No hay compras registradas</h3>
                 <p>Comienza agregando tu primera compra</p>
             </div>
@@ -93,7 +95,7 @@ class PurchaseView:
         error_html = ""
         if error:
             error_html = f"""
-            <div style="background: #fee2e2; color: #991b1b; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <div class="alert-error">
                 {error}
             </div>
             """
@@ -112,38 +114,34 @@ class PurchaseView:
         <div class="card">
             <div class="card-header">
                 <span>Nueva Compra</span>
-                <a href="/compras/" class="btn" style="background: #6b7280; color: white;">← Volver</a>
+                <a href="/compras/" class="btn btn-secondary">← Volver</a>
             </div>
             {error_html}
-            <form method="POST" action="/compras/crear/" id="purchaseForm" style="padding: 20px;">
+            <form method="POST" action="/compras/crear/" id="purchaseForm" class="p-20">
                 {csrf_token}
                 <input type="hidden" name="details" id="detailsInput" value="[]">
                     
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div class="form-grid">
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">N° Factura</label>
-                        <input type="text" name="numero_factura" placeholder="Opcional"
-                               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                        <label class="form-label">N° Factura</label>
+                        <input type="text" name="numero_factura" placeholder="Opcional" class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Proveedor *</label>
-                        <select name="proveedor_id" required
-                                style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                        <label class="form-label">Proveedor *</label>
+                        <select name="proveedor_id" required class="form-select">
                             {suppliers_options}
                         </select>
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Fecha *</label>
-                        <input type="date" name="fecha" required
-                               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                        <label class="form-label">Fecha *</label>
+                        <input type="date" name="fecha" required class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Estado</label>
-                        <select name="estado"
-                                style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                        <label class="form-label">Estado</label>
+                        <select name="estado" class="form-select">
                             <option value="pendiente">Pendiente</option>
                             <option value="completada">Completada</option>
                             <option value="cancelada">Cancelada</option>
@@ -151,163 +149,71 @@ class PurchaseView:
                     </div>
                 </div>
                 
-                <div style="margin-top: 20px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Notas</label>
-                    <textarea name="notas" rows="2"
-                              style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; resize: vertical;"></textarea>
+                <div class="mt-20">
+                    <label class="form-label">Notas</label>
+                    <textarea name="notas" rows="2" class="form-textarea"></textarea>
                 </div>
                 
-                <hr style="margin: 30px 0; border: none; border-top: 2px solid #f0f0f0;">
+                <hr class="form-divider">
                 
-                <h3 style="margin-bottom: 20px; color: #333;">Productos</h3>
+                <h3 class="mb-20">Productos</h3>
                 
-                <div style="display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 10px; margin-bottom: 20px; align-items: end;">
+                <div class="purchase-product-grid">
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Producto</label>
-                        <select id="productSelect"
-                                style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                        <label class="form-label">Producto</label>
+                        <select id="productSelect" class="form-select">
                             {products_options}
                         </select>
                     </div>
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Cantidad</label>
-                        <input type="number" id="quantityInput" min="1" value="1"
-                               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                        <label class="form-label">Cantidad</label>
+                        <input type="number" id="quantityInput" min="1" value="1" class="form-input">
                     </div>
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Precio Unitario</label>
-                        <input type="number" id="priceInput" min="0" step="0.01" value="0"
-                               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                        <label class="form-label">Precio Unitario</label>
+                        <input type="number" id="priceInput" min="0" step="0.01" value="0" class="form-input">
                     </div>
                     <div>
                         <button type="button" class="btn btn-success" id="addProductBtn">+ Agregar</button>
                     </div>
                 </div>
                 
-                <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                <table class="mt-20">
                     <thead>
-                        <tr style="background: #f8f9fa;">
-                            <th style="padding: 15px; text-align: left; border-bottom: 1px solid #f0f0f0; color: #667eea; font-weight: 600;">Producto</th>
-                            <th style="padding: 15px; text-align: left; border-bottom: 1px solid #f0f0f0; color: #667eea; font-weight: 600; width: 100px;">Cantidad</th>
-                            <th style="padding: 15px; text-align: left; border-bottom: 1px solid #f0f0f0; color: #667eea; font-weight: 600; width: 120px;">P. Unitario</th>
-                            <th style="padding: 15px; text-align: left; border-bottom: 1px solid #f0f0f0; color: #667eea; font-weight: 600; width: 120px;">Subtotal</th>
-                            <th style="padding: 15px; text-align: left; border-bottom: 1px solid #f0f0f0; color: #667eea; font-weight: 600; width: 80px;">Acción</th>
+                        <tr>
+                            <th>Producto</th>
+                            <th class="col-w-100">Cantidad</th>
+                            <th class="col-w-120">P. Unitario</th>
+                            <th class="col-w-120">Subtotal</th>
+                            <th class="col-w-80">Acción</th>
                         </tr>
                     </thead>
                     <tbody id="productsTableBody">
                         <tr id="emptyRow">
-                            <td colspan="5" style="padding: 40px; text-align: center; color: #6b7280;">
+                            <td colspan="5" class="empty-message-cell">
                                 No hay productos agregados
                             </td>
                         </tr>
                     </tbody>
                     <tfoot>
-                        <tr style="background: #f8f9fa; font-weight: 600;">
-                            <td colspan="3" style="padding: 15px; text-align: right; border-top: 1px solid #f0f0f0;">TOTAL:</td>
-                            <td id="totalAmount" style="padding: 15px; border-top: 1px solid #f0f0f0;">S/ 0.00</td>
-                            <td style="border-top: 1px solid #f0f0f0;"></td>
+                        <tr>
+                            <td colspan="3" class="text-right">TOTAL:</td>
+                            <td id="totalAmount">S/ 0.00</td>
+                            <td></td>
                         </tr>
                     </tfoot>
                 </table>
                 
                 <input type="hidden" name="total" id="totalInput" value="0">
                 
-                <div style="margin-top: 30px; display: flex; gap: 10px; justify-content: flex-end;">
-                    <a href="/compras/" class="btn" style="background: #6b7280; color: white;">Cancelar</a>
+                <div class="form-actions-end mt-30">
+                    <a href="/compras/" class="btn btn-secondary">Cancelar</a>
                     <button type="submit" class="btn btn-primary">Guardar Compra</button>
                 </div>
             </form>
         </div>
         
-        <script>
-        let details = [];
-        
-        document.getElementById('productSelect').addEventListener('change', function() {{
-            const selectedOption = this.options[this.selectedIndex];
-            const price = selectedOption.dataset.price || 0;
-            document.getElementById('priceInput').value = price;
-        }});
-        
-        document.getElementById('addProductBtn').addEventListener('click', function() {{
-            const productSelect = document.getElementById('productSelect');
-            const productId = productSelect.value;
-            const productName = productSelect.options[productSelect.selectedIndex].text;
-            const quantity = parseInt(document.getElementById('quantityInput').value);
-            const price = parseFloat(document.getElementById('priceInput').value);
-            
-            if (!productId || quantity <= 0 || price < 0) {{
-                alert('Por favor complete todos los campos correctamente');
-                return;
-            }}
-            
-            const subtotal = quantity * price;
-            
-            details.push({{
-                producto_id: productId,
-                producto_nombre: productName,
-                cantidad: quantity,
-                precio_unitario: price,
-                subtotal: subtotal
-            }});
-            
-            updateTable();
-            
-            // Reset
-            productSelect.value = '';
-            document.getElementById('quantityInput').value = 1;
-            document.getElementById('priceInput').value = 0;
-        }});
-        
-        function updateTable() {{
-            const tbody = document.getElementById('productsTableBody');
-            const emptyRow = document.getElementById('emptyRow');
-            
-            if (details.length === 0) {{
-                emptyRow.style.display = '';
-                document.getElementById('totalAmount').textContent = 'S/ 0.00';
-                document.getElementById('totalInput').value = 0;
-                return;
-            }}
-            
-            emptyRow.style.display = 'none';
-            tbody.innerHTML = '';
-            
-            let total = 0;
-            details.forEach((detail, index) => {{
-                total += detail.subtotal;
-                const row = `
-                    <tr>
-                        <td>${{detail.producto_nombre}}</td>
-                        <td>${{detail.cantidad}}</td>
-                        <td>S/ ${{detail.precio_unitario.toFixed(2)}}</td>
-                        <td>S/ ${{detail.subtotal.toFixed(2)}}</td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-danger" onclick="removeProduct(${{index}})">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                `;
-                tbody.innerHTML += row;
-            }});
-            
-            document.getElementById('totalAmount').textContent = `S/ ${{total.toFixed(2)}}`;
-            document.getElementById('totalInput').value = total.toFixed(2);
-            document.getElementById('detailsInput').value = JSON.stringify(details);
-        }}
-        
-        function removeProduct(index) {{
-            details.splice(index, 1);
-            updateTable();
-        }}
-        
-        document.getElementById('purchaseForm').addEventListener('submit', function(e) {{
-            if (details.length === 0) {{
-                e.preventDefault();
-                alert('Debe agregar al menos un producto');
-            }}
-        }});
-        </script>
+        <script src="/static/js/purchase-manager.js"></script>
         """
         
         return Layout.render('Nueva Compra', user, 'compras', content)
@@ -322,7 +228,7 @@ class PurchaseView:
         error_html = ""
         if error:
             error_html = f"""
-            <div style="background: #fee2e2; color: #991b1b; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <div class="alert-error">
                 {error}
             </div>
             """
@@ -475,98 +381,12 @@ class PurchaseView:
             </div>
         </div>
         
+        <script src="/static/js/purchase-manager.js"></script>
         <script>
-        let details = {details_json};
-        
+        // Cargar detalles existentes
+        const existingDetails = {details_json};
         document.addEventListener('DOMContentLoaded', function() {{
-            updateTable();
-        }});
-        
-        document.getElementById('productSelect').addEventListener('change', function() {{
-            const selectedOption = this.options[this.selectedIndex];
-            const price = selectedOption.dataset.price || 0;
-            document.getElementById('priceInput').value = price;
-        }});
-        
-        document.getElementById('addProductBtn').addEventListener('click', function() {{
-            const productSelect = document.getElementById('productSelect');
-            const productId = productSelect.value;
-            const productName = productSelect.options[productSelect.selectedIndex].text;
-            const quantity = parseInt(document.getElementById('quantityInput').value);
-            const price = parseFloat(document.getElementById('priceInput').value);
-            
-            if (!productId || quantity <= 0 || price < 0) {{
-                alert('Por favor complete todos los campos correctamente');
-                return;
-            }}
-            
-            const subtotal = quantity * price;
-            
-            details.push({{
-                producto_id: productId,
-                producto_nombre: productName,
-                cantidad: quantity,
-                precio_unitario: price,
-                subtotal: subtotal
-            }});
-            
-            updateTable();
-            
-            // Reset
-            productSelect.value = '';
-            document.getElementById('quantityInput').value = 1;
-            document.getElementById('priceInput').value = 0;
-        }});
-        
-        function updateTable() {{
-            const tbody = document.getElementById('productsTableBody');
-            const emptyRow = document.getElementById('emptyRow');
-            
-            if (details.length === 0) {{
-                emptyRow.style.display = '';
-                document.getElementById('totalAmount').textContent = 'S/ 0.00';
-                document.getElementById('totalInput').value = 0;
-                document.getElementById('detailsInput').value = '[]';
-                return;
-            }}
-            
-            emptyRow.style.display = 'none';
-            tbody.innerHTML = '';
-            
-            let total = 0;
-            details.forEach((detail, index) => {{
-                total += detail.subtotal;
-                const row = `
-                    <tr>
-                        <td>${{detail.producto_nombre}}</td>
-                        <td>${{detail.cantidad}}</td>
-                        <td>S/ ${{detail.precio_unitario.toFixed(2)}}</td>
-                        <td>S/ ${{detail.subtotal.toFixed(2)}}</td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-danger" onclick="removeProduct(${{index}})">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                `;
-                tbody.innerHTML += row;
-            }});
-            
-            document.getElementById('totalAmount').textContent = `S/ ${{total.toFixed(2)}}`;
-            document.getElementById('totalInput').value = total.toFixed(2);
-            document.getElementById('detailsInput').value = JSON.stringify(details);
-        }}
-        
-        function removeProduct(index) {{
-            details.splice(index, 1);
-            updateTable();
-        }}
-        
-        document.getElementById('purchaseForm').addEventListener('submit', function(e) {{
-            if (details.length === 0) {{
-                e.preventDefault();
-                alert('Debe agregar al menos un producto');
-            }}
+            loadExistingDetails(existingDetails);
         }});
         </script>
         """

@@ -4,6 +4,7 @@ from app.views.client_view import ClientView
 from django.shortcuts import redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import ensure_csrf_cookie
+from app.middleware.auth_middleware import AuthMiddleware
 
 class ClientController:
     @staticmethod

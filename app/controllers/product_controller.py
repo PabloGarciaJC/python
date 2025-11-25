@@ -4,6 +4,7 @@ from app.models.user import User
 from app.models.product import Product
 from app.models.category import Category
 from app.views.product_view import ProductView
+from app.middleware.auth_middleware import AuthMiddleware
 
 class ProductController:
     """Controlador de Productos"""
@@ -29,6 +30,7 @@ class ProductController:
     
     @staticmethod
     @ensure_csrf_cookie
+    @AuthMiddleware.require_active_user
     def create(request):
         """Crear un nuevo producto"""
         # Verificar autenticación
@@ -80,6 +82,7 @@ class ProductController:
     
     @staticmethod
     @ensure_csrf_cookie
+    @AuthMiddleware.require_active_user
     def edit(request, product_id):
         """Editar un producto existente"""
         # Verificar autenticación
@@ -135,6 +138,7 @@ class ProductController:
                 return HttpResponse(ProductView.edit(user, product, categories, request, error=f'Error al actualizar producto: {str(e)}'))
     
     @staticmethod
+    @AuthMiddleware.require_active_user
     def delete(request, product_id):
         """Eliminar un producto"""
         # Verificar autenticación

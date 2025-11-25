@@ -16,39 +16,39 @@ class ConfigView:
         # Sección de información del usuario
         user_section = f"""
         <div class="card">
-            <div class="card-header">👤 Mi Perfil</div>
-            <div style="padding: 20px;">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-                    <div>
-                        <p style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">Usuario</p>
-                        <p style="font-weight: 600;">{user_info.get('username', 'N/A')}</p>
+            <div class="card-header"><i class="fas fa-user"></i> Mi Perfil</div>
+            <div class="p-20">
+                <div class="config-info-grid">
+                    <div class="config-info-item">
+                        <p>Usuario</p>
+                        <p>{user_info.get('username', 'N/A')}</p>
                     </div>
-                    <div>
-                        <p style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">Nombre Completo</p>
-                        <p style="font-weight: 600;">{user_info.get('nombre_completo', 'N/A')}</p>
+                    <div class="config-info-item">
+                        <p>Nombre Completo</p>
+                        <p>{user_info.get('nombre_completo', 'N/A')}</p>
                     </div>
-                    <div>
-                        <p style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">Email</p>
-                        <p style="font-weight: 600;">{user_info.get('email', 'N/A')}</p>
+                    <div class="config-info-item">
+                        <p>Email</p>
+                        <p>{user_info.get('email', 'N/A')}</p>
                     </div>
-                    <div>
-                        <p style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">Rol</p>
-                        <p style="font-weight: 600;">{user_info.get('rol', 'N/A')}</p>
+                    <div class="config-info-item">
+                        <p>Rol</p>
+                        <p>{user_info.get('rol', 'N/A')}</p>
                     </div>
-                    <div>
-                        <p style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">Estado</p>
-                        <p style="font-weight: 600;">
-                            {'<span class="badge badge-success">Activo</span>' if user_info.get('activo') else '<span class="badge" style="background: #fee2e2; color: #991b1b;">Inactivo</span>'}
+                    <div class="config-info-item">
+                        <p>Estado</p>
+                        <p>
+                            {'<span class="badge badge-success">Activo</span>' if user_info.get('activo') else '<span class="badge badge-inactive">Inactivo</span>'}
                         </p>
                     </div>
-                    <div>
-                        <p style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">Miembro desde</p>
-                        <p style="font-weight: 600;">{user_info.get('created_at', 'N/A')}</p>
+                    <div class="config-info-item">
+                        <p>Miembro desde</p>
+                        <p>{user_info.get('created_at', 'N/A')}</p>
                     </div>
                 </div>
-                <div style="margin-top: 20px;">
+                <div class="mt-20">
                     <a href="/configuracion/perfil/editar/" class="btn btn-primary">Editar Perfil</a>
-                    <a href="/configuracion/perfil/cambiar-password/" class="btn btn-warning" style="margin-left: 10px;">Cambiar Contraseña</a>
+                    <a href="/configuracion/perfil/cambiar-password/" class="btn btn-warning ml-10">Cambiar Contraseña</a>
                 </div>
             </div>
         </div>
@@ -57,21 +57,21 @@ class ConfigView:
         # Sección de estadísticas del sistema
         stats_section = f"""
         <div class="card">
-            <div class="card-header">📊 Estadísticas del Sistema</div>
+            <div class="card-header"><i class="fas fa-chart-bar"></i> Estadísticas del Sistema</div>
             <div class="stats-grid">
-                <div class="stat-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <div class="stat-card bg-gradient-purple">
                     <h3>Usuarios</h3>
                     <div class="value">{system_stats.get('total_usuarios', 0)}</div>
                 </div>
-                <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                <div class="stat-card bg-gradient-pink">
                     <h3>Productos</h3>
                     <div class="value">{system_stats.get('total_productos', 0)}</div>
                 </div>
-                <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                <div class="stat-card bg-gradient-cyan">
                     <h3>Clientes</h3>
                     <div class="value">{system_stats.get('total_clientes', 0)}</div>
                 </div>
-                <div class="stat-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                <div class="stat-card bg-gradient-green">
                     <h3>Ventas</h3>
                     <div class="value">{system_stats.get('total_ventas', 0)}</div>
                 </div>
@@ -83,7 +83,7 @@ class ConfigView:
         users_rows = ""
         if all_users:
             for usuario in all_users:
-                estado_badge = '<span class="badge badge-success">Activo</span>' if usuario['activo'] else '<span class="badge" style="background: #fee2e2; color: #991b1b;">Inactivo</span>'
+                estado_badge = '<span class="badge badge-success">Activo</span>' if usuario['activo'] else '<span class="badge badge-inactive">Inactivo</span>'
                 users_rows += f"""
                 <tr>
                     <td>{usuario['username']}</td>
@@ -92,8 +92,8 @@ class ConfigView:
                     <td>{usuario['rol']}</td>
                     <td>{estado_badge}</td>
                     <td>
-                        <a href="/configuracion/usuarios/{usuario['id']}/editar/" class="btn btn-warning" style="text-decoration: none;">Editar</a>
-                        <a href="/configuracion/usuarios/{usuario['id']}/eliminar/" class="btn btn-danger" style="text-decoration: none;" onclick="return confirm('¿Está seguro de desactivar este usuario?');">Desactivar</a>
+                        <a href="/configuracion/usuarios/{usuario['id']}/editar/" class="btn btn-warning no-underline">Editar</a>
+                        <a href="/configuracion/usuarios/{usuario['id']}/eliminar/" class="btn btn-danger no-underline" onclick="return confirm('¿Está seguro de desactivar este usuario?');">Desactivar</a>
                     </td>
                 </tr>
                 """
@@ -103,24 +103,26 @@ class ConfigView:
         users_section = f"""
         <div class="card">
             <div class="card-header">
-                <span>👥 Usuarios del Sistema</span>
+                <span><i class="fas fa-users"></i> Usuarios del Sistema</span>
                 <a href="/configuracion/usuarios/crear/" class="btn btn-primary">+ Nuevo Usuario</a>
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Usuario</th>
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Rol</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {users_rows}
-                </tbody>
-            </table>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {users_rows}
+                    </tbody>
+                </table>
+            </div>
         </div>
         """
         
@@ -140,19 +142,21 @@ class ConfigView:
         
         db_section = f"""
         <div class="card">
-            <div class="card-header">💾 Información de Base de Datos</div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Tabla</th>
-                        <th>Registros</th>
-                        <th>Tamaño</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {db_rows}
-                </tbody>
-            </table>
+            <div class="card-header"><i class="fas fa-database"></i> Información de Base de Datos</div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tabla</th>
+                            <th>Registros</th>
+                            <th>Tamaño</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {db_rows}
+                    </tbody>
+                </table>
+            </div>
         </div>
         """
         
@@ -182,7 +186,7 @@ class ConfigView:
         error_html = ""
         if error:
             error_html = f"""
-            <div style="background: #fee2e2; color: #991b1b; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <div class="alert-error">
                 {error}
             </div>
             """
@@ -191,50 +195,45 @@ class ConfigView:
         <div class="card">
             <div class="card-header">
                 <span>Crear Nuevo Usuario</span>
-                <a href="/configuracion/" class="btn" style="background: #6b7280; color: white;">← Volver</a>
+                <a href="/configuracion/" class="btn btn-secondary">← Volver</a>
             </div>
             {error_html}
-            <form method="POST" action="/configuracion/usuarios/crear/" style="padding: 20px;">
+            <form method="POST" action="/configuracion/usuarios/crear/" class="p-20">
                 <input type="hidden" name="csrfmiddlewaretoken" value="{csrf_token}">
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div class="form-grid">
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Usuario *</label>
-                        <input type="text" name="username" required 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <label class="form-label">Usuario *</label>
+                        <input type="text" name="username" required class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Contraseña *</label>
-                        <input type="password" name="password" required 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <label class="form-label">Contraseña *</label>
+                        <input type="password" name="password" required class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Nombre Completo</label>
-                        <input type="text" name="nombre_completo" 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <label class="form-label">Nombre Completo</label>
+                        <input type="text" name="nombre_completo" class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Email</label>
-                        <input type="email" name="email" 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Rol *</label>
-                        <select name="rol_id" required 
-                                style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <label class="form-label">Rol *</label>
+                        <select name="rol_id" required class="form-select">
                             <option value="">Seleccione un rol</option>
                             {role_options}
                         </select>
                     </div>
                 </div>
                 
-                <div style="margin-top: 30px; display: flex; gap: 10px;">
+                <div class="form-actions mt-30">
                     <button type="submit" class="btn btn-primary">Guardar Usuario</button>
-                    <a href="/configuracion/" class="btn" style="background: #6b7280; color: white; text-decoration: none;">Cancelar</a>
+                    <a href="/configuracion/" class="btn btn-secondary no-underline">Cancelar</a>
                 </div>
             </form>
         </div>
@@ -260,7 +259,7 @@ class ConfigView:
         error_html = ""
         if error:
             error_html = f"""
-            <div style="background: #fee2e2; color: #991b1b; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <div class="alert-error">
                 {error}
             </div>
             """
@@ -269,53 +268,48 @@ class ConfigView:
         <div class="card">
             <div class="card-header">
                 <span>Editar Usuario</span>
-                <a href="/configuracion/" class="btn" style="background: #6b7280; color: white;">← Volver</a>
+                <a href="/configuracion/" class="btn btn-secondary">← Volver</a>
             </div>
             {error_html}
-            <form method="POST" action="/configuracion/usuarios/{user_to_edit['id']}/editar/" style="padding: 20px;">
+            <form method="POST" action="/configuracion/usuarios/{user_to_edit['id']}/editar/" class="p-20">
                 <input type="hidden" name="csrfmiddlewaretoken" value="{csrf_token}">
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div class="form-grid">
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Usuario *</label>
-                        <input type="text" name="username" value="{user_to_edit['username']}" required 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <label class="form-label">Usuario *</label>
+                        <input type="text" name="username" value="{user_to_edit['username']}" required class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Nombre Completo</label>
-                        <input type="text" name="nombre_completo" value="{user_to_edit.get('nombre_completo', '')}" 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <label class="form-label">Nombre Completo</label>
+                        <input type="text" name="nombre_completo" value="{user_to_edit.get('nombre_completo', '')}" class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Email</label>
-                        <input type="email" name="email" value="{user_to_edit.get('email', '')}" 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" value="{user_to_edit.get('email', '')}" class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Rol *</label>
-                        <select name="rol_id" required 
-                                style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <label class="form-label">Rol *</label>
+                        <select name="rol_id" required class="form-select">
                             <option value="">Seleccione un rol</option>
                             {role_options}
                         </select>
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Estado *</label>
-                        <select name="activo" required 
-                                style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <label class="form-label">Estado *</label>
+                        <select name="activo" required class="form-select">
                             <option value="1" {'selected' if user_to_edit.get('activo', 1) == 1 else ''}>Activo</option>
                             <option value="0" {'selected' if user_to_edit.get('activo', 1) == 0 else ''}>Inactivo</option>
                         </select>
                     </div>
                 </div>
                 
-                <div style="margin-top: 30px; display: flex; gap: 10px;">
+                <div class="form-actions mt-30">
                     <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
-                    <a href="/configuracion/" class="btn" style="background: #6b7280; color: white; text-decoration: none;">Cancelar</a>
+                    <a href="/configuracion/" class="btn btn-secondary no-underline">Cancelar</a>
                 </div>
             </form>
         </div>
@@ -324,7 +318,7 @@ class ConfigView:
         return HttpResponse(Layout.render('Editar Usuario', user, 'configuracion', content))
     
     @staticmethod
-    def edit_profile(user, user_info, request, error=None):
+    def edit_profile(user, user_info, request, is_admin=False, error=None):
         """Vista del formulario de editar perfil del usuario actual"""
         
         # Obtener token CSRF
@@ -335,8 +329,30 @@ class ConfigView:
         error_html = ""
         if error:
             error_html = f"""
-            <div style="background: #fee2e2; color: #991b1b; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <div class="alert-error">
                 {error}
+            </div>
+            """
+        
+        # Campo de estado solo si es administrador
+        estado_field = ""
+        if is_admin:
+            estado_field = f"""
+            <div>
+                <label class="form-label">Estado *</label>
+                <select name="activo" required 
+                        class="form-select">
+                    <option value="1" {'selected' if user_info.get('activo', 1) == 1 else ''}>Activo</option>
+                    <option value="0" {'selected' if user_info.get('activo', 1) == 0 else ''}>Inactivo</option>
+                </select>
+            </div>
+            """
+        else:
+            estado_field = f"""
+            <div>
+                <label class="form-label">Estado</label>
+                <input type="text" value="{'Activo' if user_info.get('activo', 1) == 1 else 'Inactivo'}" disabled 
+                       class="form-input-disabled">
             </div>
             """
         
@@ -344,52 +360,45 @@ class ConfigView:
         <div class="card">
             <div class="card-header">
                 <span>Editar Mi Perfil</span>
-                <a href="/configuracion/" class="btn" style="background: #6b7280; color: white;">← Volver</a>
+                <a href="/configuracion/" class="btn btn-secondary">← Volver</a>
             </div>
             {error_html}
-            <form method="POST" action="/configuracion/perfil/editar/" style="padding: 20px;">
+            <form method="POST" action="/configuracion/perfil/editar/" class="p-20">
                 <input type="hidden" name="csrfmiddlewaretoken" value="{csrf_token}">
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div class="form-grid">
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Usuario</label>
+                        <label class="form-label">Usuario</label>
                         <input type="text" value="{user_info.get('username', '')}" disabled 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; background: #f5f5f5;">
-                        <small style="color: #666;">El usuario no se puede cambiar</small>
+                               class="form-input-disabled">
+                        <small class="form-hint">El usuario no se puede cambiar</small>
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Nombre Completo</label>
+                        <label class="form-label">Nombre Completo</label>
                         <input type="text" name="nombre_completo" value="{user_info.get('nombre_completo', '')}" 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                               class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Email</label>
+                        <label class="form-label">Email</label>
                         <input type="email" name="email" value="{user_info.get('email', '')}" 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                               class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Rol</label>
+                        <label class="form-label">Rol</label>
                         <input type="text" value="{user_info.get('rol', '')}" disabled 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; background: #f5f5f5;">
-                        <small style="color: #666;">El rol no se puede cambiar</small>
+                               class="form-input-disabled">
+                        <small class="form-hint">El rol no se puede cambiar</small>
                     </div>
                     
-                    <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Estado *</label>
-                        <select name="activo" required 
-                                style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-                            <option value="1" {'selected' if user_info.get('activo', 1) == 1 else ''}>Activo</option>
-                            <option value="0" {'selected' if user_info.get('activo', 1) == 0 else ''}>Inactivo</option>
-                        </select>
-                    </div>
+                    {estado_field}
                 </div>
                 
-                <div style="margin-top: 30px; display: flex; gap: 10px;">
+                <div class="form-actions mt-30">
                     <button type="submit" class="btn btn-primary">Actualizar Perfil</button>
-                    <a href="/configuracion/" class="btn" style="background: #6b7280; color: white; text-decoration: none;">Cancelar</a>
+                    <a href="/configuracion/" class="btn btn-secondary no-underline">Cancelar</a>
                 </div>
             </form>
         </div>
@@ -409,7 +418,7 @@ class ConfigView:
         error_html = ""
         if error:
             error_html = f"""
-            <div style="background: #fee2e2; color: #991b1b; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <div class="alert-error">
                 {error}
             </div>
             """
@@ -418,36 +427,36 @@ class ConfigView:
         <div class="card">
             <div class="card-header">
                 <span>Cambiar Contraseña</span>
-                <a href="/configuracion/" class="btn" style="background: #6b7280; color: white;">← Volver</a>
+                <a href="/configuracion/" class="btn btn-secondary">← Volver</a>
             </div>
             {error_html}
-            <form method="POST" action="/configuracion/perfil/cambiar-password/" style="padding: 20px;">
+            <form method="POST" action="/configuracion/perfil/cambiar-password/" class="p-20">
                 <input type="hidden" name="csrfmiddlewaretoken" value="{csrf_token}">
                 
-                <div style="max-width: 500px;">
-                    <div style="margin-bottom: 20px;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Contraseña Actual *</label>
+                <div class="max-w-500">
+                    <div class="form-field">
+                        <label class="form-label">Contraseña Actual *</label>
                         <input type="password" name="current_password" required 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                               class="form-input">
                     </div>
                     
-                    <div style="margin-bottom: 20px;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Nueva Contraseña *</label>
+                    <div class="form-field">
+                        <label class="form-label">Nueva Contraseña *</label>
                         <input type="password" name="new_password" required 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-                        <small style="color: #666;">Mínimo 4 caracteres</small>
+                               class="form-input">
+                        <small class="form-hint">Mínimo 4 caracteres</small>
                     </div>
                     
-                    <div style="margin-bottom: 20px;">
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Confirmar Nueva Contraseña *</label>
+                    <div class="form-field">
+                        <label class="form-label">Confirmar Nueva Contraseña *</label>
                         <input type="password" name="confirm_password" required 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                               class="form-input">
                     </div>
                 </div>
                 
-                <div style="margin-top: 30px; display: flex; gap: 10px;">
+                <div class="form-actions mt-30">
                     <button type="submit" class="btn btn-primary">Cambiar Contraseña</button>
-                    <a href="/configuracion/" class="btn" style="background: #6b7280; color: white; text-decoration: none;">Cancelar</a>
+                    <a href="/configuracion/" class="btn btn-secondary no-underline">Cancelar</a>
                 </div>
             </form>
         </div>

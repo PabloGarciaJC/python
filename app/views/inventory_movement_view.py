@@ -16,7 +16,7 @@ class InventoryMovementView:
                 tipo_badge = {
                     'entrada': '<span class="badge badge-success">Entrada</span>',
                     'salida': '<span class="badge badge-warning">Salida</span>',
-                    'ajuste': '<span style="padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; background: #dbeafe; color: #1e40af;">Ajuste</span>'
+                    'ajuste': '<span class="badge badge-info">Ajuste</span>'
                 }.get(movement['tipo_movimiento'], movement['tipo_movimiento'])
                 
                 rows += f"""
@@ -30,9 +30,9 @@ class InventoryMovementView:
                     <td>{movement['fecha']}</td>
                     <td>{movement['usuario_nombre']}</td>
                     <td>
-                        <a href="/movimientos-inventario/{movement['id']}/ver/" class="btn" style="background: #3b82f6; color: white; padding: 8px 15px; font-size: 13px;">Ver</a>
+                        <a href="/movimientos-inventario/{movement['id']}/ver/" class="btn btn-info">Ver</a>
                         <a href="/movimientos-inventario/{movement['id']}/editar/" class="btn btn-warning">Editar</a>
-                        <form method="POST" action="/movimientos-inventario/{movement['id']}/eliminar/" style="display: inline;">
+                        <form method="POST" action="/movimientos-inventario/{movement['id']}/eliminar/" class="d-inline">
                             {csrf_token}
                             <button type="submit" class="btn btn-danger" 
                                     onclick="return confirm('¿Estás seguro de eliminar este movimiento?')">
@@ -44,7 +44,8 @@ class InventoryMovementView:
                 """
             
             table_content = f"""
-            <table>
+            <div class="table-container">
+                <table>
                 <thead>
                     <tr>
                         <th>#</th>
@@ -61,12 +62,13 @@ class InventoryMovementView:
                 <tbody>
                     {rows}
                 </tbody>
-            </table>
+                </table>
+            </div>
             """
         else:
             table_content = """
             <div class="empty-state">
-                <div style="font-size: 4rem; margin-bottom: 20px;">📦</div>
+                <i class="fas fa-exchange-alt icon-4xl"></i>
                 <h3>No hay movimientos de inventario registrados</h3>
                 <p>Comienza registrando el primer movimiento</p>
             </div>
@@ -94,7 +96,7 @@ class InventoryMovementView:
         error_html = ""
         if error:
             error_html = f"""
-            <div style="background: #fee2e2; color: #991b1b; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <div class="alert-error">
                 {error}
             </div>
             """
@@ -113,32 +115,29 @@ class InventoryMovementView:
         <div class="card">
             <div class="card-header">
                 <span>Registrar Nuevo Movimiento de Inventario</span>
-                <a href="/movimientos-inventario/" class="btn" style="background: #6b7280; color: white;">← Volver</a>
+                <a href="/movimientos-inventario/" class="btn btn-secondary">← Volver</a>
             </div>
             {error_html}
-            <form method="POST" action="/movimientos-inventario/crear/" style="padding: 20px;">
+            <form method="POST" action="/movimientos-inventario/crear/" class="p-20">
                 {csrf_token}
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div class="form-grid">
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Producto *</label>
-                        <select name="producto_id" required
-                                style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                        <label class="form-label">Producto *</label>
+                        <select name="producto_id" required class="form-select">
                             {product_options}
                         </select>
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Almacén *</label>
-                        <select name="almacen_id" required
-                                style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                        <label class="form-label">Almacén *</label>
+                        <select name="almacen_id" required class="form-select">
                             {warehouse_options}
                         </select>
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Tipo de Movimiento *</label>
-                        <select name="tipo_movimiento" required
-                                style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                        <label class="form-label">Tipo de Movimiento *</label>
+                        <select name="tipo_movimiento" required class="form-select">
                             <option value="">Seleccione un tipo</option>
                             <option value="entrada">Entrada</option>
                             <option value="salida">Salida</option>
@@ -147,26 +146,23 @@ class InventoryMovementView:
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Cantidad *</label>
-                        <input type="number" name="cantidad" value="1" min="1" required
-                               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                        <label class="form-label">Cantidad *</label>
+                        <input type="number" name="cantidad" value="1" min="1" required class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Referencia</label>
-                        <input type="text" name="referencia" maxlength="100" placeholder="Opcional"
-                               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                        <label class="form-label">Referencia</label>
+                        <input type="text" name="referencia" maxlength="100" placeholder="Opcional" class="form-input">
                     </div>
                 </div>
                 
-                <div style="margin-top: 20px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Motivo</label>
-                    <textarea name="motivo" rows="3" placeholder="Opcional"
-                              style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; resize: vertical;"></textarea>
+                <div class="mt-20">
+                    <label class="form-label">Motivo</label>
+                    <textarea name="motivo" rows="3" placeholder="Opcional" class="form-textarea"></textarea>
                 </div>
                 
-                <div style="margin-top: 30px; display: flex; gap: 10px; justify-content: flex-end;">
-                    <a href="/movimientos-inventario/" class="btn" style="background: #6b7280; color: white;">Cancelar</a>
+                <div class="form-actions-end mt-30">
+                    <a href="/movimientos-inventario/" class="btn btn-secondary">Cancelar</a>
                     <button type="submit" class="btn btn-primary">Registrar Movimiento</button>
                 </div>
             </form>
@@ -185,7 +181,7 @@ class InventoryMovementView:
         error_html = ""
         if error:
             error_html = f"""
-            <div style="background: #fee2e2; color: #991b1b; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <div class="alert-error">
                 {error}
             </div>
             """
@@ -217,57 +213,51 @@ class InventoryMovementView:
         <div class="card">
             <div class="card-header">
                 <span>Editar Movimiento de Inventario</span>
-                <a href="/movimientos-inventario/" class="btn" style="background: #6b7280; color: white;">← Volver</a>
+                <a href="/movimientos-inventario/" class="btn btn-secondary">← Volver</a>
             </div>
             {error_html}
-            <form method="POST" action="/movimientos-inventario/{movement['id']}/editar/" style="padding: 20px;">
+            <form method="POST" action="/movimientos-inventario/{movement['id']}/editar/" class="p-20">
                 {csrf_token}
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div class="form-grid">
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Producto *</label>
-                        <select name="producto_id" required
-                                style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                        <label class="form-label">Producto *</label>
+                        <select name="producto_id" required class="form-select">
                             {product_options}
                         </select>
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Almacén *</label>
-                        <select name="almacen_id" required
-                                style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                        <label class="form-label">Almacén *</label>
+                        <select name="almacen_id" required class="form-select">
                             {warehouse_options}
                         </select>
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Tipo de Movimiento *</label>
-                        <select name="tipo_movimiento" required
-                                style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                        <label class="form-label">Tipo de Movimiento *</label>
+                        <select name="tipo_movimiento" required class="form-select">
                             {tipo_options}
                         </select>
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Cantidad *</label>
-                        <input type="number" name="cantidad" value="{movement['cantidad']}" min="1" required
-                               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                        <label class="form-label">Cantidad *</label>
+                        <input type="number" name="cantidad" value="{movement['cantidad']}" min="1" required class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Referencia</label>
-                        <input type="text" name="referencia" value="{movement.get('referencia', '')}" maxlength="100"
-                               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                        <label class="form-label">Referencia</label>
+                        <input type="text" name="referencia" value="{movement.get('referencia', '')}" maxlength="100" class="form-input">
                     </div>
                 </div>
                 
-                <div style="margin-top: 20px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Motivo</label>
-                    <textarea name="motivo" rows="3"
-                              style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; resize: vertical;">{movement.get('motivo', '')}</textarea>
+                <div class="mt-20">
+                    <label class="form-label">Motivo</label>
+                    <textarea name="motivo" rows="3" class="form-textarea">{movement.get('motivo', '')}</textarea>
                 </div>
                 
-                <div style="margin-top: 30px; display: flex; gap: 10px; justify-content: flex-end;">
-                    <a href="/movimientos-inventario/" class="btn" style="background: #6b7280; color: white;">Cancelar</a>
+                <div class="form-actions-end mt-30">
+                    <a href="/movimientos-inventario/" class="btn btn-secondary">Cancelar</a>
                     <button type="submit" class="btn btn-primary">Actualizar Movimiento</button>
                 </div>
             </form>
@@ -283,64 +273,64 @@ class InventoryMovementView:
         tipo_badge = {
             'entrada': '<span class="badge badge-success">Entrada</span>',
             'salida': '<span class="badge badge-warning">Salida</span>',
-            'ajuste': '<span style="padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; background: #dbeafe; color: #1e40af;">Ajuste</span>'
+            'ajuste': '<span class="badge badge-info">Ajuste</span>'
         }.get(movement['tipo_movimiento'], movement['tipo_movimiento'])
         
         content = f"""
         <div class="card">
             <div class="card-header">
                 <span>Detalle de Movimiento #{movement['id']}</span>
-                <a href="/movimientos-inventario/" class="btn" style="background: #6b7280; color: white;">← Volver</a>
+                <a href="/movimientos-inventario/" class="btn btn-secondary">← Volver</a>
             </div>
             
-            <div style="padding: 20px;">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-                    <div style="background: #f9fafb; padding: 15px; border-radius: 8px; border: 1px solid #e5e7eb;">
-                        <p style="margin: 0; color: #6b7280; font-size: 13px;">Producto</p>
-                        <p style="margin: 5px 0 0 0; font-weight: 600; color: #111827; font-size: 16px;">{movement['producto_nombre']}</p>
+            <div class="p-20">
+                <div class="info-grid">
+                    <div class="info-box">
+                        <p class="info-box-label">Producto</p>
+                        <p class="info-box-value">{movement['producto_nombre']}</p>
                     </div>
                     
-                    <div style="background: #f9fafb; padding: 15px; border-radius: 8px; border: 1px solid #e5e7eb;">
-                        <p style="margin: 0; color: #6b7280; font-size: 13px;">Almacén</p>
-                        <p style="margin: 5px 0 0 0; font-weight: 600; color: #111827; font-size: 16px;">{movement['almacen_nombre']}</p>
+                    <div class="info-box">
+                        <p class="info-box-label">Almacén</p>
+                        <p class="info-box-value">{movement['almacen_nombre']}</p>
                     </div>
                     
-                    <div style="background: #f9fafb; padding: 15px; border-radius: 8px; border: 1px solid #e5e7eb;">
-                        <p style="margin: 0; color: #6b7280; font-size: 13px;">Tipo de Movimiento</p>
-                        <p style="margin: 5px 0 0 0;">{tipo_badge}</p>
+                    <div class="info-box">
+                        <p class="info-box-label">Tipo de Movimiento</p>
+                        <p class="info-box-value">{tipo_badge}</p>
                     </div>
                     
-                    <div style="background: #f9fafb; padding: 15px; border-radius: 8px; border: 1px solid #e5e7eb;">
-                        <p style="margin: 0; color: #6b7280; font-size: 13px;">Cantidad</p>
-                        <p style="margin: 5px 0 0 0; font-weight: 600; color: #111827; font-size: 18px;">{movement['cantidad']} unidades</p>
+                    <div class="info-box">
+                        <p class="info-box-label">Cantidad</p>
+                        <p class="info-box-value info-box-value-lg">{movement['cantidad']} unidades</p>
                     </div>
                     
-                    <div style="background: #f9fafb; padding: 15px; border-radius: 8px; border: 1px solid #e5e7eb;">
-                        <p style="margin: 0; color: #6b7280; font-size: 13px;">Referencia</p>
-                        <p style="margin: 5px 0 0 0; font-weight: 600; color: #111827;">{movement.get('referencia', 'N/A')}</p>
+                    <div class="info-box">
+                        <p class="info-box-label">Referencia</p>
+                        <p class="info-box-value">{movement.get('referencia', 'N/A')}</p>
                     </div>
                     
-                    <div style="background: #f9fafb; padding: 15px; border-radius: 8px; border: 1px solid #e5e7eb;">
-                        <p style="margin: 0; color: #6b7280; font-size: 13px;">Fecha</p>
-                        <p style="margin: 5px 0 0 0; font-weight: 600; color: #111827;">{movement['fecha']}</p>
+                    <div class="info-box">
+                        <p class="info-box-label">Fecha</p>
+                        <p class="info-box-value">{movement['fecha']}</p>
                     </div>
                     
-                    <div style="background: #f9fafb; padding: 15px; border-radius: 8px; border: 1px solid #e5e7eb;">
-                        <p style="margin: 0; color: #6b7280; font-size: 13px;">Usuario</p>
-                        <p style="margin: 5px 0 0 0; font-weight: 600; color: #111827;">{movement['usuario_nombre']}</p>
+                    <div class="info-box">
+                        <p class="info-box-label">Usuario</p>
+                        <p class="info-box-value">{movement['usuario_nombre']}</p>
                     </div>
                 </div>
                 
                 {f'''
-                <div style="margin-top: 20px; background: #f9fafb; padding: 15px; border-radius: 8px; border: 1px solid #e5e7eb;">
-                    <p style="margin: 0; color: #6b7280; font-size: 13px;">Motivo</p>
-                    <p style="margin: 5px 0 0 0; color: #111827; line-height: 1.6;">{movement['motivo']}</p>
+                <div class="info-box mt-20">
+                    <p class="info-box-label">Motivo</p>
+                    <p class="info-box-value info-box-text">{movement['motivo']}</p>
                 </div>
                 ''' if movement.get('motivo') else ''}
                 
-                <div style="margin-top: 30px; display: flex; gap: 10px;">
+                <div class="mt-30 d-flex gap-10">
                     <a href="/movimientos-inventario/{movement['id']}/editar/" class="btn btn-warning">Editar Movimiento</a>
-                    <a href="/movimientos-inventario/" class="btn" style="background: #6b7280; color: white;">Volver al Listado</a>
+                    <a href="/movimientos-inventario/" class="btn btn-secondary">Volver al Listado</a>
                 </div>
             </div>
         </div>

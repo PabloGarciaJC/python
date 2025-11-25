@@ -18,14 +18,15 @@ class RoleView:
                     <td>{role['nombre']}</td>
                     <td>{role.get('descripcion', 'Sin descripción')}</td>
                     <td>
-                        <a href="/roles/{role['id']}/editar/" class="btn btn-warning" style="text-decoration: none;">Editar</a>
-                        <a href="/roles/{role['id']}/eliminar/" class="btn btn-danger" style="text-decoration: none;" onclick="return confirm('¿Está seguro de eliminar este rol?');">Eliminar</a>
+                        <a href="/roles/{role['id']}/editar/" class="btn btn-warning no-underline">Editar</a>
+                        <a href="/roles/{role['id']}/eliminar/" class="btn btn-danger no-underline" onclick="return confirm('¿Está seguro de eliminar este rol?');">Eliminar</a>
                     </td>
                 </tr>
                 """
             
             table_content = f"""
-            <table>
+            <div class="table-container">
+                <table>
                 <thead>
                     <tr>
                         <th>#</th>
@@ -37,12 +38,13 @@ class RoleView:
                 <tbody>
                     {rows}
                 </tbody>
-            </table>
+                </table>
+            </div>
             """
         else:
             table_content = """
             <div class="empty-state">
-                <div style="font-size: 4rem; margin-bottom: 20px;">🔐</div>
+                <i class="fas fa-user-shield icon-4xl"></i>
                 <h3>No hay roles registrados</h3>
                 <p>Comienza agregando tu primer rol</p>
             </div>
@@ -72,7 +74,7 @@ class RoleView:
         error_html = ""
         if error:
             error_html = f"""
-            <div style="background: #fee2e2; color: #991b1b; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <div class="alert-error">
                 {error}
             </div>
             """
@@ -81,27 +83,27 @@ class RoleView:
         <div class="card">
             <div class="card-header">
                 <span>Crear Nuevo Rol</span>
-                <a href="/roles/" class="btn" style="background: #6b7280; color: white;">← Volver</a>
+                <a href="/roles/" class="btn btn-secondary">← Volver</a>
             </div>
             {error_html}
-            <form method="POST" action="/roles/crear/" style="padding: 20px;">
+            <form method="POST" action="/roles/crear/" class="p-20">
                 <input type="hidden" name="csrfmiddlewaretoken" value="{csrf_token}">
                 
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Nombre *</label>
+                <div class="form-field">
+                    <label class="form-label">Nombre *</label>
                     <input type="text" name="nombre" required 
-                           style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                           class="form-input">
                 </div>
                 
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Descripción</label>
+                <div class="form-field">
+                    <label class="form-label">Descripción</label>
                     <textarea name="descripcion" rows="4" 
-                              style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"></textarea>
+                              class="form-textarea"></textarea>
                 </div>
                 
-                <div style="display: flex; gap: 10px;">
+                <div class="form-actions">
                     <button type="submit" class="btn btn-primary">Guardar Rol</button>
-                    <a href="/roles/" class="btn" style="background: #6b7280; color: white; text-decoration: none;">Cancelar</a>
+                    <a href="/roles/" class="btn btn-secondary no-underline">Cancelar</a>
                 </div>
             </form>
         </div>
@@ -121,7 +123,7 @@ class RoleView:
         error_html = ""
         if error:
             error_html = f"""
-            <div style="background: #fee2e2; color: #991b1b; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <div class="alert-error">
                 {error}
             </div>
             """
@@ -130,27 +132,27 @@ class RoleView:
         <div class="card">
             <div class="card-header">
                 <span>Editar Rol</span>
-                <a href="/roles/" class="btn" style="background: #6b7280; color: white;">← Volver</a>
+                <a href="/roles/" class="btn btn-secondary">← Volver</a>
             </div>
             {error_html}
-            <form method="POST" action="/roles/{role['id']}/editar/" style="padding: 20px;">
+            <form method="POST" action="/roles/{role['id']}/editar/" class="p-20">
                 <input type="hidden" name="csrfmiddlewaretoken" value="{csrf_token}">
                 
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Nombre *</label>
+                <div class="form-field">
+                    <label class="form-label">Nombre *</label>
                     <input type="text" name="nombre" value="{role['nombre']}" required 
-                           style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                           class="form-input">
                 </div>
                 
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Descripción</label>
+                <div class="form-field">
+                    <label class="form-label">Descripción</label>
                     <textarea name="descripcion" rows="4" 
-                              style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">{role.get('descripcion', '')}</textarea>
+                              class="form-textarea">{role.get('descripcion', '')}</textarea>
                 </div>
                 
-                <div style="display: flex; gap: 10px;">
+                <div class="form-actions">
                     <button type="submit" class="btn btn-primary">Actualizar Rol</button>
-                    <a href="/roles/" class="btn" style="background: #6b7280; color: white; text-decoration: none;">Cancelar</a>
+                    <a href="/roles/" class="btn btn-secondary no-underline">Cancelar</a>
                 </div>
             </form>
         </div>

@@ -24,9 +24,9 @@ class SaleDetailView:
                     <td>S/ {detail['precio_unitario']:.2f}</td>
                     <td>S/ {detail['subtotal']:.2f}</td>
                     <td>
-                        <a href="/detalle-ventas/{detail['id']}/ver/" class="btn" style="background: #3b82f6; color: white; padding: 8px 15px; font-size: 13px;">Ver</a>
+                        <a href="/detalle-ventas/{detail['id']}/ver/" class="btn btn-info">Ver</a>
                         <a href="/detalle-ventas/{detail['id']}/editar/" class="btn btn-warning">Editar</a>
-                        <form method="POST" action="/detalle-ventas/{detail['id']}/eliminar/" style="display: inline;">
+                        <form method="POST" action="/detalle-ventas/{detail['id']}/eliminar/" class="d-inline">
                             {csrf_token}
                             <button type="submit" class="btn btn-danger" 
                                     onclick="return confirm('¿Estás seguro de eliminar este detalle?')">
@@ -38,7 +38,8 @@ class SaleDetailView:
                 """
             
             table_content = f"""
-            <table>
+            <div class="table-container">
+                <table>
                 <thead>
                     <tr>
                         <th>#</th>
@@ -55,12 +56,13 @@ class SaleDetailView:
                 <tbody>
                     {rows}
                 </tbody>
-            </table>
+                </table>
+            </div>
             """
         else:
             table_content = """
             <div class="empty-state">
-                <div style="font-size: 4rem; margin-bottom: 20px;">📝</div>
+                <i class="fas fa-file-invoice icon-4xl"></i>
                 <h3>No hay detalles de ventas registrados</h3>
                 <p>Comienza agregando el primer detalle</p>
             </div>
@@ -88,7 +90,7 @@ class SaleDetailView:
         error_html = ""
         if error:
             error_html = f"""
-            <div style="background: #fee2e2; color: #991b1b; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <div class="alert-error">
                 {error}
             </div>
             """
@@ -107,79 +109,55 @@ class SaleDetailView:
         <div class="card">
             <div class="card-header">
                 <span>Crear Nuevo Detalle de Venta</span>
-                <a href="/detalle-ventas/" class="btn" style="background: #6b7280; color: white;">← Volver</a>
+                <a href="/detalle-ventas/" class="btn btn-secondary">← Volver</a>
             </div>
             {error_html}
-            <form method="POST" action="/detalle-ventas/crear/" style="padding: 20px;" id="detailForm">
+            <form method="POST" action="/detalle-ventas/crear/" class="p-20" id="detailForm">
                 {csrf_token}
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div class="form-grid">
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Venta *</label>
+                        <label class="form-label">Venta *</label>
                         <select name="venta_id" required
-                                style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                                class="form-select">
                             {sale_options}
                         </select>
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Producto *</label>
+                        <label class="form-label">Producto *</label>
                         <select name="producto_id" id="producto" required
-                                style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                                class="form-select">
                             {product_options}
                         </select>
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Cantidad *</label>
+                        <label class="form-label">Cantidad *</label>
                         <input type="number" name="cantidad" id="cantidad" value="1" min="1" required
-                               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                               class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Precio Unitario *</label>
+                        <label class="form-label">Precio Unitario *</label>
                         <input type="number" name="precio_unitario" id="precio_unitario" step="0.01" min="0" required
-                               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                               class="form-input">
                     </div>
                 </div>
                 
-                <div style="margin-top: 20px; padding: 15px; background: #f3f4f6; border-radius: 8px;">
-                    <p style="margin: 0; font-size: 18px; font-weight: 600;">
+                <div class="total-summary">
+                    <p>
                         Subtotal: S/ <span id="subtotal">0.00</span>
                     </p>
                 </div>
                 
-                <div style="margin-top: 30px; display: flex; gap: 10px; justify-content: flex-end;">
-                    <a href="/detalle-ventas/" class="btn" style="background: #6b7280; color: white;">Cancelar</a>
+                <div class="form-actions-end mt-30">
+                    <a href="/detalle-ventas/" class="btn btn-secondary">Cancelar</a>
                     <button type="submit" class="btn btn-primary">Guardar Detalle</button>
                 </div>
             </form>
         </div>
         
-        <script>
-            const productoSelect = document.getElementById('producto');
-            const cantidadInput = document.getElementById('cantidad');
-            const precioInput = document.getElementById('precio_unitario');
-            const subtotalSpan = document.getElementById('subtotal');
-            
-            productoSelect.addEventListener('change', function() {{
-                const selectedOption = this.options[this.selectedIndex];
-                const price = selectedOption.getAttribute('data-price');
-                if (price) {{
-                    precioInput.value = parseFloat(price).toFixed(2);
-                    calcularSubtotal();
-                }}
-            }});
-            
-            cantidadInput.addEventListener('input', calcularSubtotal);
-            precioInput.addEventListener('input', calcularSubtotal);
-            
-            function calcularSubtotal() {{
-                const cantidad = parseFloat(cantidadInput.value) || 0;
-                const precio = parseFloat(precioInput.value) || 0;
-                const subtotal = cantidad * precio;
-                subtotalSpan.textContent = subtotal.toFixed(2);
-            }}
-        </script>
+        <script src="/static/js/detail-calculator.js"></script>
         """
         
         return Layout.render('Nuevo Detalle de Venta', user, 'detalle-ventas', content)
@@ -194,7 +172,7 @@ class SaleDetailView:
         error_html = ""
         if error:
             error_html = f"""
-            <div style="background: #fee2e2; color: #991b1b; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <div class="alert-error">
                 {error}
             </div>
             """
@@ -209,78 +187,54 @@ class SaleDetailView:
         <div class="card">
             <div class="card-header">
                 <span>Editar Detalle de Venta</span>
-                <a href="/detalle-ventas/" class="btn" style="background: #6b7280; color: white;">← Volver</a>
+                <a href="/detalle-ventas/" class="btn btn-secondary">← Volver</a>
             </div>
             {error_html}
-            <form method="POST" action="/detalle-ventas/{detail['id']}/editar/" style="padding: 20px;" id="detailForm">
+            <form method="POST" action="/detalle-ventas/{detail['id']}/editar/" class="p-20" id="detailForm">
                 {csrf_token}
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div class="form-grid">
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Venta</label>
+                        <label class="form-label">Venta</label>
                         <input type="text" value="{detail.get('numero_factura', 'Sin factura')}" disabled
-                               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; background: #f5f5f5;">
-                        <small style="color: #666;">La venta no se puede cambiar</small>
+                               class="form-input-disabled">
+                        <small class="form-hint">La venta no se puede cambiar</small>
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Producto *</label>
+                        <label class="form-label">Producto *</label>
                         <select name="producto_id" id="producto" required
-                                style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                                class="form-select">
                             {product_options}
                         </select>
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Cantidad *</label>
+                        <label class="form-label">Cantidad *</label>
                         <input type="number" name="cantidad" id="cantidad" value="{detail['cantidad']}" min="1" required
-                               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                               class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Precio Unitario *</label>
+                        <label class="form-label">Precio Unitario *</label>
                         <input type="number" name="precio_unitario" id="precio_unitario" value="{detail['precio_unitario']}" step="0.01" min="0" required
-                               style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;">
+                               class="form-input">
                     </div>
                 </div>
                 
-                <div style="margin-top: 20px; padding: 15px; background: #f3f4f6; border-radius: 8px;">
-                    <p style="margin: 0; font-size: 18px; font-weight: 600;">
+                <div class="total-summary">
+                    <p>
                         Subtotal: S/ <span id="subtotal">{detail['subtotal']:.2f}</span>
                     </p>
                 </div>
                 
-                <div style="margin-top: 30px; display: flex; gap: 10px; justify-content: flex-end;">
-                    <a href="/detalle-ventas/" class="btn" style="background: #6b7280; color: white;">Cancelar</a>
+                <div class="form-actions-end mt-30">
+                    <a href="/detalle-ventas/" class="btn btn-secondary">Cancelar</a>
                     <button type="submit" class="btn btn-primary">Actualizar Detalle</button>
                 </div>
             </form>
         </div>
         
-        <script>
-            const productoSelect = document.getElementById('producto');
-            const cantidadInput = document.getElementById('cantidad');
-            const precioInput = document.getElementById('precio_unitario');
-            const subtotalSpan = document.getElementById('subtotal');
-            
-            productoSelect.addEventListener('change', function() {{
-                const selectedOption = this.options[this.selectedIndex];
-                const price = selectedOption.getAttribute('data-price');
-                if (price) {{
-                    precioInput.value = parseFloat(price).toFixed(2);
-                    calcularSubtotal();
-                }}
-            }});
-            
-            cantidadInput.addEventListener('input', calcularSubtotal);
-            precioInput.addEventListener('input', calcularSubtotal);
-            
-            function calcularSubtotal() {{
-                const cantidad = parseFloat(cantidadInput.value) || 0;
-                const precio = parseFloat(precioInput.value) || 0;
-                const subtotal = cantidad * precio;
-                subtotalSpan.textContent = subtotal.toFixed(2);
-            }}
-        </script>
+        <script src="/static/js/detail-calculator.js"></script>
         """
         
         return Layout.render('Editar Detalle de Venta', user, 'detalle-ventas', content)
@@ -292,74 +246,74 @@ class SaleDetailView:
         estado_badge = {
             'pendiente': '<span class="badge badge-warning">Pendiente</span>',
             'completada': '<span class="badge badge-success">Completada</span>',
-            'cancelada': '<span style="padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; background: #fee2e2; color: #991b1b;">Cancelada</span>'
+            'cancelada': '<span class="badge badge-cancelada">Cancelada</span>'
         }.get(detail.get('venta_estado', ''), detail.get('venta_estado', ''))
         
         content = f"""
         <div class="card">
             <div class="card-header">
                 <span>Detalle de Venta #{detail['id']}</span>
-                <a href="/detalle-ventas/" class="btn" style="background: #6b7280; color: white;">← Volver</a>
+                <a href="/detalle-ventas/" class="btn btn-secondary">← Volver</a>
             </div>
             
-            <div style="padding: 20px;">
-                <div style="background: #f9fafb; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
-                    <h3 style="margin: 0 0 15px 0; color: #111827; font-size: 18px;">Información de la Venta</h3>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+            <div class="p-20">
+                <div class="detail-info-section">
+                    <h3>Información de la Venta</h3>
+                    <div class="info-grid">
                         <div>
-                            <p style="margin: 0; color: #6b7280; font-size: 13px;">N° Factura</p>
-                            <p style="margin: 5px 0 0 0; font-weight: 600; color: #111827;">{detail.get('numero_factura', 'Sin factura')}</p>
+                            <p class="info-box-label">N° Factura</p>
+                            <p class="info-box-value">{detail.get('numero_factura', 'Sin factura')}</p>
                         </div>
                         <div>
-                            <p style="margin: 0; color: #6b7280; font-size: 13px;">Cliente</p>
-                            <p style="margin: 5px 0 0 0; font-weight: 600; color: #111827;">{detail['cliente_nombre']}</p>
-                            <p style="margin: 2px 0 0 0; font-size: 12px; color: #6b7280;">{detail.get('cliente_documento', '')}</p>
+                            <p class="info-box-label">Cliente</p>
+                            <p class="info-box-value">{detail['cliente_nombre']}</p>
+                            <p class="form-hint">{detail.get('cliente_documento', '')}</p>
                         </div>
                         <div>
-                            <p style="margin: 0; color: #6b7280; font-size: 13px;">Fecha</p>
-                            <p style="margin: 5px 0 0 0; font-weight: 600; color: #111827;">{detail['fecha_venta']}</p>
+                            <p class="info-box-label">Fecha</p>
+                            <p class="info-box-value">{detail['fecha_venta']}</p>
                         </div>
                         <div>
-                            <p style="margin: 0; color: #6b7280; font-size: 13px;">Tipo de Pago</p>
-                            <p style="margin: 5px 0 0 0; font-weight: 600; color: #111827;">{detail.get('tipo_pago', 'N/A').capitalize()}</p>
+                            <p class="info-box-label">Tipo de Pago</p>
+                            <p class="info-box-value">{detail.get('tipo_pago', 'N/A').capitalize()}</p>
                         </div>
                         <div>
-                            <p style="margin: 0; color: #6b7280; font-size: 13px;">Estado</p>
-                            <p style="margin: 5px 0 0 0;">{estado_badge}</p>
+                            <p class="info-box-label">Estado</p>
+                            <p class="info-box-value">{estado_badge}</p>
                         </div>
                         <div>
-                            <p style="margin: 0; color: #6b7280; font-size: 13px;">Total Venta</p>
-                            <p style="margin: 5px 0 0 0; font-weight: 600; color: #059669; font-size: 18px;">S/ {detail['venta_total']:.2f}</p>
+                            <p class="info-box-label">Total Venta</p>
+                            <p class="info-box-value text-success-lg">S/ {detail['venta_total']:.2f}</p>
                         </div>
                     </div>
                 </div>
                 
-                <h3 style="margin: 0 0 15px 0; color: #111827; font-size: 18px;">Detalle del Producto</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-                    <div style="background: white; padding: 15px; border: 1px solid #e5e7eb; border-radius: 8px;">
-                        <p style="margin: 0; color: #6b7280; font-size: 13px;">Producto</p>
-                        <p style="margin: 5px 0 0 0; font-weight: 600; color: #111827; font-size: 16px;">{detail['producto_nombre']}</p>
+                <h3>Detalle del Producto</h3>
+                <div class="info-grid">
+                    <div class="info-box-white">
+                        <p class="info-box-label">Producto</p>
+                        <p class="info-box-value">{detail['producto_nombre']}</p>
                     </div>
                     
-                    <div style="background: white; padding: 15px; border: 1px solid #e5e7eb; border-radius: 8px;">
-                        <p style="margin: 0; color: #6b7280; font-size: 13px;">Cantidad</p>
-                        <p style="margin: 5px 0 0 0; font-weight: 600; color: #111827; font-size: 16px;">{detail['cantidad']} unidades</p>
+                    <div class="info-box-white">
+                        <p class="info-box-label">Cantidad</p>
+                        <p class="info-box-value">{detail['cantidad']} unidades</p>
                     </div>
                     
-                    <div style="background: white; padding: 15px; border: 1px solid #e5e7eb; border-radius: 8px;">
-                        <p style="margin: 0; color: #6b7280; font-size: 13px;">Precio Unitario</p>
-                        <p style="margin: 5px 0 0 0; font-weight: 600; color: #111827; font-size: 16px;">S/ {detail['precio_unitario']:.2f}</p>
+                    <div class="info-box-white">
+                        <p class="info-box-label">Precio Unitario</p>
+                        <p class="info-box-value">S/ {detail['precio_unitario']:.2f}</p>
                     </div>
                     
-                    <div style="background: white; padding: 15px; border: 1px solid #e5e7eb; border-radius: 8px;">
-                        <p style="margin: 0; color: #6b7280; font-size: 13px;">Subtotal</p>
-                        <p style="margin: 5px 0 0 0; font-weight: 600; color: #059669; font-size: 18px;">S/ {detail['subtotal']:.2f}</p>
+                    <div class="info-box-white">
+                        <p class="info-box-label">Subtotal</p>
+                        <p class="info-box-value text-success-lg">S/ {detail['subtotal']:.2f}</p>
                     </div>
                 </div>
                 
-                <div style="margin-top: 30px; display: flex; gap: 10px;">
+                <div class="mt-30 d-flex gap-10">
                     <a href="/detalle-ventas/{detail['id']}/editar/" class="btn btn-warning">Editar Detalle</a>
-                    <a href="/detalle-ventas/" class="btn" style="background: #6b7280; color: white;">Volver al Listado</a>
+                    <a href="/detalle-ventas/" class="btn btn-secondary">Volver al Listado</a>
                 </div>
             </div>
         </div>

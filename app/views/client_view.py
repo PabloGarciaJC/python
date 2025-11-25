@@ -20,14 +20,15 @@ class ClientView:
                     <td>{client.get('telefono', 'N/A')}</td>
                     <td>{client.get('email', 'N/A')}</td>
                     <td>
-                        <a href="/clientes/{client['id']}/editar/" class="btn btn-warning" style="text-decoration: none;">Editar</a>
-                        <a href="/clientes/{client['id']}/eliminar/" class="btn btn-danger" style="text-decoration: none;" onclick="return confirm('¿Está seguro de eliminar este cliente?');">Eliminar</a>
+                        <a href="/clientes/{client['id']}/editar/" class="btn btn-warning no-underline">Editar</a>
+                        <a href="/clientes/{client['id']}/eliminar/" class="btn btn-danger no-underline" onclick="return confirm('¿Está seguro de eliminar este cliente?');">Eliminar</a>
                     </td>
                 </tr>
                 """
             
             table_content = f"""
-            <table>
+            <div class="table-container">
+                <table>
                 <thead>
                     <tr>
                         <th>#</th>
@@ -41,12 +42,13 @@ class ClientView:
                 <tbody>
                     {rows}
                 </tbody>
-            </table>
+                </table>
+            </div>
             """
         else:
             table_content = """
             <div class="empty-state">
-                <div style="font-size: 4rem; margin-bottom: 20px;">👥</div>
+                <div class="icon-4xl"><i class="fas fa-users"></i></div>
                 <h3>No hay clientes registrados</h3>
                 <p>Comienza agregando tu primer cliente</p>
             </div>
@@ -76,7 +78,7 @@ class ClientView:
         error_html = ""
         if error:
             error_html = f"""
-            <div style="background: #fee2e2; color: #991b1b; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <div class="alert-error">
                 {error}
             </div>
             """
@@ -85,47 +87,42 @@ class ClientView:
         <div class="card">
             <div class="card-header">
                 <span>Crear Nuevo Cliente</span>
-                <a href="/clientes/" class="btn" style="background: #6b7280; color: white;">← Volver</a>
+                <a href="/clientes/" class="btn btn-secondary">← Volver</a>
             </div>
             {error_html}
-            <form method="POST" action="/clientes/crear/" style="padding: 20px;">
+            <form method="POST" action="/clientes/crear/" class="p-20">
                 <input type="hidden" name="csrfmiddlewaretoken" value="{csrf_token}">
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div class="form-grid">
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Nombre Completo *</label>
-                        <input type="text" name="nombre" required 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <label class="form-label">Nombre Completo *</label>
+                        <input type="text" name="nombre" required class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Documento (DNI/RUC)</label>
-                        <input type="text" name="documento" 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <label class="form-label">Documento (DNI/RUC)</label>
+                        <input type="text" name="documento" class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Teléfono</label>
-                        <input type="text" name="telefono" 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <label class="form-label">Teléfono</label>
+                        <input type="text" name="telefono" class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Email</label>
-                        <input type="email" name="email" 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-input">
                     </div>
                 </div>
                 
-                <div style="margin-top: 20px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Dirección</label>
-                    <textarea name="direccion" rows="3" 
-                              style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"></textarea>
+                <div class="mt-20">
+                    <label class="form-label">Dirección</label>
+                    <textarea name="direccion" rows="3" class="form-textarea"></textarea>
                 </div>
                 
-                <div style="margin-top: 30px; display: flex; gap: 10px;">
+                <div class="form-actions mt-30">
                     <button type="submit" class="btn btn-primary">Guardar Cliente</button>
-                    <a href="/clientes/" class="btn" style="background: #6b7280; color: white; text-decoration: none;">Cancelar</a>
+                    <a href="/clientes/" class="btn btn-secondary no-underline">Cancelar</a>
                 </div>
             </form>
         </div>
@@ -145,7 +142,7 @@ class ClientView:
         error_html = ""
         if error:
             error_html = f"""
-            <div style="background: #fee2e2; color: #991b1b; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <div class="alert-error">
                 {error}
             </div>
             """
@@ -154,47 +151,42 @@ class ClientView:
         <div class="card">
             <div class="card-header">
                 <span>Editar Cliente</span>
-                <a href="/clientes/" class="btn" style="background: #6b7280; color: white;">← Volver</a>
+                <a href="/clientes/" class="btn btn-secondary">← Volver</a>
             </div>
             {error_html}
-            <form method="POST" action="/clientes/{client['id']}/editar/" style="padding: 20px;">
+            <form method="POST" action="/clientes/{client['id']}/editar/" class="p-20">
                 <input type="hidden" name="csrfmiddlewaretoken" value="{csrf_token}">
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div class="form-grid">
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Nombre Completo *</label>
-                        <input type="text" name="nombre" value="{client['nombre']}" required 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <label class="form-label">Nombre Completo *</label>
+                        <input type="text" name="nombre" value="{client['nombre']}" required class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Documento (DNI/RUC)</label>
-                        <input type="text" name="documento" value="{client.get('documento', '')}" 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <label class="form-label">Documento (DNI/RUC)</label>
+                        <input type="text" name="documento" value="{client.get('documento', '')}" class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Teléfono</label>
-                        <input type="text" name="telefono" value="{client.get('telefono', '')}" 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <label class="form-label">Teléfono</label>
+                        <input type="text" name="telefono" value="{client.get('telefono', '')}" class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Email</label>
-                        <input type="email" name="email" value="{client.get('email', '')}" 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" value="{client.get('email', '')}" class="form-input">
                     </div>
                 </div>
                 
-                <div style="margin-top: 20px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Dirección</label>
-                    <textarea name="direccion" rows="3" 
-                              style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">{client.get('direccion', '')}</textarea>
+                <div class="mt-20">
+                    <label class="form-label">Dirección</label>
+                    <textarea name="direccion" rows="3" class="form-textarea">{client.get('direccion', '')}</textarea>
                 </div>
                 
-                <div style="margin-top: 30px; display: flex; gap: 10px;">
+                <div class="form-actions mt-30">
                     <button type="submit" class="btn btn-primary">Actualizar Cliente</button>
-                    <a href="/clientes/" class="btn" style="background: #6b7280; color: white; text-decoration: none;">Cancelar</a>
+                    <a href="/clientes/" class="btn btn-secondary no-underline">Cancelar</a>
                 </div>
             </form>
         </div>

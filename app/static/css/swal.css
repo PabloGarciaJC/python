@@ -1,0 +1,210 @@
+/* SweetAlert Custom Styles */
+
+/* Container */
+.swal2-container {
+    z-index: 10000;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    overflow-x: hidden;
+    transition: background-color 0.1s;
+}
+
+.swal2-backdrop-show {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+/* Popup */
+.swal2-popup {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: none;
+    position: relative;
+    box-sizing: border-box;
+    grid-template-columns: minmax(0, 100%);
+    width: 32em;
+    max-width: 100%;
+    padding: 30px;
+    border: none;
+    border-radius: 15px;
+    background: #fff;
+    color: #545454;
+    font-size: 1rem;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.swal2-popup.swal2-show {
+    display: grid !important;
+}
+
+/* Close button */
+.swal2-close {
+    z-index: 2;
+    align-items: center;
+    justify-content: center;
+    width: 1.2em;
+    height: 1.2em;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: -1.2em;
+    padding: 0;
+    overflow: hidden;
+    transition: color 0.1s, box-shadow 0.1s;
+    border: none;
+    border-radius: 5px;
+    background: transparent;
+    color: #ccc;
+    font-family: monospace;
+    font-size: 2.5em;
+    cursor: pointer;
+    justify-self: end;
+}
+
+.swal2-close:hover {
+    transform: none;
+    background: transparent;
+    color: #f27474;
+}
+
+/* Icon */
+.swal2-icon {
+    position: relative;
+    box-sizing: content-box;
+    justify-content: center;
+    width: 5em;
+    height: 5em;
+    margin: 1.25em auto 1.875em;
+    border: 0.25em solid transparent;
+    border-radius: 50%;
+    font-family: inherit;
+    line-height: 5em;
+    cursor: default;
+    user-select: none;
+}
+
+.swal2-icon-show {
+    display: flex;
+}
+
+.swal2-icon.swal2-info {
+    border-color: #9de0f6;
+    color: #3fc3ee;
+}
+
+.swal2-icon-content {
+    display: flex;
+    align-items: center;
+    font-size: 3.75em;
+}
+
+/* Title */
+.swal2-title {
+    position: relative;
+    max-width: 100%;
+    margin: 0;
+    padding: 0.8em 1em 0;
+    color: rgba(0, 0, 0, 0.65);
+    font-size: 1.875em;
+    font-weight: 600;
+    text-align: center;
+    text-transform: none;
+    word-wrap: break-word;
+}
+
+/* HTML Container */
+.swal2-html-container {
+    z-index: 1;
+    justify-content: center;
+    margin: 1em 1.6em 0.3em;
+    padding: 0;
+    overflow: auto;
+    color: inherit;
+    font-size: 1.125em;
+    font-weight: normal;
+    line-height: normal;
+    text-align: center;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.contact-message {
+    margin: 20px 0;
+    color: #6b7280;
+    line-height: 1.6;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.social-links a {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-size: 24px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+}
+
+.social-links a:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+}
+
+/* Actions */
+.swal2-actions {
+    display: flex;
+    z-index: 1;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 1.25em auto 0;
+    padding: 0;
+}
+
+.swal2-styled {
+    margin: 0.3125em;
+    padding: 0.625em 1.1em;
+    transition: box-shadow 0.1s;
+    box-shadow: 0 0 0 3px transparent;
+    font-weight: 500;
+}
+
+.swal2-confirm {
+    border: 0;
+    border-radius: 0.25em;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: #fff;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.swal2-confirm:hover {
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.5);
+}
+
+/* Body classes */
+body.swal2-shown {
+    overflow: hidden;
+}
+
+body.swal2-height-auto {
+    height: auto !important;
+}

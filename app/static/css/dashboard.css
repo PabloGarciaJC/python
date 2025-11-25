@@ -1,0 +1,88 @@
+/* Dashboard Specific Styles */
+
+.welcome-banner {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.welcome-banner h1 {
+    margin: 0 0 10px 0;
+    font-size: 28px;
+}
+
+.welcome-banner p {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 16px;
+}
+
+/* Stock badges */
+.stock-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+}
+
+.stock-danger {
+    background: #ef4444;
+}
+
+.stock-warning {
+    background: #f59e0b;
+}
+
+.stock-success {
+    background: #10b981;
+}
+
+/* Card spacing */
+.mb-30 {
+    margin-bottom: 30px;
+}
+
+/* Empty state styling */
+.empty-message {
+    text-align: center;
+    padding: 30px;
+    color: #6b7280;
+}
+
+/* Responsive Dashboard */
+@media (max-width: 768px) {
+    .welcome-banner {
+        padding: 20px;
+    }
+    
+    .welcome-banner h1 {
+        font-size: 22px;
+    }
+    
+    .welcome-banner p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .welcome-banner {
+        padding: 15px;
+    }
+    
+    .welcome-banner h1 {
+        font-size: 18px;
+    }
+    
+    .welcome-banner p {
+        font-size: 13px;
+    }
+    
+    .stock-badge {
+        font-size: 11px;
+        padding: 4px 10px;
+    }
+}

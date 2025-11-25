@@ -1,0 +1,5 @@
+nohup: no se tendrá en cuenta la entrada
+Traceback (most recent call last):
+  File "/home/pablo/www/python/index.py", line 4, in <module>
+    from django.conf import settings
+ModuleNotFoundError: No module named 'django'

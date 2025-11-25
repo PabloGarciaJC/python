@@ -39,9 +39,11 @@ class Config:
         return result[0] if result else {}
     
     @staticmethod
-    def get_all_users():
+    def get_all_users(include_superadmin=False):
         """Obtiene todos los usuarios del sistema"""
-        query = """
+        where_clause = "" if include_superadmin else "WHERE u.username != 'superadmin'"
+        
+        query = f"""
             SELECT 
                 u.id,
                 u.username,
@@ -51,6 +53,7 @@ class Config:
                 r.nombre as rol
             FROM pablogarciajcbd.usuarios u
             INNER JOIN pablogarciajcbd.roles r ON u.rol_id = r.id
+            {where_clause}
             ORDER BY u.created_at DESC
         """
         return Database.execute_query(query)
@@ -142,19 +145,23 @@ class Config:
     @staticmethod
     def update_profile(user_id, data):
         """Actualiza el perfil del usuario actual"""
-        query = """
+        # Construir query dinámicamente según los campos disponibles
+        fields = ['nombre_completo = %s', 'email = %s']
+        params = [data['nombre_completo'], data.get('email', '')]
+        
+        # Solo actualizar activo si está en data (es administrador)
+        if 'activo' in data:
+            fields.append('activo = %s')
+            params.append(data['activo'])
+        
+        params.append(user_id)
+        
+        query = f"""
             UPDATE pablogarciajcbd.usuarios 
-            SET nombre_completo = %s,
-                email = %s,
-                activo = %s
+            SET {', '.join(fields)}
             WHERE id = %s
         """
-        params = (
-            data['nombre_completo'],
-            data.get('email', ''),
-            data.get('activo', 1),
-            user_id
-        )
+        
         return Database.execute_query(query, params, fetch=False)
     
     @staticmethod

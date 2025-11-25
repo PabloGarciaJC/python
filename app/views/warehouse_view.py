@@ -19,14 +19,15 @@ class WarehouseView:
                     <td>{warehouse.get('ubicacion', 'N/A')}</td>
                     <td>{warehouse.get('capacidad', 0):,}</td>
                     <td>
-                        <a href="/almacenes/{warehouse['id']}/editar/" class="btn btn-warning" style="text-decoration: none;">Editar</a>
-                        <a href="/almacenes/{warehouse['id']}/eliminar/" class="btn btn-danger" style="text-decoration: none;" onclick="return confirm('¿Está seguro de eliminar este almacén?');">Eliminar</a>
+                        <a href="/almacenes/{warehouse['id']}/editar/" class="btn btn-warning no-underline">Editar</a>
+                        <a href="/almacenes/{warehouse['id']}/eliminar/" class="btn btn-danger no-underline" onclick="return confirm('¿Está seguro de eliminar este almacén?');">Eliminar</a>
                     </td>
                 </tr>
                 """
             
             table_content = f"""
-            <table>
+            <div class="table-container">
+                <table>
                 <thead>
                     <tr>
                         <th>#</th>
@@ -39,12 +40,13 @@ class WarehouseView:
                 <tbody>
                     {rows}
                 </tbody>
-            </table>
+                </table>
+            </div>
             """
         else:
             table_content = """
             <div class="empty-state">
-                <div style="font-size: 4rem; margin-bottom: 20px;">🏢</div>
+                <i class="fas fa-warehouse icon-4xl"></i>
                 <h3>No hay almacenes registrados</h3>
                 <p>Comienza agregando tu primer almacén</p>
             </div>
@@ -74,7 +76,7 @@ class WarehouseView:
         error_html = ""
         if error:
             error_html = f"""
-            <div style="background: #fee2e2; color: #991b1b; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <div class="alert-error">
                 {error}
             </div>
             """
@@ -83,35 +85,35 @@ class WarehouseView:
         <div class="card">
             <div class="card-header">
                 <span>Crear Nuevo Almacén</span>
-                <a href="/almacenes/" class="btn" style="background: #6b7280; color: white;">← Volver</a>
+                <a href="/almacenes/" class="btn btn-secondary">← Volver</a>
             </div>
             {error_html}
-            <form method="POST" action="/almacenes/crear/" style="padding: 20px;">
+            <form method="POST" action="/almacenes/crear/" class="p-20">
                 <input type="hidden" name="csrfmiddlewaretoken" value="{csrf_token}">
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div class="form-grid">
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Nombre *</label>
+                        <label class="form-label">Nombre *</label>
                         <input type="text" name="nombre" required 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                               class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Ubicación</label>
+                        <label class="form-label">Ubicación</label>
                         <input type="text" name="ubicacion" 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                               class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Capacidad</label>
+                        <label class="form-label">Capacidad</label>
                         <input type="number" name="capacidad" value="0" min="0" 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                               class="form-input">
                     </div>
                 </div>
                 
-                <div style="margin-top: 30px; display: flex; gap: 10px;">
+                <div class="form-actions mt-30">
                     <button type="submit" class="btn btn-primary">Guardar Almacén</button>
-                    <a href="/almacenes/" class="btn" style="background: #6b7280; color: white; text-decoration: none;">Cancelar</a>
+                    <a href="/almacenes/" class="btn btn-secondary no-underline">Cancelar</a>
                 </div>
             </form>
         </div>
@@ -131,7 +133,7 @@ class WarehouseView:
         error_html = ""
         if error:
             error_html = f"""
-            <div style="background: #fee2e2; color: #991b1b; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <div class="alert-error">
                 {error}
             </div>
             """
@@ -140,35 +142,35 @@ class WarehouseView:
         <div class="card">
             <div class="card-header">
                 <span>Editar Almacén</span>
-                <a href="/almacenes/" class="btn" style="background: #6b7280; color: white;">← Volver</a>
+                <a href="/almacenes/" class="btn btn-secondary">← Volver</a>
             </div>
             {error_html}
-            <form method="POST" action="/almacenes/{warehouse['id']}/editar/" style="padding: 20px;">
+            <form method="POST" action="/almacenes/{warehouse['id']}/editar/" class="p-20">
                 <input type="hidden" name="csrfmiddlewaretoken" value="{csrf_token}">
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div class="form-grid">
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Nombre *</label>
+                        <label class="form-label">Nombre *</label>
                         <input type="text" name="nombre" value="{warehouse['nombre']}" required 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                               class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Ubicación</label>
+                        <label class="form-label">Ubicación</label>
                         <input type="text" name="ubicacion" value="{warehouse.get('ubicacion', '')}" 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                               class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Capacidad</label>
+                        <label class="form-label">Capacidad</label>
                         <input type="number" name="capacidad" value="{warehouse.get('capacidad', 0)}" min="0" 
-                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                               class="form-input">
                     </div>
                 </div>
                 
-                <div style="margin-top: 30px; display: flex; gap: 10px;">
+                <div class="form-actions mt-30">
                     <button type="submit" class="btn btn-primary">Actualizar Almacén</button>
-                    <a href="/almacenes/" class="btn" style="background: #6b7280; color: white; text-decoration: none;">Cancelar</a>
+                    <a href="/almacenes/" class="btn btn-secondary no-underline">Cancelar</a>
                 </div>
             </form>
         </div>

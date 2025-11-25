@@ -12,7 +12,7 @@ class SaleView:
         estado_badges = {
             'pendiente': '<span class="badge badge-warning">Pendiente</span>',
             'completada': '<span class="badge badge-success">Completada</span>',
-            'cancelada': '<span class="badge" style="background: #fee2e2; color: #991b1b;">Cancelada</span>'
+            'cancelada': '<span class="badge badge-cancelada">Cancelada</span>'
         }
         
         # Generar las filas de la tabla
@@ -30,35 +30,37 @@ class SaleView:
                     <td>{badge}</td>
                     <td>{sale['tipo_pago'].capitalize()}</td>
                     <td>
-                        <a href="/ventas/{sale['id']}/editar/" class="btn btn-warning" style="text-decoration: none;">Editar</a>
-                        <a href="/ventas/{sale['id']}/eliminar/" class="btn btn-danger" style="text-decoration: none;" onclick="return confirm('¿Está seguro de eliminar esta venta?');">Eliminar</a>
+                        <a href="/ventas/{sale['id']}/editar/" class="btn btn-warning no-underline">Editar</a>
+                        <a href="/ventas/{sale['id']}/eliminar/" class="btn btn-danger no-underline" onclick="return confirm('¿Está seguro de eliminar esta venta?');">Eliminar</a>
                     </td>
                 </tr>
                 """
             
             table_content = f"""
-            <table>
-                <thead>
-                    <tr>
-                        <th>Factura</th>
-                        <th>Fecha</th>
-                        <th>Cliente</th>
-                        <th>Documento</th>
-                        <th>Total</th>
-                        <th>Estado</th>
-                        <th>Tipo Pago</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {rows}
-                </tbody>
-            </table>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Factura</th>
+                            <th>Fecha</th>
+                            <th>Cliente</th>
+                            <th>Documento</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                            <th>Tipo Pago</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {rows}
+                    </tbody>
+                </table>
+            </div>
             """
         else:
             table_content = """
             <div class="empty-state">
-                <div style="font-size: 4rem; margin-bottom: 20px;">🛒</div>
+                <div class="icon-4xl"><i class="fas fa-shopping-cart"></i></div>
                 <h3>No hay ventas registradas</h3>
                 <p>Comienza registrando tu primera venta</p>
             </div>
@@ -105,7 +107,7 @@ class SaleView:
         error_html = ""
         if error:
             error_html = f"""
-            <div style="background: #fee2e2; color: #991b1b; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <div class="alert-error">
                 {error}
             </div>
             """
@@ -118,29 +120,29 @@ class SaleView:
         <div class="card">
             <div class="card-header">
                 <span>Crear Nueva Venta</span>
-                <a href="/ventas/" class="btn" style="background: #6b7280; color: white;">← Volver</a>
+                <a href="/ventas/" class="btn btn-secondary">← Volver</a>
             </div>
             {error_html}
-            <form method="POST" action="/ventas/crear/" id="saleForm" style="padding: 20px;">
+            <form method="POST" action="/ventas/crear/" id="saleForm" class="p-20">
                 <input type="hidden" name="csrfmiddlewaretoken" value="{csrf_token}">
                 <input type="hidden" name="details" id="details">
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                <div class="form-grid">
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Cliente *</label>
-                        <select name="cliente_id" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <label class="form-label">Cliente *</label>
+                        <select name="cliente_id" required class="form-select">
                             {client_options}
                         </select>
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Fecha *</label>
-                        <input type="date" name="fecha" value="{fecha_actual}" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <label class="form-label">Fecha *</label>
+                        <input type="date" name="fecha" value="{fecha_actual}" required class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Tipo de Pago</label>
-                        <select name="tipo_pago" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <label class="form-label">Tipo de Pago</label>
+                        <select name="tipo_pago" class="form-select">
                             <option value="efectivo">Efectivo</option>
                             <option value="tarjeta">Tarjeta</option>
                             <option value="transferencia">Transferencia</option>
@@ -148,31 +150,31 @@ class SaleView:
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Estado</label>
-                        <select name="estado" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <label class="form-label">Estado</label>
+                        <select name="estado" class="form-select">
                             <option value="completada">Completada</option>
                             <option value="pendiente">Pendiente</option>
                         </select>
                     </div>
                 </div>
                 
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Notas</label>
-                    <textarea name="notas" rows="2" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"></textarea>
+                <div class="mb-20">
+                    <label class="form-label">Notas</label>
+                    <textarea name="notas" rows="2" class="form-textarea"></textarea>
                 </div>
                 
-                <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;">
+                <hr class="form-divider">
                 
-                <h3 style="margin-bottom: 15px;">Productos</h3>
-                <div style="display: grid; grid-template-columns: 2fr 1fr 100px; gap: 10px; margin-bottom: 15px;">
-                    <select id="productSelect" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                <h3 class="mb-15">Productos</h3>
+                <div class="product-input-grid">
+                    <select id="productSelect" class="form-select">
                         {product_options}
                     </select>
-                    <input type="number" id="quantityInput" placeholder="Cantidad" min="1" value="1" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                    <input type="number" id="quantityInput" placeholder="Cantidad" min="1" value="1" class="form-input">
                     <button type="button" onclick="addProduct()" class="btn btn-primary">Agregar</button>
                 </div>
                 
-                <table id="productsTable" style="display: none; margin-bottom: 20px;">
+                <table id="productsTable" class="d-none mb-20">
                     <thead>
                         <tr>
                             <th>Producto</th>
@@ -185,93 +187,24 @@ class SaleView:
                     <tbody id="productsBody"></tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="3" style="text-align: right; font-weight: bold;">TOTAL:</td>
-                            <td colspan="2" style="font-weight: bold; color: #10b981;" id="totalAmount">$0.00</td>
+                            <td colspan="3" class="text-right">TOTAL:</td>
+                            <td colspan="2" class="text-success" id="totalAmount">$0.00</td>
                         </tr>
                     </tfoot>
                 </table>
                 
-                <div style="margin-top: 30px; display: flex; gap: 10px;">
+                <div class="form-actions mt-30">
                     <button type="submit" class="btn btn-primary">Guardar Venta</button>
-                    <a href="/ventas/" class="btn" style="background: #6b7280; color: white; text-decoration: none;">Cancelar</a>
+                    <a href="/ventas/" class="btn btn-secondary no-underline">Cancelar</a>
                 </div>
             </form>
         </div>
         
+        <script src="/static/js/product-manager.js"></script>
         <script>
+            // Inicializar el gestor de productos con los datos del servidor
             const products = {str(products_json).replace("'", '"')};
-            let selectedProducts = [];
-            
-            function addProduct() {{
-                const select = document.getElementById('productSelect');
-                const quantity = parseInt(document.getElementById('quantityInput').value);
-                const productId = parseInt(select.value);
-                
-                if (!productId || quantity <= 0) {{
-                    alert('Seleccione un producto y cantidad válida');
-                    return;
-                }}
-                
-                const product = products.find(p => p.id === productId);
-                if (!product) return;
-                
-                // Verificar si ya está agregado
-                const existing = selectedProducts.find(p => p.producto_id === productId);
-                if (existing) {{
-                    existing.cantidad += quantity;
-                    existing.subtotal = existing.cantidad * existing.precio_unitario;
-                }} else {{
-                    selectedProducts.push({{
-                        producto_id: productId,
-                        nombre: product.nombre,
-                        precio_unitario: product.precio,
-                        cantidad: quantity,
-                        subtotal: product.precio * quantity
-                    }});
-                }}
-                
-                renderProducts();
-                select.value = '';
-                document.getElementById('quantityInput').value = 1;
-            }}
-            
-            function removeProduct(index) {{
-                selectedProducts.splice(index, 1);
-                renderProducts();
-            }}
-            
-            function renderProducts() {{
-                const tbody = document.getElementById('productsBody');
-                const table = document.getElementById('productsTable');
-                
-                if (selectedProducts.length === 0) {{
-                    table.style.display = 'none';
-                    return;
-                }}
-                
-                table.style.display = 'table';
-                tbody.innerHTML = selectedProducts.map((p, i) => `
-                    <tr>
-                        <td>${{p.nombre}}</td>
-                        <td>$${{p.precio_unitario.toFixed(2)}}</td>
-                        <td>${{p.cantidad}}</td>
-                        <td>$${{p.subtotal.toFixed(2)}}</td>
-                        <td><button type="button" class="btn btn-danger" onclick="removeProduct(${{i}})">X</button></td>
-                    </tr>
-                `).join('');
-                
-                const total = selectedProducts.reduce((sum, p) => sum + p.subtotal, 0);
-                document.getElementById('totalAmount').textContent = `$${{total.toFixed(2)}}`;
-            }}
-            
-            document.getElementById('saleForm').addEventListener('submit', function(e) {{
-                if (selectedProducts.length === 0) {{
-                    e.preventDefault();
-                    alert('Debe agregar al menos un producto');
-                    return;
-                }}
-                document.getElementById('details').value = JSON.stringify(selectedProducts);
-            }});
+            manager = new ProductManager(products);
         </script>
         """
         
@@ -318,7 +251,7 @@ class SaleView:
         error_html = ""
         if error:
             error_html = f"""
-            <div style="background: #fee2e2; color: #991b1b; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <div class="alert-error">
                 {error}
             </div>
             """
@@ -327,30 +260,30 @@ class SaleView:
         <div class="card">
             <div class="card-header">
                 <span>Editar Venta - {sale['numero_factura']}</span>
-                <a href="/ventas/" class="btn" style="background: #6b7280; color: white;">← Volver</a>
+                <a href="/ventas/" class="btn btn-secondary">← Volver</a>
             </div>
             {error_html}
-            <form method="POST" action="/ventas/{sale['id']}/editar/" id="saleForm" style="padding: 20px;">
+            <form method="POST" action="/ventas/{sale['id']}/editar/" id="saleForm" class="p-20">
                 <input type="hidden" name="csrfmiddlewaretoken" value="{csrf_token}">
                 <input type="hidden" name="details" id="details">
                 <input type="hidden" name="numero_factura" value="{sale['numero_factura']}">
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                <div class="form-grid">
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Cliente *</label>
-                        <select name="cliente_id" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <label class="form-label">Cliente *</label>
+                        <select name="cliente_id" required class="form-select">
                             {client_options}
                         </select>
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Fecha *</label>
-                        <input type="date" name="fecha" value="{sale['fecha']}" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <label class="form-label">Fecha *</label>
+                        <input type="date" name="fecha" value="{sale['fecha']}" required class="form-input">
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Tipo de Pago</label>
-                        <select name="tipo_pago" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <label class="form-label">Tipo de Pago</label>
+                        <select name="tipo_pago" class="form-select">
                             <option value="efectivo" {'selected' if sale.get('tipo_pago') == 'efectivo' else ''}>Efectivo</option>
                             <option value="tarjeta" {'selected' if sale.get('tipo_pago') == 'tarjeta' else ''}>Tarjeta</option>
                             <option value="transferencia" {'selected' if sale.get('tipo_pago') == 'transferencia' else ''}>Transferencia</option>
@@ -358,8 +291,8 @@ class SaleView:
                     </div>
                     
                     <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Estado</label>
-                        <select name="estado" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <label class="form-label">Estado</label>
+                        <select name="estado" class="form-select">
                             <option value="completada" {'selected' if sale.get('estado') == 'completada' else ''}>Completada</option>
                             <option value="pendiente" {'selected' if sale.get('estado') == 'pendiente' else ''}>Pendiente</option>
                             <option value="cancelada" {'selected' if sale.get('estado') == 'cancelada' else ''}>Cancelada</option>
@@ -367,19 +300,19 @@ class SaleView:
                     </div>
                 </div>
                 
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Notas</label>
-                    <textarea name="notas" rows="2" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">{sale.get('notas', '')}</textarea>
+                <div class="mb-20">
+                    <label class="form-label">Notas</label>
+                    <textarea name="notas" rows="2" class="form-textarea">{sale.get('notas', '')}</textarea>
                 </div>
                 
-                <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;">
+                <hr class="form-divider">
                 
-                <h3 style="margin-bottom: 15px;">Productos</h3>
-                <div style="display: grid; grid-template-columns: 2fr 1fr 100px; gap: 10px; margin-bottom: 15px;">
-                    <select id="productSelect" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                <h3 class="mb-15">Productos</h3>
+                <div class="product-input-grid">
+                    <select id="productSelect" class="form-select">
                         {product_options}
                     </select>
-                    <input type="number" id="quantityInput" placeholder="Cantidad" min="1" value="1" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                    <input type="number" id="quantityInput" placeholder="Cantidad" min="1" value="1" class="form-input">
                     <button type="button" onclick="addProduct()" class="btn btn-primary">Agregar</button>
                 </div>
                 
@@ -396,87 +329,26 @@ class SaleView:
                     <tbody id="productsBody"></tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="3" style="text-align: right; font-weight: bold;">TOTAL:</td>
-                            <td colspan="2" style="font-weight: bold; color: #10b981;" id="totalAmount">$0.00</td>
+                            <td colspan="3" class="text-right">TOTAL:</td>
+                            <td colspan="2" class="text-success" id="totalAmount">$0.00</td>
                         </tr>
                     </tfoot>
                 </table>
                 
-                <div style="margin-top: 30px; display: flex; gap: 10px;">
+                <div class="form-actions mt-30">
                     <button type="submit" class="btn btn-primary">Actualizar Venta</button>
-                    <a href="/ventas/" class="btn" style="background: #6b7280; color: white; text-decoration: none;">Cancelar</a>
+                    <a href="/ventas/" class="btn btn-secondary no-underline">Cancelar</a>
                 </div>
             </form>
         </div>
         
+        <script src="/static/js/product-manager.js"></script>
         <script>
+            // Inicializar el gestor de productos con los datos del servidor
             const products = {str(products_json).replace("'", '"')};
-            let selectedProducts = {str(existing_details).replace("'", '"')};
-            
-            function addProduct() {{
-                const select = document.getElementById('productSelect');
-                const quantity = parseInt(document.getElementById('quantityInput').value);
-                const productId = parseInt(select.value);
-                
-                if (!productId || quantity <= 0) {{
-                    alert('Seleccione un producto y cantidad válida');
-                    return;
-                }}
-                
-                const product = products.find(p => p.id === productId);
-                if (!product) return;
-                
-                const existing = selectedProducts.find(p => p.producto_id === productId);
-                if (existing) {{
-                    existing.cantidad += quantity;
-                    existing.subtotal = existing.cantidad * existing.precio_unitario;
-                }} else {{
-                    selectedProducts.push({{
-                        producto_id: productId,
-                        nombre: product.nombre,
-                        precio_unitario: product.precio,
-                        cantidad: quantity,
-                        subtotal: product.precio * quantity
-                    }});
-                }}
-                
-                renderProducts();
-                select.value = '';
-                document.getElementById('quantityInput').value = 1;
-            }}
-            
-            function removeProduct(index) {{
-                selectedProducts.splice(index, 1);
-                renderProducts();
-            }}
-            
-            function renderProducts() {{
-                const tbody = document.getElementById('productsBody');
-                tbody.innerHTML = selectedProducts.map((p, i) => `
-                    <tr>
-                        <td>${{p.nombre}}</td>
-                        <td>$${{p.precio_unitario.toFixed(2)}}</td>
-                        <td>${{p.cantidad}}</td>
-                        <td>$${{p.subtotal.toFixed(2)}}</td>
-                        <td><button type="button" class="btn btn-danger" onclick="removeProduct(${{i}})">X</button></td>
-                    </tr>
-                `).join('');
-                
-                const total = selectedProducts.reduce((sum, p) => sum + p.subtotal, 0);
-                document.getElementById('totalAmount').textContent = `$${{total.toFixed(2)}}`;
-            }}
-            
-            document.getElementById('saleForm').addEventListener('submit', function(e) {{
-                if (selectedProducts.length === 0) {{
-                    e.preventDefault();
-                    alert('Debe agregar al menos un producto');
-                    return;
-                }}
-                document.getElementById('details').value = JSON.stringify(selectedProducts);
-            }});
-            
-            // Renderizar productos existentes al cargar
-            renderProducts();
+            const existingDetails = {str(existing_details).replace("'", '"')};
+            manager = new ProductManager(products, existingDetails);
+            manager.render();
         </script>
         """
         

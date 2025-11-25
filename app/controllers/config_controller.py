@@ -20,11 +20,14 @@ class ConfigController:
         if not user:
             return redirect('/login/')
         
+        # Verificar si es superadmin
+        is_superadmin = user.get('username') == 'superadmin'
+        
         # Obtener datos de configuración
         data = {
             'user_info': Config.get_user_info(user_id),
             'system_stats': Config.get_system_stats(),
-            'all_users': Config.get_all_users(),
+            'all_users': Config.get_all_users(include_superadmin=is_superadmin),
             'database_info': Config.get_database_info()
         }
         
@@ -175,18 +178,24 @@ class ConfigController:
         # Obtener información completa del usuario
         user_info = Config.get_user_info(user_id)
         
+        # Verificar si el usuario está activo (solo usuarios con activo=1 pueden editar estado)
+        is_active_user = user.get('activo') == 1
+        
         # Si es GET, mostrar formulario
         if request.method == 'GET':
-            return HttpResponse(ConfigView.edit_profile(user, user_info, request))
+            return HttpResponse(ConfigView.edit_profile(user, user_info, request, is_admin=is_active_user))
         
         # Si es POST, procesar el formulario
         if request.method == 'POST':
             try:
                 data = {
                     'nombre_completo': request.POST.get('nombre_completo'),
-                    'email': request.POST.get('email'),
-                    'activo': int(request.POST.get('activo', 1))
+                    'email': request.POST.get('email')
                 }
+                
+                # Solo permitir cambiar el estado si el usuario está activo (activo=1)
+                if is_active_user:
+                    data['activo'] = int(request.POST.get('activo', 1))
                 
                 # Actualizar el perfil
                 Config.update_profile(user_id, data)
@@ -195,7 +204,7 @@ class ConfigController:
                 return HttpResponseRedirect('/configuracion/')
                 
             except Exception as e:
-                return HttpResponse(ConfigView.edit_profile(user, user_info, request, error=f'Error al actualizar perfil: {str(e)}'))
+                return HttpResponse(ConfigView.edit_profile(user, user_info, request, is_admin=is_active_user, error=f'Error al actualizar perfil: {str(e)}'))
     
     @staticmethod
     @ensure_csrf_cookie

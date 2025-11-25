@@ -10,44 +10,44 @@ class DashboardView:
         
         # Tarjetas de estadísticas principales
         main_stats = f"""
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 30px;">
-            <div class="stat-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <p style="margin: 0; opacity: 0.9; font-size: 14px;">Productos</p>
-                        <h2 style="margin: 10px 0 0 0; font-size: 32px; font-weight: 700;">{stats['total_productos']}</h2>
+        <div class="stats-primary-grid">
+            <div class="stat-card-primary bg-gradient-purple">
+                <div class="stat-card-content">
+                    <div class="stat-card-info">
+                        <p>Productos</p>
+                        <h2>{stats['total_productos']}</h2>
                     </div>
-                    <div style="font-size: 40px; opacity: 0.3;">📦</div>
+                    <div class="stat-card-icon"><i class="fas fa-box"></i></div>
                 </div>
             </div>
             
-            <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <p style="margin: 0; opacity: 0.9; font-size: 14px;">Ventas del Mes</p>
-                        <h2 style="margin: 10px 0 0 0; font-size: 32px; font-weight: 700;">${stats['ventas_mes']:,.2f}</h2>
+            <div class="stat-card-primary bg-gradient-pink">
+                <div class="stat-card-content">
+                    <div class="stat-card-info">
+                        <p>Ventas del Mes</p>
+                        <h2>${stats['ventas_mes']:,.2f}</h2>
                     </div>
-                    <div style="font-size: 40px; opacity: 0.3;">💰</div>
+                    <div class="stat-card-icon"><i class="fas fa-dollar-sign"></i></div>
                 </div>
             </div>
             
-            <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <p style="margin: 0; opacity: 0.9; font-size: 14px;">Compras del Mes</p>
-                        <h2 style="margin: 10px 0 0 0; font-size: 32px; font-weight: 700;">${stats['compras_mes']:,.2f}</h2>
+            <div class="stat-card-primary bg-gradient-cyan">
+                <div class="stat-card-content">
+                    <div class="stat-card-info">
+                        <p>Compras del Mes</p>
+                        <h2>${stats['compras_mes']:,.2f}</h2>
                     </div>
-                    <div style="font-size: 40px; opacity: 0.3;">🛒</div>
+                    <div class="stat-card-icon"><i class="fas fa-shopping-cart"></i></div>
                 </div>
             </div>
             
-            <div class="stat-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <p style="margin: 0; opacity: 0.9; font-size: 14px;">Clientes</p>
-                        <h2 style="margin: 10px 0 0 0; font-size: 32px; font-weight: 700;">{stats['total_clientes']}</h2>
+            <div class="stat-card-primary bg-gradient-green">
+                <div class="stat-card-content">
+                    <div class="stat-card-info">
+                        <p>Clientes</p>
+                        <h2>{stats['total_clientes']}</h2>
                     </div>
-                    <div style="font-size: 40px; opacity: 0.3;">👥</div>
+                    <div class="stat-card-icon"><i class="fas fa-users"></i></div>
                 </div>
             </div>
         </div>
@@ -55,35 +55,35 @@ class DashboardView:
         
         # Tarjetas de estadísticas secundarias
         secondary_stats = f"""
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px;">
-            <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid #8b5cf6; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                <p style="margin: 0; color: #6b7280; font-size: 13px;">Categorías</p>
-                <h3 style="margin: 8px 0 0 0; font-size: 24px; font-weight: 700; color: #111827;">{stats['total_categorias']}</h3>
+        <div class="stats-secondary-grid">
+            <div class="stat-card-secondary border-purple">
+                <p>Categorías</p>
+                <h3>{stats['total_categorias']}</h3>
             </div>
             
-            <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid #ec4899; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                <p style="margin: 0; color: #6b7280; font-size: 13px;">Proveedores</p>
-                <h3 style="margin: 8px 0 0 0; font-size: 24px; font-weight: 700; color: #111827;">{stats['total_proveedores']}</h3>
+            <div class="stat-card-secondary border-pink">
+                <p>Proveedores</p>
+                <h3>{stats['total_proveedores']}</h3>
             </div>
             
-            <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid #3b82f6; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                <p style="margin: 0; color: #6b7280; font-size: 13px;">Almacenes</p>
-                <h3 style="margin: 8px 0 0 0; font-size: 24px; font-weight: 700; color: #111827;">{stats['total_almacenes']}</h3>
+            <div class="stat-card-secondary border-blue">
+                <p>Almacenes</p>
+                <h3>{stats['total_almacenes']}</h3>
             </div>
             
-            <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid #10b981; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                <p style="margin: 0; color: #6b7280; font-size: 13px;">Total Ventas</p>
-                <h3 style="margin: 8px 0 0 0; font-size: 24px; font-weight: 700; color: #111827;">{stats['total_ventas']}</h3>
+            <div class="stat-card-secondary border-green">
+                <p>Total Ventas</p>
+                <h3>{stats['total_ventas']}</h3>
             </div>
             
-            <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid #f59e0b; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                <p style="margin: 0; color: #6b7280; font-size: 13px;">Total Compras</p>
-                <h3 style="margin: 8px 0 0 0; font-size: 24px; font-weight: 700; color: #111827;">{stats['total_compras']}</h3>
+            <div class="stat-card-secondary border-orange">
+                <p>Total Compras</p>
+                <h3>{stats['total_compras']}</h3>
             </div>
             
-            <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid #06b6d4; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                <p style="margin: 0; color: #6b7280; font-size: 13px;">Movimientos Inventario</p>
-                <h3 style="margin: 8px 0 0 0; font-size: 24px; font-weight: 700; color: #111827;">{stats['total_movimientos']}</h3>
+            <div class="stat-card-secondary border-cyan">
+                <p>Movimientos Inventario</p>
+                <h3>{stats['total_movimientos']}</h3>
             </div>
         </div>
         """
@@ -92,45 +92,47 @@ class DashboardView:
         stock_rows = ""
         if productos_bajo_stock:
             for producto in productos_bajo_stock:
-                color = "#ef4444" if producto['stock_actual'] < 5 else "#f59e0b"
+                badge_class = "stock-danger" if producto['stock_actual'] < 5 else "stock-warning"
                 stock_rows += f"""
                 <tr>
                     <td>{producto['nombre']}</td>
                     <td>{producto.get('categoria', 'N/A')}</td>
                     <td>
-                        <span style="padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; background: {color}; color: white;">
+                        <span class="stock-badge {badge_class}">
                             {producto['stock_actual']} unidades
                         </span>
                     </td>
                     <td>
-                        <a href="/productos/{producto['id']}/editar/" class="btn" style="background: #3b82f6; color: white; padding: 6px 12px; font-size: 13px;">
+                        <a href="/productos/{producto['id']}/editar/" class="btn btn-info btn-sm">
                             Ver Producto
                         </a>
                     </td>
                 </tr>
                 """
         else:
-            stock_rows = '<tr><td colspan="4" style="text-align: center; padding: 30px; color: #6b7280;">✅ Todos los productos tienen stock suficiente</td></tr>'
+            stock_rows = '<tr><td colspan="4" class="empty-message"><i class="fas fa-check-circle"></i> Todos los productos tienen stock suficiente</td></tr>'
         
         productos_stock_section = f"""
-        <div class="card" style="margin-bottom: 30px;">
+        <div class="card mb-30">
             <div class="card-header">
-                <span>⚠️ Productos con Stock Bajo</span>
-                <a href="/productos/" class="btn" style="background: #6b7280; color: white;">Ver Todos</a>
+                <span><i class="fas fa-exclamation-triangle"></i> Productos con Stock Bajo</span>
+                <a href="/productos/" class="btn btn-secondary">Ver Todos</a>
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Producto</th>
-                        <th>Categoría</th>
-                        <th>Stock Actual</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {stock_rows}
-                </tbody>
-            </table>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Categoría</th>
+                            <th>Stock Actual</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {stock_rows}
+                    </tbody>
+                </table>
+            </div>
         </div>
         """
         
@@ -152,36 +154,38 @@ class DashboardView:
                     <td>{estado_badge}</td>
                     <td>{venta['fecha']}</td>
                     <td>
-                        <a href="/ventas/{venta['id']}/ver/" class="btn" style="background: #3b82f6; color: white; padding: 6px 12px; font-size: 13px;">
+                        <a href="/ventas/{venta['id']}/ver/" class="btn btn-info btn-sm">
                             Ver
                         </a>
                     </td>
                 </tr>
                 """
         else:
-            ventas_rows = '<tr><td colspan="6" style="text-align: center; padding: 30px; color: #6b7280;">📊 No hay ventas registradas</td></tr>'
+            ventas_rows = '<tr><td colspan="6" class="empty-message"><i class="fas fa-chart-line"></i> No hay ventas registradas</td></tr>'
         
         ultimas_ventas_section = f"""
-        <div class="card" style="margin-bottom: 30px;">
+        <div class="card mb-30">
             <div class="card-header">
-                <span>💳 Últimas Ventas</span>
+                <span><i class="fas fa-credit-card"></i> Últimas Ventas</span>
                 <a href="/ventas/" class="btn btn-primary">Ver Todas</a>
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Cliente</th>
-                        <th>Total</th>
-                        <th>Estado</th>
-                        <th>Fecha</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {ventas_rows}
-                </tbody>
-            </table>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cliente</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                            <th>Fecha</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {ventas_rows}
+                    </tbody>
+                </table>
+            </div>
         </div>
         """
         
@@ -203,44 +207,46 @@ class DashboardView:
                     <td>{estado_badge}</td>
                     <td>{compra['fecha']}</td>
                     <td>
-                        <a href="/compras/{compra['id']}/ver/" class="btn" style="background: #3b82f6; color: white; padding: 6px 12px; font-size: 13px;">
+                        <a href="/compras/{compra['id']}/ver/" class="btn btn-info btn-sm">
                             Ver
                         </a>
                     </td>
                 </tr>
                 """
         else:
-            compras_rows = '<tr><td colspan="6" style="text-align: center; padding: 30px; color: #6b7280;">📦 No hay compras registradas</td></tr>'
+            compras_rows = '<tr><td colspan="6" class="empty-message"><i class="fas fa-shopping-cart"></i> No hay compras registradas</td></tr>'
         
         ultimas_compras_section = f"""
         <div class="card">
             <div class="card-header">
-                <span>🛍️ Últimas Compras</span>
+                <span><i class="fas fa-shopping-bag"></i> Últimas Compras</span>
                 <a href="/compras/" class="btn btn-primary">Ver Todas</a>
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Proveedor</th>
-                        <th>Total</th>
-                        <th>Estado</th>
-                        <th>Fecha</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {compras_rows}
-                </tbody>
-            </table>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Proveedor</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                            <th>Fecha</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {compras_rows}
+                    </tbody>
+                </table>
+            </div>
         </div>
         """
         
         # Bienvenida personalizada
         welcome_card = f"""
-        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-            <h1 style="margin: 0 0 10px 0; font-size: 28px;">¡Bienvenido, {user['nombre_completo']}! 👋</h1>
-            <p style="margin: 0; opacity: 0.9; font-size: 16px;">Rol: {user['rol']} | Dashboard del Sistema de Gestión</p>
+        <div class="welcome-banner">
+            <h1>Bienvenido, {user['nombre_completo']}</h1>
+            <p>Rol: {user['rol']} | Dashboard del Sistema de Inventario</p>
         </div>
         """
         
