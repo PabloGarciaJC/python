@@ -245,8 +245,8 @@ class DashboardView:
         # Bienvenida personalizada
         welcome_card = f"""
         <div class="welcome-banner">
-            <h1>¡Bienvenido, {user['nombre_completo']}!</h1>
-            <p>Rol: {user['rol']} | Dashboard del Sistema de Gestión de Inventario</p>
+            <h1>Bienvenido, {user['nombre_completo']}</h1>
+            <p>Rol: {user['rol']} | Dashboard del Sistema de Inventario</p>
         </div>
         """
         

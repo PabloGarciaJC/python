@@ -11,7 +11,7 @@ class DocumentationView:
         content = f"""
         <div class="documentation-container">
             <h1 class="doc-main-title"><i class="fas fa-book"></i> Documentación del Sistema</h1>
-            <p class="doc-subtitle">Sistema de Gestión de Inventario - Guía Completa de Funcionalidades y Tecnologías</p>
+            <p class="doc-subtitle">Sistema de Inventario - Guía Completa de Funcionalidades y Tecnologías</p>
             
             <!-- Funcionalidades -->
             <section class="doc-section">
