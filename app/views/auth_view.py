@@ -50,12 +50,12 @@ class AuthView:
         <form method="POST" id="login-form">
             <input type="hidden" name="csrfmiddlewaretoken" value="{csrf_token}">
             <div class="form-group">
-                <label>Usuario</label>
-                <input type="text" name="username" id="username-input" class="form-control" required autofocus>
+                <label>Usuario o Email</label>
+                <input type="text" name="username" id="username-input" class="form-control" placeholder="Ingresa tu usuario o correo" required autofocus>
             </div>
             <div class="form-group">
                 <label>Contraseña</label>
-                <input type="password" name="password" id="password-input" class="form-control" required>
+                <input type="password" name="password" id="password-input" class="form-control" placeholder="Ingresa tu contraseña" required>
             </div>
             <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
         </form>

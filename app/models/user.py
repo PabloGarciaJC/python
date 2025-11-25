@@ -6,15 +6,15 @@ class User:
     
     @staticmethod
     def authenticate(username, password):
-        """Autentica un usuario"""
+        """Autentica un usuario por username o email"""
         password_hash = hashlib.sha256(password.encode()).hexdigest()
         query = """
             SELECT u.*, r.nombre as rol
             FROM usuarios u
             JOIN roles r ON u.rol_id = r.id
-            WHERE u.username = %s AND u.password = %s AND u.activo = 1
+            WHERE (u.username = %s OR u.email = %s) AND u.password = %s AND u.activo = 1
         """
-        users = Database.execute_query(query, (username, password_hash))
+        users = Database.execute_query(query, (username, username, password_hash))
         return users[0] if users else None
     
     @staticmethod
