@@ -77,7 +77,7 @@ El sistema está diseñado con **roles personalizables**:
    - **`make down`**: Detiene los contenedores y apaga la aplicación.
    - **`make shell`**: Ingresa al contenedor para interactuar directamente con el sistema en su entorno de ejecución.
    - **`make install-dependencies`**: Instala todas las dependencias necesarias para disponer del sistema de logs y ejecutar pruebas.
-   - **`make init-test`**: Ejecuta las pruebas unitarias y de integración.
+   - **`make init-chatbot`**: Instala y configura el chatbot en el sistema.
 
 4. Además de estos comandos, dentro del archivo **Makefile** puedes encontrar otros comandos que te permitirán interactuar de manera más específica con los contenedores y los diferentes servicios que conforman la aplicación.
 
@@ -99,4 +99,4 @@ El sistema está diseñado con **roles personalizables**:
 | **Twitter**  | Proyectos, pensamientos y actualizaciones.                | [Presiona aquí](https://x.com/PabloGarciaJC?t=lct1gxvE8DkqAr8dgxrHIw&s=09)   |
 
 ---
-> _"La única forma de hacer un gran trabajo es amar lo que haces." - Steve Jobs_
+> _"El buen manejo de tus finanzas hoy construye la seguridad del mañana."_
