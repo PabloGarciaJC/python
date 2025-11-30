@@ -1,6 +1,6 @@
 # Sistema de Inventario (Python + Django)
 
-**Sistema de Inventario** es una aplicación completa desarrollada con **Django** bajo el patrón **MVC**, diseñada para administrar inventarios, ventas, compras, productos, clientes, proveedores y almacenes desde un panel de administración intuitivo y moderno.
+**Sistema de Inventario** es una aplicación completa desarrollada con **Django** bajo el patrón **MVC**, diseñada para administrar inventarios, ventas, compras, productos, clientes, proveedores y almacenes.
 
 | ![Imagen 1](https://pablogarciajc.com/wp-content/uploads/2025/11/Sistema-de-Inventario-1.webp) | ![Imagen 2](https://pablogarciajc.com/wp-content/uploads/2025/11/Sistema-de-Inventario-2.webp) |
 |-----------|-----------|
