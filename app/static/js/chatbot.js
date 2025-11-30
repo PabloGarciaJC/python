@@ -35,16 +35,36 @@ document.addEventListener('DOMContentLoaded', function() {
     // Enviar mensaje
     // ======================
     async function sendMessage() {
-        if (isSending) return;
-        const message = messageInput.value.trim();
-        if (!message) return;
-        isSending = true;
-        messageInput.disabled = true;
-        sendBtn.disabled = true;
-        messageInput.value = '';
-        messageInput.style.height = 'auto';
-        typingIndicator.style.display = 'flex';
-        scrollToBottom();
+            if (isSending) return;
+            const message = messageInput.value.trim();
+            if (!message) return;
+
+            // Validar comandos básicos
+            const comandosBasicos = [
+                /^ayuda$/i,
+                /^buscar producto\s.+$/i,
+                /^resumen de ventas$/i,
+                /^resumen de compras$/i,
+                /^productos con stock bajo$/i
+            ];
+            const esComando = comandosBasicos.some(reg => reg.test(message));
+            if (!esComando) {
+                Swal.fire({
+                    title: 'Comando no reconocido',
+                    text: 'Ese mensaje no es un comando aceptado. Usa los comandos básicos mostrados en la bienvenida.',
+                    icon: 'warning',
+                    confirmButtonColor: '#667eea'
+                });
+                return;
+            }
+
+            isSending = true;
+            messageInput.disabled = true;
+            sendBtn.disabled = true;
+            messageInput.value = '';
+            messageInput.style.height = 'auto';
+            typingIndicator.style.display = 'flex';
+            scrollToBottom();
         try {
             const csrftoken = getCookie('csrftoken');
             const response = await fetch('/chatbot/send/', {

@@ -149,9 +149,9 @@ class AIService:
                 if 'stock bajo' in message_lower or 'bajo stock' in message_lower or 'poco stock' in message_lower:
                     low_stock = [p for p in products if p.get('stock_actual', 0) < 10]
                     if not low_stock:
-                        return "✅ ¡Excelente! No hay productos con stock bajo (menos de 10 unidades)."
+                        return "¡Excelente! No hay productos con stock bajo (menos de 10 unidades)."
                     
-                    response = f"⚠️ **Productos con Stock Bajo**\n\n"
+                    response = f"Productos con Stock Bajo\n\n"
                     response += f"Se encontraron {len(low_stock)} productos con menos de 10 unidades:\n\n"
                     
                     for product in low_stock[:15]:
@@ -165,12 +165,12 @@ class AIService:
                     return response
                 
                 # Consulta general
-                response = f"📦 **Resumen de Productos**\n\n"
+                response = f"Resumen de Productos\n\n"
                 response += f"Total de productos: {len(products)}\n\n"
                 response += "Algunos productos destacados:\n\n"
                 
                 for product in products[:10]:  # Mostrar primeros 10
-                    response += f"• **{product.get('nombre', 'N/A')}**\n"
+                    response += f"{product.get('nombre', 'N/A')}\n"
                     response += f"  - Stock: {product.get('stock_actual', 0)} unidades\n"
                     response += f"  - Precio: ${product.get('precio_venta', 0):.2f}\n"
                     if product.get('categoria'):
@@ -236,20 +236,20 @@ class AIService:
         return """
         ¡Hola! Soy tu asistente virtual del Sistema de Inventario. Puedo ayudarte con:
         
-        📦 **Consultas sobre productos:**
+        Consultas sobre productos:
         - "Buscar producto laptop"
         - "¿Qué productos tienen stock bajo?"
         - "Mostrar productos"
         
-        💰 **Información de ventas:**
+        Información de ventas:
         - "Resumen de ventas"
         - "¿Cuánto he vendido?"
         
-        🛒 **Información de compras:**
+        Información de compras:
         - "Resumen de compras"
         - "Total de compras"
         
-        ❓ **Ayuda general:**
+        Ayuda general:
         - "¿Cómo registro una venta?"
         - "¿Cómo funciona el sistema?"
         
